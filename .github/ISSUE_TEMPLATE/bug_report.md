@@ -14,7 +14,7 @@ Una descripción clara y concisa de lo que es el fallo.
 Pasos para reproducir el comportamiento:
 1. Ir a '...'
 2. Haga clic en '....'
-3. 3. Desplácese hasta "....
+3. Desplácese hasta "....
 4. Ver error
 
 **Comportamiento esperado**
