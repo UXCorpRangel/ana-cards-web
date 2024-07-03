@@ -7,56 +7,48 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
-  - type: input
-    id: contact
+        Gracias por tomarte el tiempo de rellenar esta solicitud de feature
+  - type: textarea
+    id: descripcion
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
+      label: Solicitud de feature
+      description: Por favor, descríbelo.
+      placeholder: Una descripción clara y concisa del feature.
+      value: "Me gustaría que [...]"
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta de solución
+      description: Por favor, descríbelo.
+      placeholder: Una descripción clara y concisa de lo que quieres que ocurra.
+      value: "Me gustaría que [...]"
     validations:
       required: false
   - type: textarea
-    id: what-happened
+    id: alternativa
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
+      label: Alternativas consideradas
+      description: Por favor, descríbelas.
+      placeholder: Una descripción clara y concisa de las soluciones o características alternativas que has considerado.
+      value: "Me gustaría que [...]"
     validations:
-      required: true
-  - type: dropdown
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
-      default: 0
-    validations:
-      required: true
-  - type: dropdown
-    id: browsers
-    attributes:
-      label: What browsers are you seeing the problem on?
-      multiple: true
-      options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
+      required: false
   - type: textarea
-    id: logs
+    id: contexto
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
+      label: Contexto adicional
+      description: Por favor, descríbelo.
+      placeholder: Añade aquí cualquier otro contexto o capturas de pantalla sobre la solicitud de función.
+      value: ""
+    validations:
+      required: false
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com). 
+      label: Codódigo de Conducta
+      description: Al enviar esta solicitud, aceptas seguir nuestro [Código de Conducta](https://github.com/UXCorpRangel/ana-cards-web?tab=coc-ov-file). 
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: Estoy de acuerdo con el código de conducta.
           required: true
