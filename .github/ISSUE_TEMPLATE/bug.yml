@@ -44,7 +44,6 @@ body:
     attributes:
       label: Sistema Operativo
       description: ¿Qué sistema operativo estás usando?
-      multiple: true
       options:
         - Windows
         - MacOS
