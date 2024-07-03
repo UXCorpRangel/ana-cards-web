@@ -1,0 +1,88 @@
+name: Bug Report
+description: Crea una issue para ayudarnos a mejorar.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+projects: ["UXCorpRangel/1"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por tomarte el tiempo de rellenar este informe de errores.
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: He encontrado un bug
+      description: Por favor, descríbelo.
+      placeholder: Una descripción clara y concisa del bug.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduccion
+    attributes:
+      label: Pasos para reproducir el bug
+      description: Por favor, describe los pasos que has seguido para encontrar el bug.
+      placeholder: 1. Ir a [...] 2. Haga clic en [...] 3. Desplácese hasta [...] 4. Ver error
+    validations:
+      required: true
+  - type: textarea
+    id: comportamiento
+    attributes:
+      label: Comportamiento esperado
+      description: Una descripción clara y concisa de lo que esperaba que ocurriera.
+      placeholder: Una descripción clara y concisa de lo que esperaba que ocurriera.
+    validations:
+      required: false
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Capturas de pantalla o video
+      description: Añade capturas de pantalla para ayudar a explicar el problema.
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Sistema Operativo
+      description: ¿Qué sistema operativo estás usando?
+      multiple: true
+      options:
+        - Windows
+        - MacOS
+        - Linux
+        - iOS
+        - Android
+    validations:
+      required: true
+  - type: dropdown
+    id: navegador
+    attributes:
+      label: ¿En qué navegador tuviste problemas?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Otros
+      validations:
+        required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión del navegador
+      description: Especifica la versión del navegador
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: Añade aquí cualquier otro contexto sobre el problema.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Codódigo de Conducta
+      description: Al enviar esta solicitud, aceptas seguir nuestro [Código de Conducta](https://github.com/UXCorpRangel/ana-cards-web?tab=coc-ov-file). 
+      options:
+        - label: Estoy de acuerdo con el código de conducta.
+          required: true
