@@ -44,6 +44,7 @@ body:
     attributes:
       label: Sistema Operativo
       description: ¿Qué sistema operativo estás usando?
+      multiple: true
       options:
         - Windows
         - MacOS
@@ -56,6 +57,7 @@ body:
     id: navegador
     attributes:
       label: ¿En qué navegador tuviste problemas?
+      multiple: true
       options:
         - Firefox
         - Chrome
@@ -83,4 +85,5 @@ body:
       description: Al enviar esta solicitud, aceptas seguir nuestro [Código de Conducta](https://github.com/UXCorpRangel/ana-cards-web?tab=coc-ov-file). 
       options:
         - label: Estoy de acuerdo con el código de conducta.
-          required: true
+      validations:
+        required: true
