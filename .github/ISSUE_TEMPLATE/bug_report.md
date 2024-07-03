@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Bug report BK
 about: Crea una issue para ayudarnos a mejorar
 title: "[BUG]"
 labels: bug
