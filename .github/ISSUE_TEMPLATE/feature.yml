@@ -41,7 +41,6 @@ body:
       label: Contexto adicional
       description: Por favor, descríbelo.
       placeholder: Añade aquí cualquier otro contexto o capturas de pantalla sobre la solicitud de función.
-      value: ""
     validations:
       required: false
   - type: checkboxes
