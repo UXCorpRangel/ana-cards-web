@@ -23,7 +23,6 @@ body:
       label: Propuesta de solución
       description: Por favor, descríbelo.
       placeholder: Una descripción clara y concisa de lo que quieres que ocurra.
-      value: "Me gustaría que [...]"
     validations:
       required: false
   - type: textarea
@@ -32,7 +31,6 @@ body:
       label: Alternativas consideradas
       description: Por favor, descríbelas.
       placeholder: Una descripción clara y concisa de las soluciones o características alternativas que has considerado.
-      value: "Me gustaría que [...]"
     validations:
       required: false
   - type: textarea
