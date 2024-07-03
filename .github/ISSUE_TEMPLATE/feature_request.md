@@ -3,6 +3,7 @@ name: Feature request
 about: Sugiere una idea para este proyecto
 title: "[FEATURE]"
 labels: enhancement
+projects: ["UXCorpRangel/1"]
 assignees: ''
 
 ---
