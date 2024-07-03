@@ -64,8 +64,8 @@ body:
         - Safari
         - Microsoft Edge
         - Otros
-      validations:
-        required: true
+    validations:
+      required: true
   - type: input
     id: version
     attributes:
@@ -85,5 +85,5 @@ body:
       description: Al enviar esta solicitud, aceptas seguir nuestro [Código de Conducta](https://github.com/UXCorpRangel/ana-cards-web?tab=coc-ov-file). 
       options:
         - label: Estoy de acuerdo con el código de conducta.
-      validations:
-        required: true
+    validations:
+      required: true
