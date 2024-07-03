@@ -1,5 +1,5 @@
 ---
-name: Feature request
+name: Feature request bk
 about: Sugiere una idea para este proyecto
 title: "[FEATURE]"
 labels: enhancement
