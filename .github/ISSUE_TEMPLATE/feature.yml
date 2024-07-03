@@ -1,7 +1,7 @@
 name: Feature request
 description: Sugiere una idea para este proyecto
 title: "[FEATURE]: "
-labels: ["enhancement"]
+labels: ["enhancement", "triage"]
 projects: ["UXCorpRangel/1"]
 body:
   - type: markdown
