@@ -1,0 +1,153 @@
+---
+import { CardCategory } from '@contracts';
+import Card from './Card.astro';
+---
+
+<dialog class="dialog-card">
+  <Card flip id={0} level={1} name="" image="" description="" category={CardCategory.TOOLS} />
+</dialog>
+
+<style>
+  .dialog-card {
+    border: none;
+    outline: none;
+    padding: 9cqb;
+    background-color: transparent;
+    z-index: var(--z-index-modal);
+
+    &::backdrop {
+      animation: none;
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(9px);
+      background: linear-gradient(
+        rgb(from var(--body-color) r g b / 0.5),
+        rgb(from var(--primary-color) r g b / 0.3),
+        rgb(from var(--secondary-color) r g b / 0.3)
+      );
+    }
+
+    &[open] {
+      animation: show-dialog 0.3s ease normal;
+
+      &::backdrop {
+        animation: show-backdrop 0.3s ease;
+      }
+    }
+
+    &.hide {
+      animation: hide-dialog 0.3s ease normal;
+
+      &::backdrop {
+        animation: hide-backdrop 0.5s ease 0.2s normal;
+      }
+    }
+  }
+
+  @keyframes show-backdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes hide-backdrop {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes show-dialog {
+    from {
+      scale: 0;
+    }
+    to {
+      scale: 1;
+    }
+  }
+  @keyframes hide-dialog {
+    to {
+      scale: 0;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
+  const cardWrapper = dialog?.querySelector<HTMLDivElement>('.card-wrapper');
+  const card = cardWrapper?.querySelector<HTMLDivElement>('.card');
+
+  const titleEl = card?.querySelector<HTMLHeadingElement>('.card-front .title');
+  const imageEl = card?.querySelector<HTMLImageElement>('.card-front .image img');
+  const contentEl = card?.querySelector<HTMLParagraphElement>('.card-front .content');
+  const footerEl = card?.querySelector<HTMLSpanElement>('.card-front .footer');
+  const categoryEl = card?.querySelector<SVGSVGElement>('.card-front .category');
+  const levelEl = card?.querySelector<HTMLDivElement>('.card-front .level-dots');
+
+  function closeDialog() {
+    dialog?.classList.remove('hide');
+    dialog?.close();
+    dialog?.removeEventListener('animationend', closeDialog, false);
+    dialog?.removeAttribute('data-card-id');
+  }
+
+  function updateDialog(cardId: string) {
+    const _cardWrapper = document.querySelector<HTMLDivElement>(
+      `.card-wrapper[data-card-id="${cardId}"]`
+    );
+    const _card = _cardWrapper?.querySelector<HTMLDivElement>(
+      `.card .card-front[data-card-id="${cardId}"]`
+    );
+
+    cardWrapper?.setAttribute('style', _cardWrapper?.getAttribute('style') ?? '');
+    cardWrapper?.style.setProperty('--size', '27vw');
+
+    if (titleEl && imageEl && contentEl && footerEl && categoryEl && levelEl) {
+      const _titleEl = _card?.querySelector<HTMLHeadingElement>('.title');
+      const _imageEl = _card?.querySelector<HTMLImageElement>('.image img');
+      const _contentEl = _card?.querySelector<HTMLParagraphElement>('.content');
+      const _footerEl = _card?.querySelector<HTMLSpanElement>('.footer');
+      const _categoryEl = _card?.querySelector<SVGSVGElement>('.category');
+      const _levelEl = _card?.querySelector<HTMLDivElement>('.level-dots');
+
+      if (_titleEl && _imageEl && _contentEl && _footerEl && _categoryEl && _levelEl) {
+        titleEl.textContent = _titleEl.textContent;
+        contentEl.textContent = _contentEl.textContent;
+        footerEl.textContent = _footerEl.textContent;
+        imageEl.src = _imageEl.src;
+        categoryEl.innerHTML = _categoryEl.innerHTML;
+        levelEl.innerHTML = _levelEl.innerHTML;
+
+        card?.setAttribute('data-card-level', _card?.dataset.cardLevel ?? '1');
+        card
+          ?.querySelector<HTMLDivElement>('.card-front')
+          ?.setAttribute('data-card-level', _card?.dataset.cardLevel ?? '1');
+      } else {
+        dialog?.close();
+      }
+    }
+  }
+
+  if (dialog) {
+    new MutationObserver(mutations => {
+      mutations
+        .filter(mutation => mutation.type === 'attributes' && mutation.attributeName === 'open')
+        .forEach(mutation => {
+          const target = mutation.target as HTMLDialogElement;
+          if (target.dataset.cardId && target.open) {
+            updateDialog(target.dataset.cardId);
+          }
+        });
+    }).observe(dialog, { attributes: true, childList: false, subtree: false });
+  }
+
+  dialog?.addEventListener('click', () => {
+    dialog?.classList.add('hide');
+    dialog?.addEventListener('animationend', closeDialog, false);
+    document.querySelector('.cards .hidden-atropos')?.classList.remove('hidden-atropos');
+  });
+</script>

@@ -1,0 +1,27 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.validate": ["javascript", "typescript", "astro"],
+  "prettier.documentSelectors": ["**/*.astro"],
+  "files.associations": { "*.svg": "html" },
+  "[astro]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": { "editor.defaultFormatter": "stylelint.vscode-stylelint" },
+  "stylelint.validate": ["css", "astro"],
+  "stylelint.snippet": ["css", "astro"],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "*.astro": "${capture}.ts, ${capture}.tsx, ${capture}.js, ${capture}.jsx, ${capture}.mdx, ${capture}.md",
+    "tsconfig.json": "tsconfig.*.json,tsconfig.tsbuildinfo",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+    ".gitignore": ".gitkeep,.gitattributes",
+    ".prettierrc.*": ".prettierignore",
+    ".eslintrc.*": ".eslintignore, .eslintcache"
+  }
+}

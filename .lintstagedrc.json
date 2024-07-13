@@ -1,0 +1,15 @@
+{
+  "./**/*.{js,mjs,cjs}": [
+    "eslint --cache --fix --ext .js,.mjs,.cjs ./",
+    "prettier --cache --write \"./**/*.{js,mjs,cjs}\""
+  ],
+  "./**/*.ts": ["eslint --cache --fix --ext .ts ./", "prettier --cache --write \"./**/*.ts\""],
+  "./**/*.tsx": ["eslint --cache --fix --ext .tsx ./", "prettier --cache --write \"./**/*.tsx\""],
+  "./src/**/*.astro": [
+    "eslint --cache --fix --ext .astro ./src/",
+    "prettier --cache --write \"./src/**/*.astro\""
+  ],
+  "./src/**/*.css": "prettier --cache --write \"./src/**/*.css\"",
+  "./**/*.json": "prettier --cache --write \"./**/*.json\"",
+  "./**/*.{yaml,yml}": "prettier --cache --write \"./**/*.{yaml,yml}\""
+}

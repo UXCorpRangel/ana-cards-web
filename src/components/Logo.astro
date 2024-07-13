@@ -1,0 +1,11 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  size?: number;
+}
+
+const { size = 24 } = Astro.props;
+---
+
+<Icon name="logo" title="UX Ana Rangel" size={size} />

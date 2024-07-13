@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+
+.eslintcache
+.eslintignore
+.prettieriignore
+.gitignore

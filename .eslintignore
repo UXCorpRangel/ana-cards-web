@@ -1,0 +1,19 @@
+# Dependency directories:
+# These directories contain third-party code or dependencies that should not be linted
+
+node_modules
+.pnpm
+
+# Build and distribution directories:
+# These directories contain built or compiled code that is generated from your source
+
+public
+dist
+
+# Development tooling and configuration:
+# These entries are related to development tools and environments. These files and directories
+
+.vscode
+.astro
+
+.eslintcache

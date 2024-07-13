@@ -1,0 +1,32 @@
+---
+import PageLayout from '@layouts/Page.astro';
+---
+
+<PageLayout title="Roadmap">
+  <main>
+    <h1><span class="status">Roadmap: </span> <span>Not found</span></h1>
+  </main>
+</PageLayout>
+
+<style>
+  main {
+    margin: 6rem 0;
+    height: 33.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & h1 {
+      color: white;
+      font-weight: 400;
+      font-size: 5rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-family-primary);
+
+      .status {
+        color: var(--secondary-color);
+      }
+    }
+  }
+</style>

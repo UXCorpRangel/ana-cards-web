@@ -1,0 +1,271 @@
+---
+import { formatNumber } from '@utils';
+import { Icon } from 'astro-icon/components';
+import Cards from '@components/Cards';
+import ScrollToTop from '@components/ScrollToTop.astro';
+import PageLayout from '@layouts/Page.astro';
+import { cards } from '@data/cards';
+import { USERS_MOCK } from '@data/ranking';
+
+export function getStaticPaths() {
+  return USERS_MOCK.map(({ username }) => ({ params: { user: username } }));
+}
+
+const { user } = Astro.params;
+
+const currentUser = USERS_MOCK.find(({ username }) => username === user)!;
+
+const DIGITS = 2;
+const currentCards = formatNumber(currentUser.cards.length, DIGITS);
+const totalCards = formatNumber(cards.length, DIGITS);
+---
+
+<PageLayout title="Ranking: User">
+  <main class="container">
+    <aside class="user-wrapper">
+      <a class="back-button" href="/ranking">
+        <Icon name="arrow-left" title="Ir arriba" size={32} />
+      </a>
+
+      <img class="user-avatar" src="/assets/images/unicorn-avatar.png" alt="User Avatar" />
+
+      <h1 class="user-name">{currentUser.username}</h1>
+
+      <h1
+        class:list={[
+          'user-position',
+          {
+            'first-place': currentUser.place === 1,
+            'second-place': currentUser.place === 2,
+            'third-place': currentUser.place === 3
+          }
+        ]}
+      >
+        {`Puesto #${currentUser.place}`}
+      </h1>
+
+      <div class="user-cards">
+        <span class="current-cards">{currentCards}</span>
+        <span class="total-cards">{totalCards}</span>
+      </div>
+    </aside>
+
+    <section class="cards-wrapper">
+      <Cards />
+    </section>
+  </main>
+
+  <ScrollToTop />
+</PageLayout>
+
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .container {
+    --transition: 0.3s ease-in-out;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 4rem 2rem;
+    gap: 1.5rem;
+
+    .user-wrapper,
+    .cards-wrapper {
+      overflow: hidden;
+      border: 6px solid;
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+    }
+
+    .user-wrapper {
+      grid-column: 1 / 2;
+      position: sticky;
+      top: 4.7rem;
+      height: 56vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      border-color: var(--secondary-color);
+      background-color: var(--card-bgcolor-1);
+      font-family: var(--font-family-primary);
+
+      & .back-button {
+        z-index: 10;
+        padding: 0.5rem;
+        cursor: pointer;
+        border-radius: 50%;
+        border: 3px solid currentColor;
+        color: var(--text-color);
+        background-color: var(--card-bgcolor-2);
+        background-image: radial-gradient(
+          circle,
+          var(--card-bgcolor-1),
+          rgb(from var(--text-color) r g b / 0.2)
+        );
+
+        width: 2rem;
+        height: 2rem;
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+
+        transition:
+          border var(--transition),
+          color var(--transition),
+          box-shadow var(--transition),
+          background-image var(--transition);
+
+        &:hover,
+        &:focus {
+          outline: none;
+          color: var(--secondary-color);
+          box-shadow: 0 0 1rem rgb(from var(--secondary-color) r g b / 0.5);
+          background-image: radial-gradient(
+            circle,
+            var(--card-bgcolor-1),
+            rgb(from var(--secondary-color) r g b / 0.2)
+          );
+        }
+
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+
+      & .user-avatar {
+        width: 60%;
+        aspect-ratio: 1 / 1;
+        padding: 0.3rem;
+        margin-top: 1rem;
+        border-radius: 50%;
+        border: 3px solid var(--design-color);
+        animation: glow-avatar 5s infinite;
+      }
+
+      & .user-name {
+        width: 100%;
+        position: relative;
+        color: var(--text-color);
+        font-size: 3rem;
+        text-align: center;
+        line-height: 0.3;
+
+        &::before {
+          content: '';
+          position: absolute;
+          height: 0.3rem;
+          background-color: var(--card-border-color);
+          left: 1.5rem;
+          right: 1.5rem;
+          bottom: -2.1rem;
+        }
+      }
+
+      & .user-position {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        line-height: 0;
+
+        &.first-place {
+          color: var(--gold-color);
+        }
+        &.second-place {
+          color: var(--silver-color);
+        }
+        &.third-place {
+          color: var(--bronze-color);
+        }
+      }
+
+      & .user-cards {
+        display: flex;
+        justify-content: center;
+        gap: 1.2rem;
+        font-size: 3rem;
+        margin-top: -0.5rem;
+
+        & .current-cards {
+          color: var(--text-color);
+          position: relative;
+
+          &::after {
+            content: '';
+            width: 0.3rem;
+            height: 3rem;
+            border-radius: 0.3rem;
+            background: linear-gradient(
+              0deg,
+              var(--design-color) 0%,
+              var(--harley-color) 20%,
+              var(--development-color) 41.86%,
+              var(--lore-color) 59.84%,
+              var(--troll-color) 75.37%,
+              var(--tools-color) 100%
+            );
+            position: absolute;
+            top: 0.3rem;
+            right: -0.8rem;
+            bottom: 0.3rem;
+          }
+        }
+
+        & .total-cards {
+          color: var(--silver-color);
+        }
+      }
+    }
+
+    .cards-wrapper {
+      grid-column: 2 / 3;
+      display: flex;
+
+      border-color: var(--primary-color);
+      background-color: #0a0514;
+    }
+  }
+
+  @keyframes glow-avatar {
+    0% {
+      border-color: var(--design-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--design-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--design-color) r g b / 0.5);
+    }
+    20% {
+      border-color: var(--development-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--development-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--development-color) r g b / 0.5);
+    }
+    40% {
+      border-color: var(--harley-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--harley-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--harley-color) r g b / 0.5);
+    }
+    60% {
+      border-color: var(--lore-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--lore-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--lore-color) r g b / 0.5);
+    }
+    80% {
+      border-color: var(--troll-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--troll-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--troll-color) r g b / 0.5);
+    }
+    100% {
+      border-color: var(--tools-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--tools-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--tools-color) r g b / 0.5);
+    }
+  }
+</style>

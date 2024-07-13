@@ -1,0 +1,108 @@
+---
+import { cards } from '@data/cards';
+import Card from './Card.astro';
+import DialogCard from './DialogCard.astro';
+---
+
+<section class="cards">
+  {
+    cards.map(({ id, name, description, image, category, level }) => (
+      <Card
+        flip
+        id={id}
+        name={name}
+        image={image}
+        category={category}
+        description={description}
+        level={level}
+      />
+    ))
+  }
+</section>
+
+<DialogCard />
+
+<style>
+  section.cards {
+    gap: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
+
+<script>
+  import Atropos from 'atropos';
+
+  const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
+
+  const cursor = { x: 0, y: 0 };
+  const defaultStyles: Record<string, string> = {
+    '--shine-margin-x': '50%',
+    '--shine-margin-y': '50%',
+    '--shine-pos-x': '50%',
+    '--shine-pos-y': '50%',
+    '--hyperspace': '0'
+  };
+
+  function round(num: number) {
+    return parseFloat(num.toFixed(3));
+  }
+
+  function resetStyles(card: HTMLDivElement) {
+    Object.keys(defaultStyles).forEach(k => {
+      card.style.setProperty(k, defaultStyles[k]);
+    });
+  }
+
+  document.addEventListener('mousemove', ev => {
+    cursor.x = ev.clientX;
+    cursor.y = ev.clientY;
+  });
+
+  document.querySelectorAll<HTMLDivElement>('.card').forEach(card => {
+    const atroposSelector = `.card-${card.dataset.cardId}`;
+
+    resetStyles(card);
+
+    Atropos({
+      el: atroposSelector,
+      onLeave() {
+        resetStyles(card);
+      },
+      onRotate() {
+        if (card.dataset.cardLevel === '1') {
+          return;
+        }
+
+        const rect = card.getBoundingClientRect();
+        const absolute = { x: cursor.x - rect.left, y: cursor.y - rect.top };
+        const percent = {
+          x: round((100 / rect.width) * absolute.x),
+          y: round((100 / rect.height) * absolute.y)
+        };
+
+        card.style.setProperty('--shine-margin-x', `${percent.x}%`);
+        card.style.setProperty('--shine-margin-y', `${percent.y}%`);
+
+        card.style.setProperty('--shine-pos-x', `${round(50 + percent.x / 4 - 12.5)}%`);
+        card.style.setProperty('--shine-pos-y', `${round(50 + percent.y / 3 - 16.67)}%`);
+
+        card.style.setProperty(
+          '--hyperspace',
+          `${
+            Math.sqrt((percent.y - 50) * (percent.y - 50) + (percent.x - 50) * (percent.x - 50)) /
+            50
+          }`
+        );
+      }
+    });
+
+    card.addEventListener('click', () => {
+      document.querySelector(`.cards ${atroposSelector}`)?.classList?.add('hidden-atropos');
+      dialogCard?.setAttribute('data-card-id', `${card.dataset.cardId}`);
+      dialogCard?.showModal();
+    });
+  });
+</script>

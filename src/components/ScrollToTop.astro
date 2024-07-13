@@ -1,0 +1,96 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type Alignment = 'left' | 'right';
+
+interface Props {
+  alignment?: Alignment;
+}
+const { alignment = 'right' } = Astro.props;
+---
+
+<button
+  class:list={[
+    'scroll-to-top',
+    {
+      left: alignment === 'left',
+      right: alignment === 'right'
+    }
+  ]}
+>
+  <Icon name="chevron-up" title="Ir arriba" size={32} />
+</button>
+
+<style>
+  .scroll-to-top {
+    --transition: 0.3s ease-in-out;
+    --placement: 1.5rem;
+
+    z-index: var(--z-index-fab);
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    border-radius: 50%;
+    border: 3px solid currentColor;
+    box-shadow: 0 0 1rem transparent;
+    background: var(--card-bgcolor-1);
+    background-image: radial-gradient(
+      circle,
+      var(--card-bgcolor-1),
+      rgb(from var(--primary-color) r g b / 0.2)
+    );
+
+    transition:
+      border var(--transition),
+      color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition),
+      background-image var(--transition);
+
+    position: fixed;
+    bottom: var(--placement);
+    transform: scale(0);
+
+    &.left {
+      left: var(--placement);
+    }
+
+    &.right {
+      right: var(--placement);
+    }
+
+    &:hover,
+    &:focus {
+      outline: none;
+      color: var(--secondary-color);
+      box-shadow: 0 0 1rem rgb(from var(--secondary-color) r g b / 0.5);
+      background-image: radial-gradient(
+        circle,
+        var(--card-bgcolor-1),
+        rgb(from var(--secondary-color) r g b / 0.2)
+      );
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &.visible {
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.scroll-to-top');
+
+  button?.addEventListener('click', () => window.scrollTo(0, 0));
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 900) {
+      button?.classList.add('visible');
+    } else {
+      button?.classList.remove('visible');
+    }
+  });
+</script>

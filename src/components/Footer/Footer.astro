@@ -1,0 +1,114 @@
+---
+import Logo from '../Logo.astro';
+---
+
+<footer class="footer-wrapper">
+  <div class="footer">
+    <a class="logo" href="https://anarangel.github.io" target="_blank" rel="noopener noreferrer">
+      <Logo size={96} />
+    </a>
+
+    <span class="last-row">
+      Hecho con
+      <span class="heart">
+        <img src="/assets/images/heart_on_fire.png" width="32" height="32" alt="love" />
+      </span>
+      para la comunidad
+    </span>
+  </div>
+</footer>
+
+<style>
+  .footer-wrapper {
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    color: var(--text-color);
+    overflow: hidden;
+    min-height: 192px;
+    text-align: center;
+    backdrop-filter: blur(1rem);
+    background-color: rgb(from var(--primary-color) r g b / 0.1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::before,
+    &::after {
+      content: '';
+      z-index: -1;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      aspect-ratio: 1 / 1;
+    }
+
+    &::before {
+      top: 36%;
+      left: 6%;
+      background: rgb(from var(--primary-color) r g b / 0.2);
+      filter: blur(1rem) drop-shadow(0 0 3vw rgb(from var(--primary-color) r g b / 0.2));
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    &::after {
+      bottom: 39%;
+      right: 9%;
+      background: rgb(from var(--secondary-color) r g b / 0.2);
+      filter: blur(1rem) drop-shadow(0 0 3vw rgb(from var(--secondary-color) r g b / 0.2));
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    & .footer {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      & .logo {
+        user-select: none;
+        text-decoration: none;
+        transition: filter 0.3s ease-in-out;
+        filter: drop-shadow(0 0 3vw var(--secondary-color));
+
+        &:hover {
+          filter: drop-shadow(0 0 1vw var(--primary-color));
+        }
+      }
+
+      & .last-row {
+        user-select: none;
+        font-size: 0.8rem;
+        font-family: var(--font-family-secondary);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        & .heart {
+          display: inline-block;
+          animation: pulse 0.9s ease-out infinite;
+          filter: drop-shadow(0 0 0.5rem #f82e03);
+        }
+      }
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>

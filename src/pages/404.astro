@@ -1,0 +1,48 @@
+---
+import Logo from '@components/Logo.astro';
+import BaseLayout from '@layouts/Base.astro';
+---
+
+<BaseLayout title="Upss!!">
+  <main class="container">
+    <Logo size={248} />
+
+    <h1><span class="status-code">404: </span> <span>Not found</span></h1>
+
+    <p>There is nothing here</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+
+    & h1 {
+      color: white;
+      font-weight: 400;
+      font-size: 5rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-family-primary);
+
+      .status-code {
+        color: var(--secondary-color);
+      }
+    }
+
+    & p {
+      padding: 2px 8px;
+      background: rgb(0, 0, 0, 0.5);
+      border: 1px solid var(--primary-color);
+      border-radius: 4px;
+      font-size: 1.7rem;
+      margin-top: 0;
+      max-width: 60rem;
+    }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import bebasNeue from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2';
+import encodeSans400 from '@fontsource/encode-sans-semi-expanded/files/encode-sans-semi-expanded-latin-400-normal.woff2';
+import encodeSans600 from '@fontsource/encode-sans-semi-expanded/files/encode-sans-semi-expanded-latin-600-normal.woff2';
+
+import '@fontsource/bebas-neue';
+import '@fontsource/encode-sans-semi-expanded/400.css';
+import '@fontsource/encode-sans-semi-expanded/600.css';
+import '@fontsource-variable/playpen-sans';
+import 'atropos/css';
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+
+const _title = !title ? 'Ana×Cards' : `${title} • Ana×Cards`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{_title}</title>
+    <link rel="preload" as="font" href={bebasNeue} type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href={encodeSans400} type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href={encodeSans600} type="font/woff2" crossorigin />
+    <style is:inline>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --body-color: #010c15;
+    --text-color: #ffffff;
+    --primary-color: #2e58ff;
+    --secondary-color: #fa86ce;
+
+    --gold-color: #d4af37;
+    --silver-color: #c0c0c0;
+    --bronze-color: #cd7f32;
+
+    --card-bgcolor-1: #141414;
+    --card-bgcolor-2: #131313;
+    --card-border-color: #282828;
+
+    --font-family-primary: 'Bebas Neue', sans-serif;
+    --font-family-secondary: 'Encode Sans Semi Expanded', sans-serif;
+    --font-family-extra: 'Playpen Sans Variable', cursive;
+
+    --design-color: #e385be;
+    --development-color: #7fc3f5;
+    --harley-color: #b183e2;
+    --lore-color: #a2efc4;
+    --troll-color: #dfd6a7;
+    --tools-color: #ed9d92;
+
+    --rainbow-gradient: linear-gradient(
+      90deg,
+      var(--design-color) 0%,
+      var(--harley-color) 20%,
+      var(--development-color) 41.86%,
+      var(--lore-color) 59.84%,
+      var(--troll-color) 75.37%,
+      var(--tools-color) 100%
+    );
+
+    --scrollbar-size: 7px;
+
+    --z-index-fab: 1050;
+    --z-index-app-bar: 1100;
+    --z-index-drawer: 1200;
+    --z-index-modal: 1300;
+    --z-index-snackbar: 1400;
+    --z-index-tooltip: 1500;
+
+    color-scheme: dark;
+  }
+
+  body,
+  html {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    scroll-padding-top: 2em;
+    font-family: var(--font-family-secondary);
+  }
+
+  body {
+    background-color: var(--body-color);
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable both-edges;
+
+    --sb-track-color: #232e33;
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-size);
+      height: var(--scrollbar-size);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--body-color);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--secondary-color);
+      border-radius: 3px;
+    }
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--secondary-color) var(--primary-color);
+    }
+  }
+</style>

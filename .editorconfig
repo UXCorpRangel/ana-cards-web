@@ -1,0 +1,13 @@
+# EditorConfig is awesome: https://EditorConfig.org
+root = true
+
+[*]
+indent_size = 2
+tab_width = 2
+indent_style = space
+end_of_line = lf
+insert_final_newline = true
+
+[*.yml]
+indent_size = 2
+tab_width = 2

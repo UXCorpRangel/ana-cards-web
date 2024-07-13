@@ -1,0 +1,17 @@
+---
+import Footer from '@components/Footer';
+import Navbar from '@components/Navbar';
+import BaseLayout from './Base.astro';
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <Navbar />
+  <slot />
+  <Footer />
+</BaseLayout>

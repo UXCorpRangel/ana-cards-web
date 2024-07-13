@@ -1,0 +1,287 @@
+---
+import { CardCategory, cardCategoryColors } from '@contracts/card-category.type';
+import ScrollToTop from '@components/ScrollToTop.astro';
+import PageLayout from '@layouts/Page.astro';
+
+const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
+  name: key,
+  color: cardCategoryColors[value]
+}));
+---
+
+<PageLayout title="Inicio">
+  <main class="content">
+    <section class="card-container">
+      <div>
+        <div class="card">
+          <div class="card-back">
+            <img class="logo" src="/assets/images/logo.png" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="information">
+      <div>
+        <img src="/assets/images/cards-demo.webp" alt="" width="500" />
+      </div>
+      <article>
+        <h2>¡Tu suscripción será recompensada!</h2>
+        <p>
+          Quiero retribuirte de alguna manera por el apoyo que me brindas en el canal de Twitch. Por
+          esta razón, junto con la comunidad, he creado este proyecto.
+        </p>
+        <p>
+          Recibirás cartas coleccionables por cada vez que te suscribas a mi canal o por regalar
+          suscripciones a otros usuarios. Estas cartas representan momentos únicos del canal,
+          tecnologías y muchas cositas divertidas para rememorar.
+        </p>
+      </article>
+    </section>
+    <section class="cards-category">
+      <div>
+        <h2>Categorías de las cartas</h2>
+        <div class="buttons-container">
+          {
+            CATEGORIES.map(({ name, color }) => (
+              <button type="button" style={`--category-color: ${color}`}>
+                {name}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-back">
+            <img class="logo" src="/assets/images/logo.png" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="contributors">
+      <h2>Quienes han contribuido en el desarrollo</h2>
+      <div class="avatars-container">
+        {new Array(12).fill(0).map(() => <div class="avatars" />)}
+      </div>
+    </section>
+  </main>
+
+  <ScrollToTop />
+</PageLayout>
+
+<style>
+  .content {
+    max-width: 1080px;
+    margin-inline: auto;
+    padding: 3rem 1rem;
+
+    @media (768px <= width <= 1199.98px) {
+      max-width: 600px;
+    }
+
+    & > * + * {
+      margin-top: 3.5rem;
+    }
+  }
+
+  .card-container {
+    & > div {
+      width: max-content;
+      margin-inline: auto;
+    }
+  }
+
+  .card {
+    --noise: url('/assets/images/textures/noise.png');
+    --grain: url('/assets/images/textures/grain.png');
+    --paper: url('/assets/images/textures/paper.png');
+
+    --width: 530px;
+    --height: 920px;
+
+    --border-size: 0.563rem;
+    --border-color: #282828;
+
+    position: relative;
+    transform-style: preserve-3d;
+    width: calc(var(--width) * (15 / 23));
+    height: calc(var(--height) * (15 / 23));
+
+    transition: all 0.6s;
+
+    @media (width >= 768px) {
+      --width: 600px;
+    }
+
+    & .card-front,
+    & .card-back {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      background-image: radial-gradient(
+          48.42% 48.42% ellipse at center top,
+          rgb(from var(--primary-color) r g b / 0.2) 0%,
+          transparent 100%
+        ),
+        radial-gradient(
+          48.42% 48.42% ellipse at center bottom,
+          rgb(from var(--secondary-color) r g b / 0.2) 0%,
+          transparent 100%
+        );
+
+      width: calc(var(--width) * (15 / 23) - var(--border-size) * 2);
+      height: calc(var(--height) * (15 / 23) - var(--border-size) * 2);
+
+      border-radius: 1.375rem;
+      border: var(--border-size) solid var(--border-color);
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.25;
+        display: block;
+        mix-blend-mode: multiply;
+        background-blend-mode: multiply, overlay;
+        background-clip: padding-box, padding-box;
+        background-image: var(--noise), var(--grain);
+      }
+
+      & .logo {
+        z-index: 1;
+        width: 80%;
+        object-fit: contain;
+        mix-blend-mode: exclusion;
+      }
+    }
+  }
+
+  .information {
+    background: rgb(46 88 255 / 5%);
+    padding: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(250 134 206 / 50%);
+    display: grid;
+    gap: 1rem;
+
+    @media (width >= 768px) {
+      padding: 2.25rem;
+    }
+
+    @media (width >= 1200px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    & div {
+      border-radius: 1rem;
+    }
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
+
+    & h2 {
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 2;
+    }
+
+    & p {
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+
+  .cards-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 3rem;
+
+    @media (width >= 1200px) {
+      flex-direction: row;
+    }
+
+    & h2 {
+      font-size: 2.25rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 2.25rem;
+    }
+
+    & .buttons-container {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      max-width: 378px;
+    }
+
+    & button {
+      background: color-mix(in srgb, var(--category-color), transparent 80%);
+      color: var(--category-color);
+      border: 1px solid var(--category-color);
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 0px transparent;
+      transition:
+        box-shadow,
+        color,
+        background 300ms ease;
+
+      &:hover {
+        box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
+        color: #fff;
+      }
+
+      &:active {
+        background: var(--category-color);
+        box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
+        color: color-mix(in srgb, var(--category-color), #000 60%);
+      }
+    }
+  }
+
+  .contributors {
+    padding-block: 3.5rem;
+
+    & h2 {
+      font-size: 2.25rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 2.25rem;
+      text-align: center;
+    }
+
+    & .avatars-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem 0;
+
+      & .avatars {
+        --size: 47px;
+
+        width: var(--size);
+        height: var(--size);
+        background: #0c163d;
+        border-radius: 50%;
+        border: 1px solid #4d4a4a;
+        margin-left: -10px;
+      }
+    }
+  }
+</style>

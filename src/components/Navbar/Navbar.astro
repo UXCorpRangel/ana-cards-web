@@ -1,0 +1,177 @@
+---
+import type { NavbarItem } from '@contracts';
+import { Icon } from 'astro-icon/components';
+import NavbarLogo from './NavbarLogo.astro';
+
+const items: NavbarItem[] = [
+  { text: 'Inicio', slug: '/' },
+  { text: 'Ranking', slug: '/ranking' },
+  { text: 'Creadores', slug: '/creators' },
+  { text: 'Roadmap', slug: '/roadmap' },
+  { text: 'Contacto', slug: 'https://discord.com/invite/6rfgHETy', external: true }
+];
+---
+
+<header class="navbar-wrapper">
+  <div class="navbar">
+    <NavbarLogo size={128} />
+
+    <nav class="navbar-menu">
+      <ul>
+        {
+          items.map(({ text, slug, external = false }) => (
+            <li>
+              <a
+                href={slug}
+                class:list={[
+                  {
+                    active: Astro.url.pathname === slug || Astro.url.pathname.startsWith(`${slug}/`)
+                  },
+                  {
+                    external
+                  }
+                ]}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {external ? (
+                  <>
+                    <span>{text}</span>
+                    <span>
+                      <Icon name="external" size={16} />
+                    </span>
+                  </>
+                ) : (
+                  text.toUpperCase()
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: -140px;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-app-bar);
+    border: none;
+    backdrop-filter: blur(1rem);
+    background-color: rgb(from var(--body-color) r g b / 0.7);
+
+    & .navbar {
+      border: none;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      background: transparent;
+
+      & .navbar-menu ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: 800;
+        user-select: none;
+        padding-left: 0;
+        justify-content: center;
+
+        @media (width > 768px) {
+          gap: 0.5rem;
+          justify-content: initial;
+        }
+
+        & li {
+          color: var(--text-color);
+          list-style: none;
+          display: inline-block;
+          margin: 0;
+
+          & a {
+            border-radius: 0.5rem;
+            letter-spacing: 3px;
+            color: currentColor;
+            text-decoration: none;
+            position: relative;
+            padding: 0.3rem 0.6rem;
+            background: transparent;
+            outline: 2px solid transparent;
+
+            transition:
+              outline 0.3s ease-in-out,
+              box-shadow 0.3s ease-in-out,
+              background 0.3s ease-in-out;
+
+            &:hover,
+            &:focus {
+              outline: 2px solid var(--secondary-color);
+              box-shadow: 0 0 0.5rem var(--primary-color);
+              background: var(--body-color);
+
+              &.active::after {
+                opacity: 0;
+              }
+            }
+
+            &.active::after {
+              content: '';
+              height: 2px;
+              position: absolute;
+              left: 5%;
+              right: 5%;
+              bottom: -1px;
+              opacity: 1;
+              background: var(--secondary-color);
+              transition: opacity 0.3s ease-in-out;
+            }
+
+            &.external {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.3rem;
+
+              & svg {
+                translate: 0 1px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes float {
+    0% {
+      translate: 0 0.3rem;
+      filter: drop-shadow(1rem 0 1rem var(--primary-color))
+        drop-shadow(-1rem 0 1rem var(--secondary-color));
+    }
+
+    50% {
+      translate: 0 -0.3rem;
+      filter: drop-shadow(1rem 0 1rem var(--secondary-color))
+        drop-shadow(-1rem 0 1rem var(--primary-color));
+    }
+
+    100% {
+      translate: 0 0.3rem;
+      filter: drop-shadow(1rem 0 1rem var(--primary-color))
+        drop-shadow(-1rem 0 1rem var(--secondary-color));
+    }
+  }
+</style>
