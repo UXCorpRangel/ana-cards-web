@@ -24,7 +24,6 @@ function isActiveSlug(slug: string) {
   const normalizedSlug = slug.replace(BASE_URL, '');
 
   return (
-    Astro.url.pathname === BASE_URL ||
     normalizedPath === normalizedSlug ||
     (normalizedSlug !== '/' && normalizedPath.startsWith(normalizedSlug))
   );
