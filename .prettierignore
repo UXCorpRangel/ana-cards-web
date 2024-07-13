@@ -4,3 +4,5 @@ pnpm-lock.yaml
 .eslintignore
 .prettieriignore
 .gitignore
+
+*.yml
