@@ -41,14 +41,9 @@ function isActiveSlug(slug: string) {
             <li>
               <a
                 href={slug}
-                class:list={[
-                  {
-                    active: isActiveSlug(slug)
-                  },
-                  {
-                    external
-                  }
-                ]}
+                data-path={Astro.url.pathname.replace(`${BASE_URL}/`, '/')}
+                data-slug={slug.replace(BASE_URL, '')}
+                class:list={[{ active: isActiveSlug(slug), external }]}
                 {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {external ? (
