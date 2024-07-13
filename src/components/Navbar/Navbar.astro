@@ -21,7 +21,7 @@ const items: NavbarItem[] = [
  */
 function isActiveSlug(slug: string) {
   const normalizedPath = Astro.url.pathname.replace(`${BASE_URL}/`, '/');
-  const normalizedSlug = slug.replace(BASE_URL, '');
+  const normalizedSlug = slug.replace(`${BASE_URL}/`, '/');
 
   return (
     normalizedPath === normalizedSlug ||
