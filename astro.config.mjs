@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://UXCorpRangel.github.io/ana-cards-web',
+  base: '/ana-cards-web',
   vite: {
     build: {
       cssMinify: 'lightningcss'
