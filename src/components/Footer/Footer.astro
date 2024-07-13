@@ -1,5 +1,7 @@
 ---
 import Logo from '../Logo.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <footer class="footer-wrapper">
@@ -12,7 +14,7 @@ import Logo from '../Logo.astro';
       Hecho con
       <span class="heart">
         <img
-          src="/ana-cards-web/assets/images/heart_on_fire.png"
+          src={`${BASE_URL}/assets/images/heart_on_fire.png`}
           width="32"
           height="32"
           alt="love"

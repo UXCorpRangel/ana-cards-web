@@ -3,6 +3,8 @@ import { CardCategory, cardCategoryColors } from '@contracts/card-category.type'
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
   name: key,
   color: cardCategoryColors[value]
@@ -15,14 +17,14 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
       <div>
         <div class="card">
           <div class="card-back">
-            <img class="logo" src="/ana-cards-web/assets/images/logo.png" />
+            <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
           </div>
         </div>
       </div>
     </section>
     <section class="information">
       <div>
-        <img src="/ana-cards-web/assets/images/cards-demo.webp" alt="" width="500" />
+        <img src={`${BASE_URL}/assets/images/cards-demo.webp`} alt="" width="500" />
       </div>
       <article>
         <h2>¡Tu suscripción será recompensada!</h2>
@@ -53,7 +55,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
       <div>
         <div class="card">
           <div class="card-back">
-            <img class="logo" src="/ana-cards-web/assets/images/logo.png" />
+            <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
           </div>
         </div>
       </div>

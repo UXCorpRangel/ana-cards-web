@@ -8,6 +8,8 @@ import type { AnaCard } from '@contracts/ux-card.type';
 import { stringifyCardNumber } from '@utils';
 import { Icon } from 'astro-icon/components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 type CardSize = 'small' | 'large';
 
 interface Props extends AnaCard {
@@ -46,7 +48,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
             <h1 class="title">{name}</h1>
 
             <div class="image">
-              <img src={`/ana-cards-web/assets/images/cards/${image}`} loading="lazy" />
+              <img src={`${BASE_URL}/assets/images/cards/${image}`} loading="lazy" />
             </div>
 
             <p class="content">{description}</p>
@@ -69,7 +71,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
           </div>
 
           <div class="card-back">
-            <img class="logo" src="/ana-cards-web/assets/images/logo.png" />
+            <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
           </div>
         </div>
       </div>

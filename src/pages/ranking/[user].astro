@@ -7,6 +7,8 @@ import PageLayout from '@layouts/Page.astro';
 import { cards } from '@data/cards';
 import { USERS_MOCK } from '@data/ranking';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 export function getStaticPaths() {
   return USERS_MOCK.map(({ username }) => ({ params: { user: username } }));
 }
@@ -29,7 +31,7 @@ const totalCards = formatNumber(cards.length, DIGITS);
 
       <img
         class="user-avatar"
-        src="/ana-cards-web/assets/images/unicorn-avatar.png"
+        src={`${BASE_URL}/assets/images/unicorn-avatar.png`}
         alt="User Avatar"
       />
 
