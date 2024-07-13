@@ -46,7 +46,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
             <h1 class="title">{name}</h1>
 
             <div class="image">
-              <img src={`/assets/images/cards/${image}`} loading="lazy" />
+              <img src={`/ana-cards-web/assets/images/cards/${image}`} loading="lazy" />
             </div>
 
             <p class="content">{description}</p>
@@ -69,7 +69,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
           </div>
 
           <div class="card-back">
-            <img class="logo" src="/assets/images/logo.png" />
+            <img class="logo" src="/ana-cards-web/assets/images/logo.png" />
           </div>
         </div>
       </div>
@@ -79,9 +79,9 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
 
 <style>
   .card {
-    --noise: url('/assets/images/textures/noise.png');
-    --grain: url('/assets/images/textures/grain.png');
-    --paper: url('/assets/images/textures/paper.png');
+    --noise: url('/ana-cards-web/assets/images/textures/noise.png');
+    --grain: url('/ana-cards-web/assets/images/textures/grain.png');
+    --paper: url('/ana-cards-web/assets/images/textures/paper.png');
 
     --default-size: 12vw;
 
@@ -351,7 +351,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
         }
 
         .card-front[data-card-level] & {
-          --shine-texture: url('/assets/images/textures/diamonds.webp');
+          --shine-texture: url('/ana-cards-web/assets/images/textures/diamonds.webp');
 
           --shine-gradient-1: repeating-linear-gradient(
             0deg,
@@ -392,19 +392,19 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
         }
 
         .card-front[data-card-level='2'] & {
-          --shine-texture: url('/assets/images/textures/metal.webp');
+          --shine-texture: url('/ana-cards-web/assets/images/textures/metal.webp');
         }
 
         .card-front[data-card-level='3'] & {
-          --shine-texture: url('/assets/images/textures/crossover.webp');
+          --shine-texture: url('/ana-cards-web/assets/images/textures/crossover.webp');
         }
 
         .card-front[data-card-level='4'] & {
-          --shine-texture: url('/assets/images/textures/wave.webp');
+          --shine-texture: url('/ana-cards-web/assets/images/textures/wave.webp');
         }
 
         .card-front[data-card-level='5'] & {
-          --shine-texture: url('/assets/images/textures/stamp.webp');
+          --shine-texture: url('/ana-cards-web/assets/images/textures/stamp.webp');
         }
       }
     }
