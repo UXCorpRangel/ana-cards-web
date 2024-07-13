@@ -25,7 +25,7 @@ function isActiveSlug(slug: string) {
 
   return (
     normalizedPath === normalizedSlug ||
-    (normalizedPath === BASE_URL && normalizedSlug === '/') ||
+    normalizedSlug === '/' ||
     (normalizedSlug !== '/' && normalizedPath.startsWith(normalizedSlug))
   );
 }
