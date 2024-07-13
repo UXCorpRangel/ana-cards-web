@@ -25,7 +25,9 @@ const items: NavbarItem[] = [
                 href={slug}
                 class:list={[
                   {
-                    active: Astro.url.pathname === slug || Astro.url.pathname.startsWith(`${slug}/`)
+                    active:
+                      Astro.url.pathname === slug ||
+                      Astro.url.pathname.replace(/\/$/, '').startsWith(slug)
                   },
                   {
                     external
