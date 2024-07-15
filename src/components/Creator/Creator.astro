@@ -1,0 +1,175 @@
+---
+import type { Creator, CreatorIcon, HorizontalAlignment } from '@contracts';
+import { Icon } from 'astro-icon/components';
+
+const BASE_URL = import.meta.env.BASE_URL;
+
+const ICON_TITLES: Record<CreatorIcon, string> = {
+  github: 'GitHub',
+  linkedin: 'LinkedIn',
+  website: 'Sitio web',
+  twitter: 'X',
+  twitch: 'Twitch',
+  youtube: 'YouTube'
+};
+
+interface Props extends Creator {
+  direction: HorizontalAlignment;
+}
+const { name, description, avatar, direction, links } = Astro.props;
+---
+
+<article class=`creator ${direction}`>
+  <header>
+    <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
+
+    <div class="creator-card">
+      <h2>{name}</h2>
+
+      <div class="networking">
+        {
+          links.map(({ href, icon }) => (
+            <a href={href} target="_blank" rel="noreferer noopener">
+              <Icon name={`socials/${icon}`} title={ICON_TITLES[icon]} size={42} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </header>
+
+  <p>{description}</p>
+</article>
+
+<style>
+  .creator {
+    max-width: 45vw;
+    user-select: none;
+
+    & header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+
+      & .avatar {
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+        width: 12.5rem;
+        border-radius: 0.75rem;
+        outline: 0.4rem solid var(--design-color);
+        outline-offset: 0.4rem;
+        animation: glow-avatar 5s infinite;
+      }
+
+      & .creator-card {
+        display: flex;
+        flex-direction: column;
+
+        & h2 {
+          font-family: var(--font-family-primary);
+          font-size: 3rem;
+        }
+
+        & .networking {
+          display: flex;
+          gap: 1.5rem;
+
+          & a {
+            color: #fff;
+            text-decoration: none;
+            transition:
+              color 0.2s ease-in-out,
+              scale 0.2s ease-in-out,
+              filter 0.2s ease-in-out;
+
+            &:hover {
+              scale: 1.2;
+              color: var(--secondary-color);
+              filter: drop-shadow(0 0 0.3rem var(--primary-color));
+            }
+          }
+        }
+      }
+    }
+
+    & p {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+
+    &.left {
+      & header {
+        flex-direction: row;
+
+        & .avatar {
+          margin-inline-start: 0.4rem;
+        }
+
+        & .creator-card {
+          align-items: flex-start;
+        }
+      }
+
+      & p {
+        text-align: start;
+      }
+    }
+
+    &.right {
+      & header {
+        flex-direction: row-reverse;
+
+        & .avatar {
+          margin-inline-end: 0.4rem;
+        }
+
+        & .creator-card {
+          align-items: flex-end;
+        }
+      }
+
+      & p {
+        text-align: end;
+      }
+    }
+  }
+
+  @keyframes glow-avatar {
+    0% {
+      outline-color: var(--design-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--design-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--design-color) r g b / 0.5);
+    }
+    20% {
+      outline-color: var(--development-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--development-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--development-color) r g b / 0.5);
+    }
+    40% {
+      outline-color: var(--harley-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--harley-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--harley-color) r g b / 0.5);
+    }
+    60% {
+      outline-color: var(--lore-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--lore-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--lore-color) r g b / 0.5);
+    }
+    80% {
+      outline-color: var(--troll-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--troll-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--troll-color) r g b / 0.5);
+    }
+    100% {
+      outline-color: var(--tools-color);
+      box-shadow:
+        0 0 1rem rgb(from var(--tools-color) r g b / 0.5),
+        inset 0 0 1rem 0.5rem rgb(from var(--tools-color) r g b / 0.5);
+    }
+  }
+</style>

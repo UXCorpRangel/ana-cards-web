@@ -1,10 +1,9 @@
 ---
+import type { HorizontalAlignment } from '@contracts';
 import { Icon } from 'astro-icon/components';
 
-type Alignment = 'left' | 'right';
-
 interface Props {
-  alignment?: Alignment;
+  alignment?: HorizontalAlignment;
 }
 const { alignment = 'right' } = Astro.props;
 ---

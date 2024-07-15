@@ -1,5 +1,4 @@
-import { CardCategory } from '@contracts/card-category.type';
-import type { AnaCard } from '@contracts/ux-card.type';
+import { CardCategory, type AnaCard } from '@contracts';
 
 const DUMMY_DESCRIPTION =
   'Larga descripcion de la tarjeta, con detalles y todo lo que se nos ocurra. Siempre y cuando no se salga del contenedor que la contiene. Esta descripcion complementará la imagen de la tarjeta siempre buscando sacar sonrisas a los usuarios.';

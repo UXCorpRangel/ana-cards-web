@@ -1,31 +1,54 @@
 ---
+import Creator from '@components/Creator';
+import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
+import { creators } from '@data/creators';
 ---
 
 <PageLayout title="Creadores">
-  <main>
-    <h1><span class="status">Creators: </span> <span>Not found</span></h1>
+  <main class="creators">
+    <h1 class="title">Creadores</h1>
+
+    {
+      creators.map(({ name, description, avatar, links }, index) => (
+        <Creator
+          avatar={avatar}
+          name={name}
+          description={description}
+          direction={index % 2 === 0 ? 'left' : 'right'}
+          links={links}
+        />
+      ))
+    }
   </main>
+
+  <ScrollToTop />
 </PageLayout>
 
 <style>
-  main {
-    margin: 6rem 0;
-    height: 33.5%;
+  .creators {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 5rem;
+    margin-bottom: 5rem;
 
-    & h1 {
-      color: white;
-      font-weight: 400;
-      font-size: 5rem;
-      margin-top: 0;
-      margin-bottom: 0.5rem;
+    & .title {
+      width: 45vw;
+      position: relative;
       font-family: var(--font-family-primary);
+      font-size: 5.5rem;
+      text-align: center;
+      margin: 1rem 0 2rem;
+      user-select: none;
 
-      .status {
-        color: var(--secondary-color);
+      &::after {
+        content: '';
+        position: absolute;
+        height: 0.3rem;
+        background: var(--rainbow-gradient);
+        inset-inline: 0;
+        inset-block-end: -1rem;
       }
     }
   }
