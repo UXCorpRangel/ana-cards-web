@@ -16,8 +16,8 @@ const items: NavbarItem[] = [
 /**
  * Determina si la ruta actual es la misma que la ruta de un enlace.
  *
- * @param {string} slug La ruta a comparar.
- * @returns {boolean} `true` si la ruta actual es la misma que la ruta del enlace, `false` en caso contrario.
+ * @param slug La ruta a comparar.
+ * @returns `true` si la ruta actual es la misma que la ruta del enlace, `false` en caso contrario.
  */
 function isActiveSlug(slug: string) {
   const normalizedPath = Astro.url.pathname.replace(`${BASE_URL}/`, '/');
