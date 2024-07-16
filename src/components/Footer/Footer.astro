@@ -20,7 +20,12 @@ const BASE_URL = import.meta.env.BASE_URL;
           alt="love"
         />
       </span>
-      para la comunidad
+      para la comunidad | Inspirado en <a
+        class="manzlink"
+        href="https://manz.dev/manzcards"
+        target="_blank"
+        rel="noopener noreferrer">ManzDev</a
+      >
     </span>
   </div>
 </footer>
@@ -102,6 +107,38 @@ const BASE_URL = import.meta.env.BASE_URL;
           display: inline-block;
           animation: pulse 0.9s ease-out infinite;
           filter: drop-shadow(0 0 0.5rem #f82e03);
+        }
+
+        & .manzlink {
+          font-size: 1.2rem;
+          font-family: var(--font-family-primary);
+          color: var(--secondary-color);
+          text-decoration: none;
+          position: relative;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            background: url('/ana-cards-web/assets/images/manz.webp') no-repeat center center /
+              contain;
+            aspect-ratio: 1 / 1;
+            width: 2rem;
+            opacity: 0;
+            transition:
+              top 0.3s ease-in-out,
+              opacity 0.3s ease-in-out;
+          }
+
+          &:hover {
+            &::before {
+              top: -1.5rem;
+              opacity: 1;
+            }
+          }
         }
       }
     }
