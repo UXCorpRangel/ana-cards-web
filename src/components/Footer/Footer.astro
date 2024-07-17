@@ -117,26 +117,29 @@ const BASE_URL = import.meta.env.BASE_URL;
           position: relative;
 
           &::before {
+            --size: 2rem;
+
             content: '';
             position: absolute;
-            top: -1rem;
+            top: 0;
             left: 50%;
-            transform: translateX(-50%);
+            translate: -50% -1rem;
             z-index: -1;
             background: url('/ana-cards-web/assets/images/manz.webp') no-repeat center center /
               contain;
             mask-image: linear-gradient(to top, transparent 0%, black 50%);
             aspect-ratio: 1 / 1;
-            width: 2rem;
+            width: var(--size);
+            height: var(--size);
             opacity: 0;
             transition:
-              top 0.3s ease-in-out,
+              translate 0.3s ease-in-out,
               opacity 0.3s ease-in-out;
           }
 
           &:hover {
             &::before {
-              top: -1.5rem;
+              translate: -50% -1.5rem;
               opacity: 1;
             }
           }
