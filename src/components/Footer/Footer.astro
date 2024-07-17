@@ -117,30 +117,83 @@ const BASE_URL = import.meta.env.BASE_URL;
           position: relative;
 
           &::before {
+            --size: 2rem;
+
             content: '';
             position: absolute;
-            top: -1rem;
+            top: 0;
             left: 50%;
-            transform: translateX(-50%);
+            translate: -50% -1rem;
+            rotate: -9deg;
             z-index: -1;
-            background: url('/ana-cards-web/assets/images/manz.webp') no-repeat center center /
-              contain;
+            background: url('/ana-cards-web/assets/images/manz.webp') no-repeat;
+            background-size: 90%;
+            background-position: bottom;
+            mask-image: linear-gradient(to top, transparent 0%, black 50%);
             aspect-ratio: 1 / 1;
-            width: 2rem;
+            width: var(--size);
+            height: var(--size);
             opacity: 0;
+            filter: drop-shadow(0px 0px 4px #d60f58);
             transition:
-              top 0.3s ease-in-out,
+              translate 0.3s ease-in-out,
               opacity 0.3s ease-in-out;
+            pointer-events: none;
+          }
+
+          &::after {
+            --size: 30px;
+
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: var(--size);
+            height: var(--size);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' %3E%3Cpath d='M41.25,40 L42.5,10 L43.75,40 L45,41.25 L75,42.5 L45,43.75 L43.75,45 L42.5,75 L41.25,45 L40,43.75 L10,42.5 L40,41.25z' fill='white' style='translate: -13px -13px; scale: 1.5' /%3E%3C/svg%3E");
+            background-size: cover;
+            translate: -5px -2.1rem;
+            opacity: 0;
+            rotate: 45deg;
+            pointer-events: none;
           }
 
           &:hover {
             &::before {
-              top: -1.5rem;
+              translate: -50% -1.5rem;
               opacity: 1;
+            }
+
+            &::after {
+              animation: star 1s linear;
+              animation-timing-function: cubic-bezier(0.8, 0.01, 0.53, 1);
+              animation-delay: 0.1s;
             }
           }
         }
       }
+    }
+  }
+
+  @keyframes star {
+    0% {
+      scale: 0;
+      opacity: 0;
+      rotate: 45deg;
+    }
+
+    25% {
+      scale: 1.5;
+      opacity: 1;
+    }
+
+    40% {
+      rotate: 70deg;
+    }
+
+    100% {
+      scale: 0;
+      opacity: 0;
     }
   }
 
@@ -156,3 +209,13 @@ const BASE_URL = import.meta.env.BASE_URL;
     }
   }
 </style>
+
+<script define:vars={{ BASE_URL }}>
+  const manzlink = document.querySelector('.manzlink');
+
+  manzlink?.addEventListener('mouseenter', () => {
+    const audio = new Audio(`${BASE_URL}/audio/star.mp3`);
+
+    audio.play();
+  });
+</script>

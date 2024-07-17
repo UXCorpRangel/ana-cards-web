@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://img.shields.io/github/last-commit/UXCorpRangel/ana-cards-web?label=Updated&style=for-the-badge" alt="GitHub last commit" />
+</div>
+
 # 🃏 Ana ⨯ Cards
 
 Si estás aquí es porque ya conoces el proyecto en el que estamos trabajando. En este repositorio puedes reportar los bugs que encuentres en la aplicación o también solicitar características (funciones) nuevas.
