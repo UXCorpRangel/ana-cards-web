@@ -138,6 +138,7 @@ const BASE_URL = import.meta.env.BASE_URL;
             transition:
               translate 0.3s ease-in-out,
               opacity 0.3s ease-in-out;
+            pointer-events: none;
           }
 
           &::after {
@@ -154,6 +155,7 @@ const BASE_URL = import.meta.env.BASE_URL;
             translate: -5px -2.1rem;
             opacity: 0;
             rotate: 45deg;
+            pointer-events: none;
           }
 
           &:hover {
@@ -207,3 +209,13 @@ const BASE_URL = import.meta.env.BASE_URL;
     }
   }
 </style>
+
+<script define:vars={{ BASE_URL }}>
+  const manzlink = document.querySelector('.manzlink');
+
+  manzlink?.addEventListener('mouseenter', () => {
+    const audio = new Audio(`${BASE_URL}/audio/star.mp3`);
+
+    audio.play();
+  });
+</script>
