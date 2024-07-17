@@ -193,6 +193,7 @@ import { RANKING_MOCK } from '@data/ranking';
 </style>
 
 <script>
+  const BASE_URL = import.meta.env.BASE_URL;
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
   const searchButton = document.querySelector<HTMLButtonElement>('.search-button');
 
@@ -200,7 +201,7 @@ import { RANKING_MOCK } from '@data/ranking';
     const username = searchInput?.value.trim().toLowerCase();
 
     if (username) {
-      location.href = `/ranking/${username}`;
+      location.href = `${BASE_URL}/ranking/${username}`;
     }
   }
 
