@@ -104,7 +104,7 @@ import Card from './Card.astro';
     );
 
     cardWrapper?.setAttribute('style', _cardWrapper?.getAttribute('style') ?? '');
-    cardWrapper?.style.setProperty('--size', '27vw');
+    cardWrapper?.style.setProperty('--size', '25vw');
 
     if (titleEl && imageEl && contentEl && footerEl && categoryEl && levelEl) {
       const _titleEl = _card?.querySelector<HTMLHeadingElement>('.title');
