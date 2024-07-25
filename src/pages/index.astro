@@ -1,5 +1,6 @@
 ---
 import { CardCategory, cardCategoryColors } from '@contracts/card-category.type';
+import { Picture } from 'astro:assets';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
 
@@ -81,7 +82,14 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
         {
           contributors.map(({ login, avatar_url, html_url }) => (
             <a href={html_url} target="_blank" rel="noopener noreferrer">
-              <img class="avatars" src={avatar_url} alt={login} />
+              <Picture
+                class="avatars"
+                src={avatar_url}
+                formats={['avif', 'webp']}
+                alt={login}
+                width={47}
+                height={47}
+              />
             </a>
           ))
         }
