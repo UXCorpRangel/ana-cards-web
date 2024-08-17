@@ -1,32 +1,313 @@
 ---
+import CardRoadmap from '@components/CardRoadmap.astro';
+import Logo from '@components/Logo.astro';
 import PageLayout from '@layouts/Page.astro';
 ---
 
 <PageLayout title="Roadmap">
-  <main>
-    <h1><span class="status">Roadmap: </span> <span>Not found</span></h1>
+  <main class="container">
+    <header class="header">
+      <h1 class="title">¡LO PRÓXIMO DEL PROYECTO!</h1>
+    </header>
+    <section class="content">
+      <h2>¡Comenzamos! 🏁</h2>
+      <div>
+        <div class="logo-orb">
+          <Logo size={78} />
+        </div>
+        <div class="card-container">
+          <CardRoadmap
+            title="¡LANZAMIENTO DE LAS CARTAS!"
+            date="JULIO 2024"
+            status="Completado"
+            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
+          />
+          <CardRoadmap
+            title="¡LANZAMIENTO DE LAS CARTAS! TEXTO LARGO"
+            date="JULIO 2024"
+            status="En Desarrollo"
+            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
+          />
+          <CardRoadmap
+            title="¡LANZAMIENTO DE LAS CARTAS! TEXTO LARGO"
+            date="JULIO 2024"
+            status="En Espera"
+            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
+          />
+        </div>
+      </div>
+    </section>
   </main>
 </PageLayout>
 
 <style>
-  main {
-    margin: 6rem 0;
-    height: 33.5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @property --gradient-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 90deg;
+  }
 
-    & h1 {
-      color: white;
-      font-weight: 400;
-      font-size: 5rem;
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-      font-family: var(--font-family-primary);
+  .container {
+    max-width: 1080px;
+    margin-inline: auto;
+    padding: 3.5rem 1rem;
 
-      .status {
-        color: var(--secondary-color);
+    & .header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      & .title {
+        position: relative;
+        font-family: var(--font-family-primary);
+        font-weight: 500;
+        font-size: 5.5rem;
+        user-select: none;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 2rem;
+
+        &::after {
+          content: '';
+          position: absolute;
+          height: 0.3rem;
+          background: var(--rainbow-gradient);
+          bottom: -1rem;
+          left: 0;
+          right: 0;
+        }
+
+        @media (min-width: 1200px) {
+          width: 45vw;
+        }
       }
     }
   }
+
+  .content {
+    h2 {
+      font-family: var(--font-family-primary);
+      font-weight: 500;
+      font-size: 4rem;
+      text-align: center;
+
+      & + div {
+        position: relative;
+      }
+    }
+
+    .logo-orb {
+      --size: 122px;
+      --top: 0;
+      --gradient-angle: 90deg;
+      --rainbow-gradient: linear-gradient(
+        var(--gradient-angle),
+        var(--design-color) 0%,
+        var(--harley-color) 20%,
+        var(--development-color) 41.86%,
+        var(--lore-color) 59.84%,
+        var(--troll-color) 75.37%,
+        var(--tools-color) 100%
+      );
+
+      width: var(--size);
+      height: var(--size);
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: var(--top);
+      left: 0;
+      translate: -6px 0;
+      z-index: 2;
+      margin-inline: auto;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      background:
+        linear-gradient(var(--card-bgcolor-1), var(--card-bgcolor-1)) padding-box,
+        var(--rainbow-gradient) border-box;
+      animation: rotate 5s linear infinite;
+      transition:
+        width 300ms ease,
+        height 300ms ease,
+        background 300ms ease;
+
+      @media (min-width: 1200px) {
+        left: 50%;
+        translate: -50% 0;
+      }
+
+      & svg {
+        transition: scale 300ms ease;
+      }
+
+      &.active {
+        --size: 44px;
+
+        background:
+          var(--rainbow-gradient) padding-box,
+          linear-gradient(white, white) border-box;
+
+        @media (max-width: 1199px) {
+          --size: 35px;
+        }
+
+        svg {
+          scale: 0;
+        }
+      }
+    }
+  }
+
+  .card-container {
+    --card-size: 350px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    padding-block: 9.125rem 5rem;
+
+    @media (min-width: 1200px) {
+      gap: 18rem;
+      padding-block: 13.125rem 5rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      translate: 12px;
+      width: 6px;
+    }
+
+    @media (min-width: 1200px) {
+      &::before,
+      &::after {
+        left: 50%;
+        translate: -50%;
+      }
+    }
+
+    &::before {
+      background: linear-gradient(
+        -180deg,
+        var(--design-color) 0%,
+        var(--harley-color) 20%,
+        var(--development-color) 41.86%,
+        var(--lore-color) 59.84%,
+        var(--troll-color) 75.37%,
+        var(--tools-color) 100%
+      );
+      height: var(--height);
+      transition: none;
+      z-index: 1;
+    }
+
+    &::after {
+      height: calc(100% - var(--card-size));
+      background: var(--card-border-color);
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      --gradient-angle: 450deg;
+    }
+  }
 </style>
+
+<script>
+  interface Viewport {
+    width: number;
+    height: number;
+  }
+
+  interface Rect {
+    y: number;
+  }
+
+  interface Cache {
+    viewport: Viewport;
+    rects: Rect[];
+  }
+
+  const cardContainer = document.querySelector('.card-container') as HTMLDivElement;
+  const cardsRoadmap = Array.from(document.querySelectorAll('.card-roadmap'));
+  const logoOrb = document.querySelector('.logo-orb') as HTMLDivElement;
+  const CARD_SIZE = 350;
+  const INIT_SCROLL_DISTANCE = 0;
+  const ORB_ACTIVE_SIZE = 31;
+  const cache: Partial<Cache> = {
+    viewport: { width: 0, height: 0 },
+    rects: []
+  };
+
+  recache();
+
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', recache);
+
+  function handleScroll() {
+    window.requestAnimationFrame(scroll);
+  }
+
+  function scroll() {
+    const scrollY = window.scrollY;
+    const cardContainerHeight = cardContainer?.offsetHeight - CARD_SIZE || 0;
+    const barHeight = Math.min(cardContainerHeight, scrollY);
+
+    if (scrollY === INIT_SCROLL_DISTANCE) {
+      logoOrb?.classList.remove('active');
+    } else {
+      logoOrb?.classList.add('active');
+    }
+
+    logoOrb?.style.setProperty('--top', `${barHeight - ORB_ACTIVE_SIZE}px`);
+    cardContainer?.style.setProperty('--height', `${barHeight}px`);
+    scrollCheck();
+  }
+
+  function recache() {
+    cache.viewport = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+
+    cache.rects = [];
+
+    cardsRoadmap.forEach((node, i) => {
+      cache.rects![i] = rect(node);
+    });
+
+    scrollCheck();
+  }
+
+  function scrollCheck() {
+    const offset = getScrollOffset();
+    const midline = cache.viewport!.height * 0.6;
+
+    cache.rects!.forEach((rect, i) => {
+      cardsRoadmap[i].classList.toggle('active', rect.y - offset.y < midline);
+    });
+  }
+
+  function getScrollOffset() {
+    return {
+      x: window.pageXOffset,
+      y: window.pageYOffset
+    };
+  }
+
+  function rect(e: Element) {
+    const o = getScrollOffset();
+    const r = e.getBoundingClientRect();
+
+    return {
+      x: r.left + o.x,
+      y: r.top + o.y
+    };
+  }
+</script>
