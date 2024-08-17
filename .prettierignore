@@ -6,3 +6,6 @@ pnpm-lock.yaml
 .gitignore
 
 *.yml
+
+.github/*
+.lintstagedrc.json

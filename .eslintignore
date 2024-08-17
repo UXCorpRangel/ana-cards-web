@@ -17,3 +17,7 @@ dist
 .astro
 
 .eslintcache
+
+.lintstagedrc.json
+
+.github
