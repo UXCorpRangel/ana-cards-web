@@ -1,26 +1,46 @@
 ---
 import Logo from '@components/Logo.astro';
 import BaseLayout from '@layouts/Base.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Upss!!">
   <main class="container">
-    <Logo size={248} />
+    <img
+      class="angry-unicorn"
+      src={`${BASE_URL}/assets/images/404.webp`}
+      alt="Unicornio de caricaturas enojado"
+      width="350"
+    />
 
-    <h1><span class="status-code">404: </span> <span>Not found</span></h1>
+    <h1><span class="status-code">404: </span> <span>Unicornio no encontrado</span></h1>
 
-    <p>There is nothing here</p>
+    <a href="/" class="link">Regresar al inicio</a>
+
+    <a href="https://anarangel.github.io" target="_self" rel="noopener noreferrer" class="logo">
+      <Logo size={100} />
+    </a>
   </main>
 </BaseLayout>
 
 <style>
   .container {
+    --transition: 0.3s ease-in-out;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100vw;
+    position: relative;
+    gap: 1rem;
+
+    & .angry-unicorn {
+      margin-top: -6rem;
+      animation: float-and-shadow 9s linear infinite alternate;
+    }
 
     & h1 {
       color: white;
@@ -35,14 +55,48 @@ import BaseLayout from '@layouts/Base.astro';
       }
     }
 
-    & p {
-      padding: 2px 8px;
-      background: rgb(0, 0, 0, 0.5);
-      border: 1px solid var(--primary-color);
-      border-radius: 4px;
-      font-size: 1.7rem;
-      margin-top: 0;
-      max-width: 60rem;
+    & .link {
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.6rem;
+      border: 3px solid var(--secondary-color);
+      color: var(--secondary-color);
+      text-decoration: none;
+
+      background-color: transparent;
+
+      box-shadow: 0 0 1rem transparent;
+      cursor: pointer;
+
+      transition:
+        border var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition),
+        background-color var(--transition);
+
+      &:hover,
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 1rem rgb(from var(--secondary-color) r g b / 0.5);
+        color: var(--body-color);
+        background-color: var(--secondary-color);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    & .logo {
+      position: absolute;
+      bottom: 1rem;
+      transition: filter var(--transition);
+
+      &:hover {
+        filter: drop-shadow(0 0 1vw var(--secondary-color));
+      }
     }
   }
 </style>

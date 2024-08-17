@@ -52,29 +52,9 @@ const { size } = Astro.props;
         color: var(--text-color);
         margin-right: 0.5rem;
         text-shadow: none;
-        animation: float 9s linear infinite alternate;
+        animation: float-and-shadow 9s linear infinite alternate;
         display: inline-block;
       }
-    }
-  }
-
-  @keyframes float {
-    0% {
-      translate: 0 0.3rem;
-      filter: drop-shadow(1rem 0 1rem var(--primary-color))
-        drop-shadow(-1rem 0 1rem var(--secondary-color));
-    }
-
-    50% {
-      translate: 0 -0.3rem;
-      filter: drop-shadow(1rem 0 1rem var(--secondary-color))
-        drop-shadow(-1rem 0 1rem var(--primary-color));
-    }
-
-    100% {
-      translate: 0 0.3rem;
-      filter: drop-shadow(1rem 0 1rem var(--primary-color))
-        drop-shadow(-1rem 0 1rem var(--secondary-color));
     }
   }
 </style>
