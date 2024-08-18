@@ -1,5 +1,9 @@
 ---
-import { CardCategory, cardCategoryColors } from '@contracts/card-category.type';
+import {
+  CardCategory,
+  cardCategoryColors,
+  cardCategoryLabels
+} from '@contracts/card-category.type';
 import { Picture } from 'astro:assets';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
@@ -21,9 +25,10 @@ const contributors = [...mainContributors, ...getAnaRangelUser];
 
 const BASE_URL = import.meta.env.BASE_URL;
 
-const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
-  name: key,
-  color: cardCategoryColors[value]
+const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
+  name: cardCategoryLabels[value],
+  color: cardCategoryColors[value],
+  category: value
 }));
 ---
 
@@ -58,12 +63,16 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
     <section class="cards-category">
       <div>
         <h2>Categorías de las cartas</h2>
-        <div class="buttons-container">
+        <div class="badges-container">
           {
-            CATEGORIES.map(({ name, color }) => (
-              <button type="button" style={`--category-color: ${color}`}>
-                {name}
-              </button>
+            CATEGORIES.map(({ name, color, category }) => (
+              <label
+                class:list={['badge', category === CardCategory.SPECIAL && 'special']}
+                style={`--category-color: ${color}`}
+              >
+                <input type="radio" name="category" />
+                <span>{name}</span>
+              </label>
             ))
           }
         </div>
@@ -240,6 +249,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
     align-items: center;
     flex-direction: column;
     gap: 3rem;
+    width: 100%;
 
     @media (width >= 1200px) {
       flex-direction: row;
@@ -250,39 +260,138 @@ const CATEGORIES = Object.entries(CardCategory).map(([key, value]) => ({
       font-weight: 600;
       margin-top: 0;
       margin-bottom: 2.25rem;
+
+      @media (width <= 576px) {
+        text-align: center;
+      }
     }
 
-    & .buttons-container {
+    & .badges-container {
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      max-width: 378px;
+      max-width: 70%;
+
+      @media (width <= 576px) {
+        max-width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      & .badge {
+        --badge-border: 1px;
+        --transition: 0.3s ease;
+
+        background: color-mix(in srgb, var(--category-color), transparent 80%);
+        color: var(--category-color);
+        border: var(--badge-border) solid var(--category-color);
+        border-radius: 24px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
+        box-shadow: 0 0 0px transparent;
+        text-transform: uppercase;
+
+        transition:
+          box-shadow var(--transition),
+          color var(--transition),
+          background var(--transition);
+
+        & input[type='radio'] {
+          display: none;
+        }
+
+        &:hover,
+        &:active,
+        &:has(input[type='radio']:checked) {
+          box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
+        }
+
+        &:hover {
+          color: #fff;
+        }
+
+        &:active,
+        &:has(input[type='radio']:checked):not(.special) {
+          background: var(--category-color);
+          color: color-mix(in srgb, var(--category-color), #000 60%);
+        }
+
+        &.special {
+          color: transparent;
+          border-color: transparent;
+          background: rgb(226 141 202 / 0.2);
+          background-image: var(--rainbow-gradient);
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+
+          transition:
+            color var(--transition),
+            background var(--transition),
+            -webkit-text-fill-color var(--transition);
+
+          &:hover,
+          &:has(input[type='radio']:checked) {
+            color: var(--body-color);
+            -webkit-text-fill-color: var(--body-color);
+
+            &::before,
+            &::after {
+              background: var(--rainbow-gradient);
+              background-size: 400%;
+
+              animation: special-shadow 20s linear infinite;
+            }
+
+            &::after {
+              filter: blur(10px);
+            }
+          }
+
+          &:active {
+            color: var(--text-color);
+            -webkit-text-fill-color: var(--text-color);
+            background: var(--body-color);
+          }
+
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+
+            transition:
+              background var(--transition),
+              background-size var(--transition);
+          }
+
+          &::before {
+            z-index: -2;
+            background: var(--rainbow-gradient);
+          }
+          &::after {
+            z-index: -1;
+            margin: var(--badge-border);
+            background: color-mix(in srgb, var(--body-color), rgb(226 141 202) 15%);
+
+            transition: filter var(--transition);
+          }
+        }
+      }
     }
+  }
 
-    & button {
-      background: color-mix(in srgb, var(--category-color), transparent 80%);
-      color: var(--category-color);
-      border: 1px solid var(--category-color);
-      border-radius: 999px;
-      padding: 0.5rem 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 0 0px transparent;
-      transition:
-        box-shadow,
-        color,
-        background 300ms ease;
-
-      &:hover {
-        box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
-        color: #fff;
-      }
-
-      &:active {
-        background: var(--category-color);
-        box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
-        color: color-mix(in srgb, var(--category-color), #000 60%);
-      }
+  @keyframes special-shadow {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 300% 0;
+    }
+    100% {
+      background-position: 0 0;
     }
   }
 
