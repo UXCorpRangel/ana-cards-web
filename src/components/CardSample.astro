@@ -1,80 +1,34 @@
 ---
-import {
-  cardCategoryColors,
-  cardCategoryLabels,
-  type AnaCard,
-  type CardCategory
-} from '@contracts';
-import { stringifyCardNumber } from '@utils';
-import { Icon } from 'astro-icon/components';
-
+const cardLevel = 6;
 const BASE_URL = import.meta.env.BASE_URL;
-
-type CardSize = 'small' | 'large';
-
-interface Props extends AnaCard {
-  flip?: boolean;
-  size?: CardSize;
-}
-const {
-  id,
-  name,
-  description,
-  image,
-  category,
-  level = 1,
-  flip = false,
-  size = 'small'
-} = Astro.props;
-
-function getStyledCard(cat: CardCategory, size: CardSize) {
-  return {
-    '--category-color': cardCategoryColors[cat],
-    '--size': `${size === 'large' ? '25vw' : '12vw'};`
-  };
-}
 ---
 
-<div class={`atropos card-${id}`}>
-  <div class="atropos-scale">
-    <div class="atropos-rotate">
-      <div
-        class="atropos-inner card-wrapper"
-        style={getStyledCard(category, size)}
-        data-card-id={id}
-      >
-        <div class:list={['card', { rotate: !flip }]} data-card-id={id} data-card-level={level}>
-          <div class="card-front" data-card-id={id} data-card-level={level}>
-            <h1 class="title">{name}</h1>
+<div class="card-sample" data-category>
+  <div class="card rotate" data-card-level={cardLevel}>
+    <div class="card-front" data-card-level={cardLevel}>
+      <h1 class="title"></h1>
 
-            <div class="image">
-              <img src={`${BASE_URL}/assets/images/cards/${image}`} loading="lazy" />
-            </div>
-
-            <p class="content">{description}</p>
-
-            <span class="footer">{stringifyCardNumber(id)}</span>
-
-            <div class="category">
-              <Icon
-                name={`categories/${category}`}
-                title={cardCategoryLabels[category]}
-                size={42}
-              />
-            </div>
-
-            <div class="level-dots">
-              {Array.from({ length: level }, () => <span class="dot" />).slice(0, 50)}
-            </div>
-
-            <div class="shine"></div>
-          </div>
-
-          <div class="card-back">
-            <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
-          </div>
-        </div>
+      <div class="image">
+        <img src="" alt="Unicornio animado" />
       </div>
+
+      <p class="content"></p>
+
+      <span class="footer">#000</span>
+
+      <div class="category">
+        <svg width="42" height="42" viewBox="0 0 24 24"></svg>
+      </div>
+
+      <div class="level-dots">
+        {Array.from({ length: cardLevel }, () => <span class="dot" />).slice(0, 50)}
+      </div>
+
+      <div class="shine"></div>
+    </div>
+
+    <div class="card-back">
+      <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
     </div>
   </div>
 </div>
@@ -85,20 +39,92 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
     --grain: url('/ana-cards-web/assets/images/textures/grain.png');
     --paper: url('/ana-cards-web/assets/images/textures/paper.png');
 
-    --default-size: 12vw;
+    --size: 346px;
+
+    --height: 920px;
 
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
-    --border-size: calc(var(--size, var(--default-size)) / 43);
-    --border-radius: calc(var(--size, var(--default-size)) / 18);
+    --border-size: calc(var(--size) / 43);
+    --border-radius: calc(var(--size) / 18);
 
-    cursor: pointer;
     position: relative;
     aspect-ratio: 15 / 23;
-    width: var(--size, var(--default-size));
+    width: var(--size);
     container: card / inline-size;
     transform-style: preserve-3d;
     transition: transform 0.6s ease-in-out;
+
+    & .indicators {
+      z-index: 2;
+      position: relative;
+      backface-visibility: hidden;
+
+      & .title-indicator,
+      & .category-indicator,
+      & .level-indicator,
+      & .image-indicator,
+      & .content-indicator,
+      & .id-indicator {
+        position: absolute;
+        font-size: 1.2rem;
+        font-family: var(--font-family-primary);
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          background: #e100ff;
+        }
+      }
+
+      & .title-indicator {
+        top: 5cqi;
+        left: -27cqi;
+        width: 33cqi;
+
+        &::before {
+          top: 2.5cqi;
+          left: 40%;
+
+          width: 60%;
+          height: 1cqi;
+        }
+
+        &::after {
+          top: 1.5cqi;
+          right: 0;
+
+          border-radius: 50%;
+          aspect-ratio: 1 / 1;
+          width: 3cqi;
+        }
+      }
+
+      & .category-indicator {
+        display: none;
+      }
+
+      & .level-indicator {
+        display: none;
+      }
+
+      & .image-indicator {
+        display: none;
+      }
+
+      & .content-indicator {
+        display: none;
+      }
+
+      & .id-indicator {
+        display: none;
+      }
+    }
+
+    @media (width >= 768px) {
+      --size: 391px;
+    }
 
     &.rotate {
       transform: rotateY(180deg);
@@ -107,7 +133,7 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
     & .card-front,
     & .card-back {
       aspect-ratio: 15 / 23;
-      width: var(--size, var(--default-size));
+      width: var(--size);
       box-sizing: border-box;
 
       position: absolute;
@@ -125,6 +151,47 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
 
       border-radius: var(--border-radius);
       border: var(--border-size) solid var(--border-color);
+
+      animation: card-shadow 7s infinite alternate;
+    }
+
+    & .card-back {
+      z-index: 0;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(180deg);
+
+      background-image: radial-gradient(
+          48.42% 48.42% ellipse at center top,
+          rgb(from var(--primary-color) r g b / 0.2) 0%,
+          transparent 100%
+        ),
+        radial-gradient(
+          48.42% 48.42% ellipse at center bottom,
+          rgb(from var(--secondary-color) r g b / 0.2) 0%,
+          transparent 100%
+        );
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.25;
+        display: block;
+        mix-blend-mode: multiply;
+        background-blend-mode: multiply, overlay;
+        background-clip: padding-box, padding-box;
+        background-image: var(--noise), var(--grain);
+      }
+
+      & .logo {
+        z-index: 1;
+        width: 80%;
+        object-fit: contain;
+        mix-blend-mode: exclusion;
+      }
     }
 
     & .card-front {
@@ -134,7 +201,6 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
       --z-footer: 3;
 
       z-index: 1;
-      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
 
       &::after {
         content: '';
@@ -156,31 +222,6 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
         font-weight: 400;
         font-family: var(--font-family-primary);
         padding: 1.5cqi 2.7cqi 0;
-      }
-
-      & .category {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        width: 21cqi;
-        height: 39cqi;
-        display: flex;
-        align-items: start;
-        justify-content: end;
-        padding: 0.3cqi 2cqi;
-
-        color: var(--bgcolor);
-        background: var(--category-color);
-        clip-path: polygon(0 0, 100% 0, 100% 100%);
-
-        & svg {
-          margin-inline-end: 3cqi;
-          padding-block-start: 0.3cqi;
-          width: calc(var(--size, var(--default-size)) / 9.3);
-          height: calc(var(--size, var(--default-size)) / 9.3);
-        }
       }
 
       & .image {
@@ -253,6 +294,31 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
         border-start-end-radius: 3cqi;
         border-start-start-radius: 3cqi;
         background-color: var(--border-color);
+      }
+
+      & .category {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 21cqi;
+        height: 39cqi;
+        display: flex;
+        align-items: start;
+        justify-content: end;
+        padding: 0.3cqi 2cqi;
+
+        color: var(--bgcolor);
+        background: var(--category-color);
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+
+        & svg {
+          margin-inline-end: 3cqi;
+          padding-block-start: 0.3cqi;
+          width: calc(var(--size) / 9.3);
+          height: calc(var(--size) / 9.3);
+        }
       }
 
       & .level-dots {
@@ -410,75 +476,99 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
         }
       }
     }
-
-    & .card-back {
-      z-index: 0;
-      align-items: center;
-      justify-content: center;
-      transform: rotateY(180deg);
-
-      background-image: radial-gradient(
-          48.42% 48.42% ellipse at center top,
-          rgb(from var(--primary-color) r g b / 0.2) 0%,
-          transparent 100%
-        ),
-        radial-gradient(
-          48.42% 48.42% ellipse at center bottom,
-          rgb(from var(--secondary-color) r g b / 0.2) 0%,
-          transparent 100%
-        );
-
-      animation: card-shadow 1.5s infinite alternate;
-
-      /* box-shadow:
-        0 -1rem 1.2rem 0.1rem rgb(from var(--primary-color) r g b / 0.4),
-        0 1rem 1.2rem 0.1rem rgb(from var(--secondary-color) r g b / 0.4); */
-
-      &::before {
-        content: '';
-        position: absolute;
-        pointer-events: none;
-        inset: 0;
-        z-index: 1;
-        opacity: 0.25;
-        display: block;
-        mix-blend-mode: multiply;
-        background-blend-mode: multiply, overlay;
-        background-clip: padding-box, padding-box;
-        background-image: var(--noise), var(--grain);
-      }
-
-      & .logo {
-        z-index: 1;
-        width: 80%;
-        object-fit: contain;
-        mix-blend-mode: exclusion;
-      }
-    }
-  }
-
-  .atropos {
-    transition: scale 0.3s ease-in-out;
-
-    &.hidden-atropos {
-      scale: 0;
-    }
-
-    & .atropos-inner {
-      border-radius: calc(var(--size, 12vw) / 18);
-      animation: card-shadow 1.5s infinite alternate;
-    }
   }
 
   @keyframes card-shadow {
-    from {
-      box-shadow:
-        0 0 1.5rem 0.1rem rgb(from var(--primary-color) r g b / 0.4),
-        0 0 1.5rem 0.1rem rgb(from var(--secondary-color) r g b / 0.4);
+    0% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--primary-color) r g b / 0.4);
     }
-
-    to {
-      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+    14.3% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--design-color) r g b / 0.4);
+    }
+    28.6% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--development-color) r g b / 0.4);
+    }
+    42.9% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--harley-color) r g b / 0.4);
+    }
+    57.2% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--lore-color) r g b / 0.4);
+    }
+    71.5% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--troll-color) r g b / 0.4);
+    }
+    85.8% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--tools-color) r g b / 0.4);
+    }
+    100% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--secondary-color) r g b / 0.4);
     }
   }
 </style>
+
+<script>
+  import { CardCategory, cardCategoryColors } from '@contracts/card-category.type';
+  import {
+    demoCategoryDescriptions,
+    demoCategoryIcons,
+    demoCategoryImages,
+    demoCategoryTitles
+  } from '@data/demo-categories';
+
+  const cardContainer = document.querySelector<HTMLDivElement>('.card-sample');
+  const card = cardContainer?.querySelector<HTMLDivElement>('.card');
+
+  let currentCategory = cardContainer?.dataset.category as CardCategory;
+
+  const cardTitle = card?.querySelector<HTMLHeadingElement>('.card-front .title');
+  const cardImage = card?.querySelector<HTMLImageElement>('.card-front .image img');
+  const cardContent = card?.querySelector<HTMLParagraphElement>('.card-front .content');
+  const cardCategory = card?.querySelector<HTMLElement>('.card-front .category svg');
+
+  function updateCard(category: CardCategory) {
+    if (cardContainer) {
+      cardContainer.style.setProperty('--category-color', cardCategoryColors[category]);
+    }
+
+    if (cardTitle) {
+      cardTitle.textContent = `Categoría ${demoCategoryTitles[category]}`;
+    }
+
+    if (cardImage) {
+      cardImage.src = demoCategoryImages[category];
+    }
+
+    if (cardContent) {
+      cardContent.textContent = demoCategoryDescriptions[category];
+    }
+
+    if (cardCategory) {
+      const iconViewBox = category === CardCategory.SPECIAL ? '0 0 58 38' : '0 0 24 24';
+
+      cardCategory.innerHTML = demoCategoryIcons[category];
+      cardCategory.setAttribute('viewBox', iconViewBox);
+    }
+  }
+
+  if (cardContainer && card) {
+    new MutationObserver(mutations => {
+      mutations
+        .filter(
+          mutation => mutation.type === 'attributes' && mutation.attributeName === 'data-category'
+        )
+        .forEach(mutation => {
+          const newCategory = (mutation.target as HTMLDivElement).dataset.category as CardCategory;
+
+          if (!currentCategory) {
+            card.classList.remove('rotate');
+          } else if (currentCategory !== newCategory) {
+            card.classList.add('rotate');
+            setTimeout(() => card.classList.remove('rotate'), 600);
+          }
+
+          setTimeout(() => updateCard(newCategory), 300);
+          currentCategory = newCategory;
+        });
+    }).observe(cardContainer, { attributes: true, childList: false, subtree: false });
+  }
+</script>

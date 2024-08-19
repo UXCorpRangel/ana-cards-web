@@ -5,6 +5,7 @@ import {
   cardCategoryLabels
 } from '@contracts/card-category.type';
 import { Picture } from 'astro:assets';
+import CardSample from '@components/CardSample.astro';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
 
@@ -67,6 +68,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
           {
             CATEGORIES.map(({ name, color, category }) => (
               <label
+                data-category={category}
                 class:list={['badge', category === CardCategory.SPECIAL && 'special']}
                 style={`--category-color: ${color}`}
               >
@@ -78,11 +80,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
         </div>
       </div>
       <div>
-        <div class="card">
-          <div class="card-back">
-            <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
-          </div>
-        </div>
+        <CardSample />
       </div>
     </section>
     <section class="contributors">
@@ -292,11 +290,16 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
         position: relative;
         box-shadow: 0 0 0px transparent;
         text-transform: uppercase;
+        user-select: none;
 
         transition:
           box-shadow var(--transition),
           color var(--transition),
           background var(--transition);
+
+        & span {
+          pointer-events: none;
+        }
 
         & input[type='radio'] {
           display: none;
@@ -468,3 +471,15 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
     }
   }
 </style>
+
+<script>
+  const cardCategorySample = document.querySelector<HTMLDivElement>('.card-sample');
+  document.querySelectorAll<HTMLLabelElement>('.badge[data-category]').forEach(badge => {
+    badge.addEventListener('click', ({ target }) => {
+      if (target instanceof HTMLLabelElement && cardCategorySample) {
+        const category = target.dataset.category;
+        cardCategorySample.dataset.category = category;
+      }
+    });
+  });
+</script>

@@ -17,7 +17,7 @@ export enum CardCategory {
 }
 
 /** Mapa de categorías de las cartas */
-type CategoryMap = Record<CardCategory, string>;
+export type CategoryMap = Record<CardCategory, string>;
 
 /** Etiquetas de las categorías de las cartas */
 export const cardCategoryLabels: CategoryMap = {
