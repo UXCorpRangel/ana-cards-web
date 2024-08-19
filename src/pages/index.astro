@@ -6,6 +6,7 @@ import {
 } from '@contracts/card-category.type';
 import { Picture } from 'astro:assets';
 import CardSample from '@components/CardSample.astro';
+import ConstructionDialog from '@components/ConstructionDialog.astro';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
 
@@ -104,6 +105,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
     </section>
   </main>
 
+  <ConstructionDialog />
   <ScrollToTop />
 </PageLayout>
 

@@ -1,0 +1,213 @@
+---
+
+---
+
+<dialog class="construction">
+  <div class="container">
+    <h1>Atención</h1>
+
+    <div class="wrapper">
+      <p>
+        Este sitio web está en construcción por lo que algunas funcionalidades pueden no estar
+        disponibles. Estamos trabajando para completarlo lo antes posible.
+      </p>
+
+      <p class="mobile">
+        La experiencia en dispositivos móviles no está del todo optimizada aún. Te recomendamos
+        visitar el sitio en un dispositivo de escritorio.
+      </p>
+
+      <p>Gracias por tu paciencia.</p>
+    </div>
+
+    <button>Entendido</button>
+  </div>
+</dialog>
+
+<style>
+  dialog.construction {
+    border: none;
+    outline: none;
+    padding: 2rem 1rem;
+    z-index: var(--z-index-modal);
+    background: transparent;
+
+    &::backdrop {
+      animation: none;
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(9px);
+      background: linear-gradient(
+        rgb(from var(--body-color) r g b / 0.5),
+        rgb(from var(--primary-color) r g b / 0.3),
+        rgb(from var(--secondary-color) r g b / 0.3)
+      );
+    }
+
+    &[open] {
+      animation: show-dialog 0.3s ease normal;
+
+      &::backdrop {
+        animation: show-backdrop 0.3s ease;
+      }
+    }
+
+    &.hide {
+      animation: hide-dialog 0.3s ease normal;
+
+      &::backdrop {
+        animation: hide-backdrop 0.5s ease 0.2s normal;
+      }
+    }
+
+    & .container {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      border-radius: 1rem;
+      padding: 1.2rem 2rem;
+      background: var(--body-color);
+      user-select: none;
+      pointer-events: none;
+      width: 50vw;
+      text-align: center;
+      box-shadow: 0 0 1.5rem var(--body-color);
+
+      &::before {
+        content: '';
+        z-index: -1;
+        position: absolute;
+        inset: -0.2rem;
+        border-radius: 1rem;
+
+        background-position: 0% 50%;
+        background-size: 200%;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      }
+
+      & h1 {
+        font-size: 2rem;
+        font-family: var(--font-family-primary);
+
+        position: absolute;
+        top: -3rem;
+        left: 50%;
+        transform: translateX(-50%);
+
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        color: var(--body-color);
+        background: var(--secondary-color);
+        box-shadow: 0 0 1rem var(--body-color);
+      }
+
+      & .wrapper {
+        padding-block: 1.2rem 0.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: var(--font-family-secondary);
+        color: var(--text-color);
+
+        & p {
+          line-height: 1.2;
+          padding: 0;
+          margin-block: 0.6rem;
+        }
+
+        & .mobile {
+          display: none;
+
+          @media (width <= 576px) {
+            display: inline-block;
+          }
+        }
+
+        & p:last-child {
+          color: var(--secondary-color);
+        }
+      }
+
+      & button {
+        position: absolute;
+        bottom: -1.3rem;
+        right: 6%;
+
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: var(--font-family-primary);
+
+        cursor: pointer;
+        pointer-events: auto;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        background: var(--primary-color);
+        color: var(--body-color);
+        outline: none;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 1rem var(--body-color);
+
+        transition:
+          background 0.3s ease,
+          scale 0.3s ease;
+
+        &:hover {
+          box-shadow: 0 0 0.5rem var(--secondary-color);
+          background: var(--secondary-color);
+        }
+
+        &:active {
+          scale: 0.95;
+          background: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  @keyframes show-backdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes hide-backdrop {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes show-dialog {
+    from {
+      scale: 0;
+    }
+    to {
+      scale: 1;
+    }
+  }
+  @keyframes hide-dialog {
+    to {
+      scale: 0;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.construction');
+
+  function closeDialog() {
+    dialog?.classList.remove('hide');
+    dialog?.close();
+    dialog?.removeEventListener('animationend', closeDialog, false);
+  }
+
+  dialog?.showModal();
+  dialog?.addEventListener('click', () => {
+    dialog?.classList.add('hide');
+    dialog?.addEventListener('animationend', closeDialog, false);
+  });
+</script>
