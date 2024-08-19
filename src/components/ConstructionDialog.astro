@@ -141,24 +141,27 @@
         width: fit-content;
         padding: 0.5rem 1rem;
         background: var(--primary-color);
-        color: var(--body-color);
+        color: var(--text-color);
         outline: none;
         border: none;
         border-radius: 0.5rem;
         box-shadow: 0 0 1rem var(--body-color);
 
         transition:
+          color 0.3s ease,
           background 0.3s ease,
           scale 0.3s ease;
 
         &:hover {
           box-shadow: 0 0 0.5rem var(--secondary-color);
           background: var(--secondary-color);
+          color: var(--body-color);
         }
 
         &:active {
           scale: 0.95;
           background: var(--primary-color);
+          color: var(--text-color);
         }
       }
     }
