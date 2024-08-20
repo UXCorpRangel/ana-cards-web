@@ -31,6 +31,15 @@ const cssVars = {
 
 <div class="card-sample" data-category={defaultCategory} style={cssVars}>
   <div class="card" data-card-level={cardLevel}>
+    <div class="indicators">
+      <span class="title-indicator">Nombre</span>
+      <span class="category-indicator">Categoría</span>
+      <span class="level-indicator">Nivel</span>
+      <span class="image-indicator">Imagen</span>
+      <span class="content-indicator">Descripción</span>
+      <span class="id-indicator">Número de carta</span>
+    </div>
+
     <div class="card-front" data-card-level={cardLevel}>
       <h1 class="title">{defaultTitle}</h1>
 
@@ -91,10 +100,24 @@ const cssVars = {
       opacity: 0;
     }
 
+    @media (width >= 768px) {
+      --size: 391px;
+    }
+
+    &.rotate {
+      transform: rotateY(180deg);
+    }
+
     & .indicators {
       z-index: 2;
+      height: 100%;
+      display: block;
       position: relative;
       backface-visibility: hidden;
+
+      @media (width <= 576px) {
+        display: none;
+      }
 
       & .title-indicator,
       & .category-indicator,
@@ -105,65 +128,142 @@ const cssVars = {
         position: absolute;
         font-size: 1.2rem;
         font-family: var(--font-family-primary);
+        z-index: var(--z-index-fab);
+        user-select: none;
 
         &::before,
         &::after {
           content: '';
           position: absolute;
-          background: #e100ff;
+          background: var(--accent-color);
+        }
+
+        &::after {
+          border-radius: 50%;
+          width: 3cqi;
+          height: 3cqi;
         }
       }
 
       & .title-indicator {
-        top: 5cqi;
-        left: -27cqi;
-        width: 33cqi;
+        width: 32cqi;
+        inset-block-start: 5cqi;
+        inset-inline-start: -27cqi;
 
         &::before {
-          top: 2.5cqi;
-          left: 40%;
-
           width: 60%;
           height: 1cqi;
+          inset-block-start: 2.5cqi;
+          inset-inline-start: 40%;
         }
 
         &::after {
-          top: 1.5cqi;
-          right: 0;
-
-          border-radius: 50%;
-          aspect-ratio: 1 / 1;
-          width: 3cqi;
+          inset-block-start: 1.5cqi;
+          inset-inline-end: 0;
         }
       }
 
       & .category-indicator {
-        display: none;
+        width: 30cqi;
+        text-align: end;
+        inset-block-start: 5cqi;
+        inset-inline-end: -24cqi;
+
+        &::before {
+          width: 40%;
+          height: 1cqi;
+          inset-block-start: 2.5cqi;
+          inset-inline-end: 55%;
+        }
+
+        &::after {
+          inset-inline-start: 0;
+          inset-block-start: 1.5cqi;
+        }
       }
 
       & .level-indicator {
-        display: none;
+        width: 33cqi;
+        inset-block-start: 21cqi;
+        inset-inline-start: -27cqi;
+
+        &::before {
+          width: 60%;
+          height: 1cqi;
+          inset-block-start: 2.5cqi;
+          inset-inline-start: 27%;
+        }
+
+        &::after {
+          width: 3cqi;
+          height: 18cqi;
+          border-radius: 0;
+          background: transparent;
+          border: solid 1cqi var(--accent-color);
+          inset-block-start: -6cqi;
+          inset-inline-end: 0.3cqi;
+        }
       }
 
       & .image-indicator {
-        display: none;
+        width: 33cqi;
+        text-align: end;
+        inset-block-start: 30cqi;
+        inset-inline-end: -21cqi;
+
+        &::before {
+          width: 60%;
+          height: 1cqi;
+          inset-block-start: 2.5cqi;
+          inset-inline-end: 36%;
+        }
+
+        &::after {
+          inset-inline-start: 0;
+          inset-block-start: 1.5cqi;
+        }
       }
 
       & .content-indicator {
-        display: none;
+        width: 34.2cqi;
+        inset-block-end: 30cqi;
+        inset-inline-start: -27cqi;
+
+        &::before {
+          width: 39%;
+          height: 1cqi;
+          inset-block-start: 2.5cqi;
+          inset-inline-start: 57%;
+        }
+
+        &::after {
+          inset-block-start: 1.5cqi;
+          inset-inline-end: 0;
+        }
       }
 
       & .id-indicator {
-        display: none;
+        height: 18cqi;
+        display: flex;
+        align-items: flex-end;
+        inset-block-end: -15cqi;
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+
+        &::before {
+          width: 1cqi;
+          height: 60%;
+          inset-block-start: 1cqi;
+          inset-inline-start: 50%;
+          transform: translateX(-50%);
+        }
+
+        &::after {
+          inset-block-start: 0;
+          inset-inline-start: 50%;
+          transform: translateX(-50%);
+        }
       }
-    }
-
-    @media (width >= 768px) {
-      --size: 391px;
-    }
-
-    &.rotate {
-      transform: rotateY(180deg);
     }
 
     & .card-front,
