@@ -44,13 +44,13 @@ export const demoCategoryDescriptions: CategoryMap = {
 
 /** Colores de acento de demostración de las categorías de las cartas.*/
 export const demoCategoryAccentColors: CategoryMap = {
-  [CardCategory.DESIGN]: '#fff',
-  [CardCategory.DEVELOPMENT]: '#fff',
-  [CardCategory.HARLEY]: '#fff',
-  [CardCategory.LORE]: '#fff',
-  [CardCategory.TROLL]: '#fff',
-  [CardCategory.TOOLS]: '#fff',
-  [CardCategory.SPECIAL]: '#fff'
+  [CardCategory.DESIGN]: 'var(--rainbow-gradient)',
+  [CardCategory.DEVELOPMENT]: 'var(--rainbow-gradient)',
+  [CardCategory.HARLEY]: 'var(--rainbow-gradient)',
+  [CardCategory.LORE]: 'var(--rainbow-gradient)',
+  [CardCategory.TROLL]: 'var(--rainbow-gradient)',
+  [CardCategory.TOOLS]: 'var(--rainbow-gradient)',
+  [CardCategory.SPECIAL]: 'var(--rainbow-gradient)'
 };
 
 /** Iconos de demostración de las categorías de las cartas.*/

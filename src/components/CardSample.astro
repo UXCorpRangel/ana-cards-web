@@ -49,7 +49,7 @@ const cssVars = {
 
       <p class="content">{defaultDescription}</p>
 
-      <span class="footer">#000</span>
+      <span class="footer">#710</span>
 
       <div class="category">
         <svg width="42" height="42" viewBox={defaultIconViewBox}>
@@ -146,7 +146,7 @@ const cssVars = {
       }
 
       & .title-indicator {
-        width: 32cqi;
+        width: 31cqi;
         inset-block-start: 5cqi;
         inset-inline-start: -27cqi;
 
@@ -199,7 +199,9 @@ const cssVars = {
           height: 18cqi;
           border-radius: 0;
           background: transparent;
-          border: solid 1cqi var(--accent-color);
+          border: solid 1cqi;
+          border-image-slice: 1;
+          border-image-source: var(--accent-color);
           inset-block-start: -6cqi;
           inset-inline-end: 0.3cqi;
         }
@@ -225,7 +227,7 @@ const cssVars = {
       }
 
       & .content-indicator {
-        width: 34.2cqi;
+        width: 33cqi;
         inset-block-end: 30cqi;
         inset-inline-start: -27cqi;
 
@@ -243,7 +245,7 @@ const cssVars = {
       }
 
       & .id-indicator {
-        height: 18cqi;
+        height: 17.5cqi;
         display: flex;
         align-items: flex-end;
         inset-block-end: -15cqi;
