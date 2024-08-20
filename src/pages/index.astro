@@ -27,6 +27,9 @@ const contributors = [...mainContributors, ...getAnaRangelUser];
 
 const BASE_URL = import.meta.env.BASE_URL;
 
+/** Categoría seleccionada por defecto en la vista interactiva de las cartas. */
+const defaultSelectedCategory = CardCategory.DESIGN;
+
 const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
   name: cardCategoryLabels[value],
   color: cardCategoryColors[value],
@@ -73,7 +76,11 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
                 class:list={['badge', category === CardCategory.SPECIAL && 'special']}
                 style={`--category-color: ${color}`}
               >
-                <input type="radio" name="category" />
+                <input
+                  type="radio"
+                  name="category"
+                  checked={category === defaultSelectedCategory}
+                />
                 <span>{name}</span>
               </label>
             ))
@@ -81,7 +88,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
         </div>
       </div>
       <div>
-        <CardSample />
+        <CardSample defaultCategory={defaultSelectedCategory} />
       </div>
     </section>
     <section class="contributors">

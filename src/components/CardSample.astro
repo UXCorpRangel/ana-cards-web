@@ -1,23 +1,51 @@
 ---
-const cardLevel = 6;
+import { CardCategory, cardCategoryColors } from '@contracts/card-category.type';
+import {
+  demoCategoryAccentColors,
+  demoCategoryDescriptions,
+  demoCategoryIcons,
+  demoCategoryImages,
+  demoCategoryTitles
+} from '@data/demo-categories';
+
+type Props = {
+  defaultCategory: CardCategory;
+};
+
+const { defaultCategory } = Astro.props;
+
 const BASE_URL = import.meta.env.BASE_URL;
+
+const cardLevel = 6;
+const defaultTitle = `Categoría ${demoCategoryTitles[defaultCategory]}`;
+const defaultImage = demoCategoryImages[defaultCategory];
+const defaultDescription = demoCategoryDescriptions[defaultCategory];
+const defaultIcon = demoCategoryIcons[defaultCategory];
+const defaultIconViewBox = defaultCategory === CardCategory.SPECIAL ? '0 0 58 38' : '0 0 24 24';
+
+const cssVars = {
+  '--category-color': cardCategoryColors[defaultCategory],
+  '--accent-color': demoCategoryAccentColors[defaultCategory]
+};
 ---
 
-<div class="card-sample" data-category>
-  <div class="card rotate" data-card-level={cardLevel}>
+<div class="card-sample" data-category={defaultCategory} style={cssVars}>
+  <div class="card" data-card-level={cardLevel}>
     <div class="card-front" data-card-level={cardLevel}>
-      <h1 class="title"></h1>
+      <h1 class="title">{defaultTitle}</h1>
 
       <div class="image">
-        <img src="" alt="Unicornio animado" />
+        <img src={defaultImage} alt="Dibujo de la cabeza de un unicornio" loading="lazy" />
       </div>
 
-      <p class="content"></p>
+      <p class="content">{defaultDescription}</p>
 
       <span class="footer">#000</span>
 
       <div class="category">
-        <svg width="42" height="42" viewBox="0 0 24 24"></svg>
+        <svg width="42" height="42" viewBox={defaultIconViewBox}>
+          <Fragment set:html={defaultIcon} />
+        </svg>
       </div>
 
       <div class="level-dots">
@@ -53,7 +81,15 @@ const BASE_URL = import.meta.env.BASE_URL;
     width: var(--size);
     container: card / inline-size;
     transform-style: preserve-3d;
-    transition: transform 0.6s ease-in-out;
+    transition:
+      transform 0.6s ease-in-out,
+      scale 0.6s ease-in-out,
+      opacity 0.6s ease-in-out;
+
+    @starting-style {
+      scale: 0;
+      opacity: 0;
+    }
 
     & .indicators {
       z-index: 2;
