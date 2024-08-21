@@ -4,6 +4,7 @@ import {
   cardCategoryColors,
   cardCategoryLabels
 } from '@contracts/card-category.type';
+import Information from '@sections/home/Information.astro';
 import { Picture } from 'astro:assets';
 import CardSample from '@components/CardSample.astro';
 import ConstructionDialog from '@components/ConstructionDialog.astro';
@@ -48,23 +49,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
         </div>
       </div>
     </section>
-    <section class="information">
-      <div>
-        <img src={`${BASE_URL}/assets/images/cards-demo.webp`} alt="" width="500" />
-      </div>
-      <article>
-        <h2>¡Tu suscripción será recompensada!</h2>
-        <p>
-          Quiero retribuirte de alguna manera por el apoyo que me brindas en el canal de Twitch. Por
-          esta razón, junto con la comunidad, he creado este proyecto.
-        </p>
-        <p>
-          Recibirás cartas coleccionables por cada vez que te suscribas a mi canal o por regalar
-          suscripciones a otros usuarios. Estas cartas representan momentos únicos del canal,
-          tecnologías y muchas cositas divertidas para rememorar.
-        </p>
-      </article>
-    </section>
+    <Information />
     <section class="cards-category">
       <div>
         <h2>Categorías de las cartas</h2>
@@ -126,7 +111,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
       max-width: 600px;
     }
 
-    & > * + * {
+    & section {
       margin-top: 3.5rem;
     }
   }
@@ -209,44 +194,6 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
         object-fit: contain;
         mix-blend-mode: exclusion;
       }
-    }
-  }
-
-  .information {
-    background: rgb(46 88 255 / 5%);
-    padding: 1rem;
-    border-radius: 1.5rem;
-    border: 1px solid rgb(250 134 206 / 50%);
-    display: grid;
-    gap: 1rem;
-
-    @media (width >= 768px) {
-      padding: 2.25rem;
-    }
-
-    @media (width >= 1200px) {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-
-    & div {
-      border-radius: 1rem;
-    }
-
-    & img {
-      width: 100%;
-      height: auto;
-    }
-
-    & h2 {
-      font-weight: 600;
-      font-size: 1.5rem;
-      line-height: 2;
-    }
-
-    & p {
-      font-weight: 400;
-      line-height: 1.8;
     }
   }
 

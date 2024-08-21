@@ -1,0 +1,182 @@
+<section class="information">
+  <div>
+    <div class="card-stack"></div>
+  </div>
+  <article>
+    <h2>¡Tu suscripción será recompensada!</h2>
+    <p>
+      Quiero retribuirte de alguna manera por el apoyo que me brindas en el canal de Twitch. Por
+      esta razón, junto con la comunidad, he creado este proyecto.
+    </p>
+    <p>
+      Recibirás cartas coleccionables por cada vez que te suscribas a mi canal o por regalar
+      suscripciones a otros usuarios. Estas cartas representan momentos únicos del canal,
+      tecnologías y muchas cositas divertidas para rememorar.
+    </p>
+  </article>
+</section>
+
+<style>
+  .information {
+    background: rgb(46 88 255 / 5%);
+    padding: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(250 134 206 / 50%);
+    display: grid;
+    gap: 1rem;
+    margin-block: 3.5rem;
+
+    @media (width >= 768px) {
+      padding: 2.25rem;
+    }
+
+    @media (width >= 1200px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    & div {
+      border-radius: 1rem;
+      display: grid;
+      place-items: center;
+
+      & .card-stack {
+        width: 449px;
+        height: 280px;
+        background: url('/ana-cards-web/assets/images/card.png');
+        background-repeat: no-repeat;
+        position: relative;
+        background-position-x: center;
+
+        &::before,
+        &::after {
+          --rotate-card: 20deg;
+          --scale-card: 0.97;
+
+          content: '';
+          position: absolute;
+          width: 183px;
+          height: inherit;
+          background-image: inherit;
+          background-repeat: inherit;
+          z-index: -1;
+        }
+
+        &.show {
+          &::before {
+            animation: card-before 2s ease-in-out forwards;
+          }
+
+          &::after {
+            animation: card-after 2s ease-in-out forwards;
+          }
+        }
+
+        &::before {
+          left: 0;
+          rotate: 0deg;
+          translate: 50% 0px;
+          scale: var(--scale-card);
+          transition:
+            rotate 300ms ease-in-out,
+            translate 300ms ease-in-out;
+        }
+
+        &::after {
+          right: 0;
+          rotate: 0deg;
+          translate: -50% 0px;
+          scale: var(--scale-card);
+          transition:
+            rotate 300ms ease-in-out,
+            translate 300ms ease-in-out;
+        }
+      }
+    }
+
+    & h2 {
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 2;
+    }
+
+    & p {
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+
+  @keyframes card-before {
+    0% {
+      rotate: 0deg;
+      translate: 50% 0px;
+    }
+    30% {
+      rotate: -20deg;
+      translate: 20px 20px;
+    }
+    40% {
+      translate: 0 0;
+    }
+    60%,
+    80% {
+      rotate: -24deg;
+      translate: 0 0;
+    }
+    70%,
+    90% {
+      rotate: -17deg;
+      translate: 0 0;
+    }
+    100% {
+      rotate: -20deg;
+      translate: 20px 20px;
+    }
+  }
+
+  @keyframes card-after {
+    0% {
+      rotate: 0deg;
+      translate: -50% 0px;
+    }
+    30% {
+      rotate: 20deg;
+      translate: -20px 20px;
+    }
+    40% {
+      translate: 0 0;
+    }
+    60%,
+    80% {
+      rotate: 24deg;
+      translate: 0 0;
+    }
+    70%,
+    90% {
+      rotate: 17deg;
+      translate: 0 0;
+    }
+    100% {
+      rotate: 20deg;
+      translate: -20px 20px;
+    }
+  }
+</style>
+
+<script>
+  const cardStack = document.querySelector<HTMLDivElement>('.card-stack');
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          cardStack.classList.add('show');
+          observer.unobserve(cardStack);
+        }
+      });
+    },
+    { threshold: 0.5, rootMargin: '0px 0px -25% 0px' }
+  );
+
+  observer.observe(cardStack);
+</script>
