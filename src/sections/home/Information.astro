@@ -170,13 +170,18 @@
     (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          cardStack.classList.add('show');
-          observer.unobserve(cardStack);
+          cardStack?.classList.add('show');
+
+          if (cardStack) {
+            observer.unobserve(cardStack);
+          }
         }
       });
     },
     { threshold: 0.5, rootMargin: '0px 0px -25% 0px' }
   );
 
-  observer.observe(cardStack);
+  if (cardStack) {
+    observer.observe(cardStack);
+  }
 </script>
