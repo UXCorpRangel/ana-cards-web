@@ -1,0 +1,71 @@
+<section class="information">
+  <div></div>
+  <article>
+    <h2>¡Tu suscripción será recompensada!</h2>
+    <p>
+      Quiero retribuirte de alguna manera por el apoyo que me brindas en el canal de Twitch. Por
+      esta razón, junto con la comunidad, he creado este proyecto.
+    </p>
+    <p>
+      Recibirás cartas coleccionables por cada vez que te suscribas a mi canal o por regalar
+      suscripciones a otros usuarios. Estas cartas representan momentos únicos del canal,
+      tecnologías y muchas cositas divertidas para rememorar.
+    </p>
+  </article>
+</section>
+
+<style>
+  .information {
+    background: rgb(46 88 255 / 5%);
+    padding: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(250 134 206 / 50%);
+    display: grid;
+    gap: 1rem;
+    margin-block: 3.5rem;
+
+    @media (width >= 768px) {
+      padding: 2.25rem;
+    }
+
+    @media (width >= 1200px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    & div {
+      border-radius: 1rem;
+      display: grid;
+      place-items: center;
+    }
+
+    & h2 {
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 2;
+    }
+
+    & p {
+      font-weight: 400;
+      line-height: 1.8;
+    }
+  }
+</style>
+
+<script>
+  const cardStack = document.querySelector<HTMLDivElement>('.card-stack');
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          cardStack.classList.add('show');
+          observer.unobserve(cardStack);
+        }
+      });
+    },
+    { threshold: 0.5, rootMargin: '0px 0px -25% 0px' }
+  );
+
+  observer.observe(cardStack);
+</script>
