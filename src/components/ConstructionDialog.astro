@@ -67,8 +67,6 @@
       border-radius: 1rem;
       padding: 1.2rem 2rem;
       background: var(--body-color);
-      user-select: none;
-      pointer-events: none;
       width: 50vw;
       text-align: center;
       box-shadow: 0 0 1.5rem var(--body-color);
@@ -208,9 +206,13 @@
     dialog?.removeEventListener('animationend', closeDialog, false);
   }
 
-  dialog?.showModal();
-  dialog?.addEventListener('click', () => {
+  if (localStorage.getItem('dialog') !== 'closed') {
+    dialog?.showModal();
+  }
+
+  dialog?.querySelector<HTMLButtonElement>('button')?.addEventListener('click', () => {
     dialog?.classList.add('hide');
     dialog?.addEventListener('animationend', closeDialog, false);
+    localStorage.setItem('dialog', 'closed');
   });
 </script>
