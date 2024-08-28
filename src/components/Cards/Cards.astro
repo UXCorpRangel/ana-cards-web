@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { cards } from '@data/cards';
 import Card from './Card.astro';
 import DialogCard from './DialogCard.astro';
@@ -7,15 +8,27 @@ import DialogCard from './DialogCard.astro';
 <section class="cards">
   {
     cards.map(({ id, name, description, image, category, level }) => (
-      <Card
-        flip
-        id={id}
-        name={name}
-        image={image}
-        category={category}
-        description={description}
-        level={level}
-      />
+      <div class="card-wrapper">
+        <Card
+          flip
+          id={id}
+          name={name}
+          image={image}
+          category={category}
+          description={description}
+          level={level}
+        />
+        <div class="buttons-container">
+          <button class="share">
+            <Icon name="share" size={22} />
+            <span>Compartir</span>
+          </button>
+          <button class="download">
+            <Icon name="download" size={27} />
+            <span>Descargar</span>
+          </button>
+        </div>
+      </div>
     ))
   }
 </section>
@@ -30,12 +43,61 @@ import DialogCard from './DialogCard.astro';
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 1.3rem;
+
+      & button {
+        position: relative;
+        border: none;
+        cursor: pointer;
+        background: none;
+        padding: 0;
+        margin: 0;
+        transition: color 0.3s ease;
+
+        & * {
+          pointer-events: none;
+        }
+
+        &:hover {
+          color: var(--secondary-color);
+
+          & span {
+            translate: -50% 18px;
+            opacity: 1;
+          }
+        }
+
+        & span {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          translate: -50% 0;
+          opacity: 0;
+          pointer-events: none;
+          transition:
+            translate 0.3s ease,
+            opacity 0.3s ease;
+        }
+      }
+    }
+  }
 </style>
 
 <script>
   import Atropos from 'atropos';
 
   const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
+  // const shareButton = document.querySelector<HTMLButtonElement>('#share');
+  const downloadButton = document.querySelectorAll('.download');
 
   const cursor = { x: 0, y: 0 };
   const defaultStyles: Record<string, string> = {
@@ -105,4 +167,19 @@ import DialogCard from './DialogCard.astro';
       dialogCard?.showModal();
     });
   });
+
+  downloadButton.forEach((button, index) =>
+    button.addEventListener('click', () => {
+      import('html-to-image').then(htmlToImage =>
+        htmlToImage
+          .toPng(document.querySelector(`.card-${index + 1}`) as HTMLElement, {
+            canvasWidth: 916,
+            canvasHeight: 1406
+          })
+          .then(dataUrl =>
+            import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataUrl, 'card.png'))
+          )
+      );
+    })
+  );
 </script>

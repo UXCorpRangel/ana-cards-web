@@ -1,12 +1,6 @@
 ---
-import {
-  cardCategoryColors,
-  cardCategoryLabels,
-  type AnaCard,
-  type CardCategory
-} from '@contracts';
+import { cardCategoryColors, type AnaCard, type CardCategory } from '@contracts';
 import { stringifyCardNumber } from '@utils';
-import { Icon } from 'astro-icon/components';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -56,10 +50,11 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
             <span class="footer">{stringifyCardNumber(id)}</span>
 
             <div class="category">
-              <Icon
-                name={`categories/${category}`}
-                title={cardCategoryLabels[category]}
-                size={42}
+              <img
+                src={`${BASE_URL}/assets/icons/categories/${category}.svg`}
+                alt={category}
+                width="24"
+                height="24"
               />
             </div>
 
