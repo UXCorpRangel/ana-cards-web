@@ -19,11 +19,11 @@ import DialogCard from './DialogCard.astro';
           level={level}
         />
         <div class="buttons-container">
-          <button>
+          <button class="share">
             <Icon name="share" size={22} />
             <span>Compartir</span>
           </button>
-          <button>
+          <button class="download">
             <Icon name="download" size={27} />
             <span>Descargar</span>
           </button>
@@ -51,9 +51,8 @@ import DialogCard from './DialogCard.astro';
 
     & .buttons-container {
       display: flex;
-      justify-content: end;
+      justify-content: center;
       gap: 1.3rem;
-      translate: -10px;
 
       & button {
         position: relative;
@@ -63,6 +62,10 @@ import DialogCard from './DialogCard.astro';
         padding: 0;
         margin: 0;
         transition: color 0.3s ease;
+
+        & * {
+          pointer-events: none;
+        }
 
         &:hover {
           color: var(--secondary-color);
