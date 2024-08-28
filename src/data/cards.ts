@@ -19,7 +19,8 @@ const CATEGORIES: CardCategory[] = [
   CardCategory.HARLEY,
   CardCategory.LORE,
   CardCategory.TOOLS,
-  CardCategory.TROLL
+  CardCategory.TROLL,
+  CardCategory.SPECIAL
 ];
 
 function randomize(max: number): number {
@@ -60,19 +61,19 @@ export const cards: AnaCard[] = [
     level: 4
   },
   {
-    id: 5,
+    id: 6,
     name: 'Increible Titulo #5',
     description: DUMMY_DESCRIPTION,
     image: 'dummy-5.webp',
-    category: CardCategory.TOOLS,
+    category: CardCategory.TROLL,
     level: 5
   },
   {
-    id: 6,
+    id: 5,
     name: 'Increible Titulo #6',
     description: DUMMY_DESCRIPTION,
     image: 'dummy-6.webp',
-    category: CardCategory.TROLL,
+    category: CardCategory.TOOLS,
     level: 6
   },
   {
@@ -80,7 +81,7 @@ export const cards: AnaCard[] = [
     name: 'Increible Titulo #7',
     description: DUMMY_DESCRIPTION,
     image: 'dummy-7.webp',
-    category: CardCategory.DESIGN,
+    category: CardCategory.SPECIAL,
     level: 50
   }
 ];
