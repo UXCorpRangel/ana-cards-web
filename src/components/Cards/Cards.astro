@@ -96,6 +96,8 @@ import DialogCard from './DialogCard.astro';
   import Atropos from 'atropos';
 
   const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
+  // const shareButton = document.querySelector<HTMLButtonElement>('#share');
+  const downloadButton = document.querySelectorAll('.download');
 
   const cursor = { x: 0, y: 0 };
   const defaultStyles: Record<string, string> = {
@@ -165,4 +167,19 @@ import DialogCard from './DialogCard.astro';
       dialogCard?.showModal();
     });
   });
+
+  downloadButton.forEach((button, index) =>
+    button.addEventListener('click', () => {
+      import('html-to-image').then(htmlToImage =>
+        htmlToImage
+          .toPng(document.querySelector(`.card-${index + 1}`) as HTMLElement, {
+            canvasWidth: 916,
+            canvasHeight: 1406
+          })
+          .then(dataUrl =>
+            import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataUrl, 'card.png'))
+          )
+      );
+    })
+  );
 </script>
