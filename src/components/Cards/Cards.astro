@@ -96,8 +96,8 @@ import DialogCard from './DialogCard.astro';
   import Atropos from 'atropos';
 
   const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
-  // const shareButton = document.querySelector<HTMLButtonElement>('#share');
-  const downloadButton = document.querySelectorAll('.download');
+  const shareButtons = document.querySelectorAll<HTMLButtonElement>('.share');
+  const downloadButtons = document.querySelectorAll('.download');
 
   const cursor = { x: 0, y: 0 };
   const defaultStyles: Record<string, string> = {
@@ -168,7 +168,7 @@ import DialogCard from './DialogCard.astro';
     });
   });
 
-  downloadButton.forEach((button, index) =>
+  shareButtons.forEach((button, index) =>
     button.addEventListener('click', () => {
       const cardWrapper = document.querySelector(
         `.card-${index + 1} .card-wrapper`
@@ -181,8 +181,38 @@ import DialogCard from './DialogCard.astro';
             canvasWidth: 916,
             canvasHeight: 1406
           })
-          .then(dataUrl => {
-            import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataUrl, 'card.png'));
+          .then(dataImage => {
+            if (navigator.share) {
+              navigator.share({
+                title: 'Ana Cards',
+                text: 'Compartilhe este card com seus amigos',
+                url: window.location.href,
+                files: [new File([dataImage], 'card.png', { type: 'image/png' })]
+              });
+            }
+            cardWrapper?.classList?.remove('remove-animation');
+          })
+      );
+    })
+  );
+
+  downloadButtons.forEach((button, index) =>
+    button.addEventListener('click', () => {
+      const cardWrapper = document.querySelector(
+        `.card-${index + 1} .card-wrapper`
+      ) as HTMLDivElement;
+      cardWrapper?.classList?.add('remove-animation');
+
+      import('html-to-image').then(htmlToImage =>
+        htmlToImage
+          .toPng(document.querySelector(`.card-${index + 1}`) as HTMLElement, {
+            canvasWidth: 916,
+            canvasHeight: 1406
+          })
+          .then(dataImage => {
+            import('downloadjs').then(({ default: downloadjs }) =>
+              downloadjs(dataImage, 'card.png')
+            );
             cardWrapper?.classList?.remove('remove-animation');
           })
       );
