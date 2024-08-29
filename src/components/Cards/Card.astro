@@ -463,6 +463,10 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
       border-radius: calc(var(--size, 12vw) / 18);
       animation: card-shadow 1.5s infinite alternate;
     }
+
+    & .atropos-inner.remove-animation {
+      animation: none;
+    }
   }
 
   @keyframes card-shadow {
