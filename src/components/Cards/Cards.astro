@@ -96,8 +96,8 @@ import DialogCard from './DialogCard.astro';
   import Atropos from 'atropos';
 
   const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
-  // const shareButton = document.querySelector<HTMLButtonElement>('#share');
-  const downloadButton = document.querySelectorAll('.download');
+  const shareButtons = document.querySelectorAll<HTMLButtonElement>('.share');
+  const downloadButtons = document.querySelectorAll('.download');
 
   const cursor = { x: 0, y: 0 };
   const defaultStyles: Record<string, string> = {
@@ -168,18 +168,52 @@ import DialogCard from './DialogCard.astro';
     });
   });
 
-  downloadButton.forEach((button, index) =>
+  function createImageFromCard(cardSelector: string): Promise<string> {
+    const cardWrapper = document.querySelector(`${cardSelector} .card-wrapper`) as HTMLDivElement;
+    cardWrapper?.classList?.add('remove-animation');
+
+    return import('html-to-image').then(htmlToImage =>
+      htmlToImage
+        .toPng(document.querySelector(cardSelector) as HTMLElement, {
+          canvasWidth: 916,
+          canvasHeight: 1406
+        })
+        .finally(() => {
+          cardWrapper?.classList?.remove('remove-animation');
+        })
+    );
+  }
+
+  function shareCard(cardSelector: string) {
+    createImageFromCard(cardSelector).then(dataImage => {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Ana Cards',
+          text: 'Compartilhe este card com seus amigos',
+          url: window.location.href,
+          files: [new File([dataImage], 'card.png', { type: 'image/png' })]
+        });
+      }
+    });
+  }
+
+  function downloadCard(cardSelector: string) {
+    createImageFromCard(cardSelector).then(dataImage => {
+      import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataImage, 'card.png'));
+    });
+  }
+
+  shareButtons.forEach((button, index) =>
     button.addEventListener('click', () => {
-      import('html-to-image').then(htmlToImage =>
-        htmlToImage
-          .toPng(document.querySelector(`.card-${index + 1}`) as HTMLElement, {
-            canvasWidth: 916,
-            canvasHeight: 1406
-          })
-          .then(dataUrl =>
-            import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataUrl, 'card.png'))
-          )
-      );
+      const cardSelector = `.card-${index + 1}`;
+      shareCard(cardSelector);
+    })
+  );
+
+  downloadButtons.forEach((button, index) =>
+    button.addEventListener('click', () => {
+      const cardSelector = `.card-${index + 1}`;
+      downloadCard(cardSelector);
     })
   );
 </script>
