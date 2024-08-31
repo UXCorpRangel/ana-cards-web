@@ -1,0 +1,94 @@
+---
+const BASE_URL = import.meta.env.BASE_URL;
+---
+
+<section class="card-container">
+  <div>
+    <div class="card">
+      <div class="card-back">
+        <img class="logo" src={`${BASE_URL}/assets/images/logo.png`} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .card-container {
+    & > div {
+      width: max-content;
+      margin-inline: auto;
+    }
+  }
+
+  .card {
+    --noise: url('/ana-cards-web/assets/images/textures/noise.png');
+    --grain: url('/ana-cards-web/assets/images/textures/grain.png');
+
+    --width: 530px;
+    --height: 920px;
+
+    --border-size: 0.563rem;
+    --border-color: #282828;
+
+    position: relative;
+    transform-style: preserve-3d;
+    width: calc(var(--width) * (15 / 23));
+    height: calc(var(--height) * (15 / 23));
+
+    transition: all 0.6s;
+
+    @media (width >= 768px) {
+      --width: 600px;
+    }
+
+    & .card-back {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      background-image: radial-gradient(
+          48.42% 48.42% ellipse at center top,
+          rgb(from var(--primary-color) r g b / 0.2) 0%,
+          transparent 100%
+        ),
+        radial-gradient(
+          48.42% 48.42% ellipse at center bottom,
+          rgb(from var(--secondary-color) r g b / 0.2) 0%,
+          transparent 100%
+        );
+
+      width: calc(var(--width) * (15 / 23) - var(--border-size) * 2);
+      height: calc(var(--height) * (15 / 23) - var(--border-size) * 2);
+
+      border-radius: 1.375rem;
+      border: var(--border-size) solid var(--border-color);
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.25;
+        display: block;
+        mix-blend-mode: multiply;
+        background-blend-mode: multiply, overlay;
+        background-clip: padding-box, padding-box;
+        background-image: var(--noise), var(--grain);
+      }
+
+      & .logo {
+        z-index: 1;
+        width: 80%;
+        object-fit: contain;
+        mix-blend-mode: exclusion;
+      }
+    }
+  }
+</style>
