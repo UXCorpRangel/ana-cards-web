@@ -200,11 +200,14 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
 
 <script>
   const cardCategorySample = document.querySelector<HTMLDivElement>('.card-sample');
+
   document.querySelectorAll<HTMLLabelElement>('.badge[data-category]').forEach(badge => {
     badge.addEventListener('click', ({ target }) => {
       if (target instanceof HTMLLabelElement && cardCategorySample) {
+        const cardFlickSound = new Audio('/ana-cards-web/audio/card-flick.mp3');
         const category = target.dataset.category;
         cardCategorySample.dataset.category = category;
+        cardFlickSound.play();
       }
     });
   });
