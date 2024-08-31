@@ -1,26 +1,12 @@
 ---
-import {
-  CardCategory,
-  cardCategoryColors,
-  cardCategoryLabels
-} from '@contracts/card-category.type';
+import CardsCategory from '@sections/home/CardsCategory.astro';
 import Contributors from '@sections/home/Contributors.astro';
 import Information from '@sections/home/Information.astro';
-import CardSample from '@components/CardSample.astro';
 import ConstructionDialog from '@components/ConstructionDialog.astro';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import PageLayout from '@layouts/Page.astro';
 
 const BASE_URL = import.meta.env.BASE_URL;
-
-/** Categoría seleccionada por defecto en la vista interactiva de las cartas. */
-const defaultSelectedCategory = CardCategory.DESIGN;
-
-const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
-  name: cardCategoryLabels[value],
-  color: cardCategoryColors[value],
-  category: value
-}));
 ---
 
 <PageLayout title="Inicio">
@@ -35,32 +21,7 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
       </div>
     </section>
     <Information />
-    <section class="cards-category">
-      <div>
-        <h2>Categorías de las cartas</h2>
-        <div class="badges-container">
-          {
-            CATEGORIES.map(({ name, color, category }) => (
-              <label
-                data-category={category}
-                class:list={['badge', category === CardCategory.SPECIAL && 'special']}
-                style={`--category-color: ${color}`}
-              >
-                <input
-                  type="radio"
-                  name="category"
-                  checked={category === defaultSelectedCategory}
-                />
-                <span>{name}</span>
-              </label>
-            ))
-          }
-        </div>
-      </div>
-      <div>
-        <CardSample defaultCategory={defaultSelectedCategory} />
-      </div>
-    </section>
+    <CardsCategory />
     <Contributors />
   </main>
 
@@ -163,173 +124,4 @@ const CATEGORIES = Object.entries(CardCategory).map(([, value]) => ({
       }
     }
   }
-
-  .cards-category {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    gap: 3rem;
-    width: 100%;
-
-    @media (width >= 1200px) {
-      flex-direction: row;
-    }
-
-    & h2 {
-      font-size: 2.25rem;
-      font-weight: 600;
-      margin-top: 0;
-      margin-bottom: 2.25rem;
-
-      @media (width <= 576px) {
-        text-align: center;
-      }
-    }
-
-    & .badges-container {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      max-width: 70%;
-
-      @media (width <= 576px) {
-        max-width: 100%;
-        justify-content: center;
-        align-items: center;
-      }
-
-      & .badge {
-        --badge-border: 1px;
-        --transition: 0.3s ease;
-
-        background: color-mix(in srgb, var(--category-color), transparent 80%);
-        color: var(--category-color);
-        border: var(--badge-border) solid var(--category-color);
-        border-radius: 24px;
-        padding: 0.5rem 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        position: relative;
-        box-shadow: 0 0 0px transparent;
-        text-transform: uppercase;
-        user-select: none;
-
-        transition:
-          box-shadow var(--transition),
-          color var(--transition),
-          background var(--transition);
-
-        & span {
-          pointer-events: none;
-        }
-
-        & input[type='radio'] {
-          display: none;
-        }
-
-        &:hover,
-        &:active,
-        &:has(input[type='radio']:checked) {
-          box-shadow: 0 0 17px color-mix(in srgb, var(--category-color), transparent 20%);
-        }
-
-        &:hover {
-          color: #fff;
-        }
-
-        &:active,
-        &:has(input[type='radio']:checked):not(.special) {
-          background: var(--category-color);
-          color: color-mix(in srgb, var(--category-color), #000 60%);
-        }
-
-        &.special {
-          color: transparent;
-          border-color: transparent;
-          background: rgb(226 141 202 / 0.2);
-          background-image: var(--rainbow-gradient);
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-
-          transition:
-            color var(--transition),
-            background var(--transition),
-            -webkit-text-fill-color var(--transition);
-
-          &:hover,
-          &:has(input[type='radio']:checked) {
-            color: var(--body-color);
-            -webkit-text-fill-color: var(--body-color);
-
-            &::before,
-            &::after {
-              background: var(--rainbow-gradient);
-              background-size: 400%;
-
-              animation: special-shadow 20s linear infinite;
-            }
-
-            &::after {
-              filter: blur(10px);
-            }
-          }
-
-          &:active {
-            color: var(--text-color);
-            -webkit-text-fill-color: var(--text-color);
-            background: var(--body-color);
-          }
-
-          &::before,
-          &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-
-            transition:
-              background var(--transition),
-              background-size var(--transition);
-          }
-
-          &::before {
-            z-index: -2;
-            background: var(--rainbow-gradient);
-          }
-          &::after {
-            z-index: -1;
-            margin: var(--badge-border);
-            background: color-mix(in srgb, var(--body-color), rgb(226 141 202) 15%);
-
-            transition: filter var(--transition);
-          }
-        }
-      }
-    }
-  }
-
-  @keyframes special-shadow {
-    0% {
-      background-position: 0 0;
-    }
-    50% {
-      background-position: 300% 0;
-    }
-    100% {
-      background-position: 0 0;
-    }
-  }
 </style>
-
-<script>
-  const cardCategorySample = document.querySelector<HTMLDivElement>('.card-sample');
-  document.querySelectorAll<HTMLLabelElement>('.badge[data-category]').forEach(badge => {
-    badge.addEventListener('click', ({ target }) => {
-      if (target instanceof HTMLLabelElement && cardCategorySample) {
-        const category = target.dataset.category;
-        cardCategorySample.dataset.category = category;
-      }
-    });
-  });
-</script>
