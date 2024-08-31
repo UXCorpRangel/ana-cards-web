@@ -22,9 +22,12 @@ import PageLayout from '@layouts/Page.astro';
 
 <style>
   .content {
+    display: flex;
+    flex-direction: column;
+    gap: 7rem;
     max-width: 1080px;
     margin-inline: auto;
-    padding: 3rem 1rem;
+    padding-block: 3rem 6rem;
 
     @media (768px <= width <= 1199.98px) {
       max-width: 600px;
