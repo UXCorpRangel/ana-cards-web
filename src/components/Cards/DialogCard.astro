@@ -157,6 +157,13 @@ import DialogMenu from './DialogMenu.astro';
     dialog?.addEventListener('animationend', closeDialog, false);
     document.querySelector('ana-card.hidden-card')?.classList.remove('hidden-card');
   });
+
+  dialog?.addEventListener('cancel', event => {
+    event.preventDefault();
+    dialog?.classList.add('hide');
+    dialog?.addEventListener('animationend', closeDialog, false);
+    document.querySelector('ana-card.hidden-card')?.classList.remove('hidden-card');
+  });
   // #endregion Dialog Card
 
   // #region Dialog Menu
