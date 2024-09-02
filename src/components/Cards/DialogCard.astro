@@ -1,10 +1,12 @@
 ---
 import { CardCategory } from '@contracts';
 import Card from './Card.astro';
+import DialogMenu from './DialogMenu.astro';
 ---
 
 <dialog class="dialog-card">
-  <Card flip id={0} level={1} name="" image="" description="" category={CardCategory.TOOLS} />
+  <Card id={0} level={1} name="" image="" description="" category={CardCategory.TOOLS} />
+  <DialogMenu />
 </dialog>
 
 <style>
@@ -12,6 +14,7 @@ import Card from './Card.astro';
     border: none;
     outline: none;
     padding: 9cqb;
+    overflow: visible;
     background-color: transparent;
     z-index: var(--z-index-modal);
 
@@ -77,16 +80,21 @@ import Card from './Card.astro';
 </style>
 
 <script>
+  import { CardCategory } from '@contracts';
+  import { stringifyCardNumber } from '@utils';
+  import { AnaCard } from './ana-card.wc';
+
+  // #region Dialog Card
   const dialog = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
   const cardWrapper = dialog?.querySelector<HTMLDivElement>('.card-wrapper');
   const card = cardWrapper?.querySelector<HTMLDivElement>('.card');
 
-  const titleEl = card?.querySelector<HTMLHeadingElement>('.card-front .title');
-  const imageEl = card?.querySelector<HTMLImageElement>('.card-front .image img');
-  const contentEl = card?.querySelector<HTMLParagraphElement>('.card-front .content');
-  const footerEl = card?.querySelector<HTMLSpanElement>('.card-front .footer');
-  const categoryEl = card?.querySelector<SVGSVGElement>('.card-front .category');
-  const levelEl = card?.querySelector<HTMLDivElement>('.card-front .level-dots');
+  const titleEl = card?.querySelector<HTMLHeadingElement>('.card-front .card-title');
+  const imageEl = card?.querySelector<HTMLImageElement>('.card-front .card-image img');
+  const contentEl = card?.querySelector<HTMLParagraphElement>('.card-front .card-content');
+  const footerEl = card?.querySelector<HTMLSpanElement>('.card-front .card-footer');
+  const categoryEl = card?.querySelector<SVGSVGElement>('.card-front .card-category');
+  const levelEl = card?.querySelector<HTMLDivElement>('.card-front .card-level-dots');
 
   function closeDialog() {
     dialog?.classList.remove('hide');
@@ -96,36 +104,35 @@ import Card from './Card.astro';
   }
 
   function updateDialog(cardId: string) {
-    const _cardWrapper = document.querySelector<HTMLDivElement>(
-      `.card-wrapper[data-card-id="${cardId}"]`
-    );
-    const _card = _cardWrapper?.querySelector<HTMLDivElement>(
-      `.card .card-front[data-card-id="${cardId}"]`
-    );
+    const cardSelector = `${AnaCard.componentName}[data-id="${cardId}"]`;
+    const anaCard = document.querySelector<AnaCard>(cardSelector);
 
-    cardWrapper?.setAttribute('style', _cardWrapper?.getAttribute('style') ?? '');
+    cardWrapper?.setAttribute('style', anaCard?.getAttribute('style') ?? '');
     cardWrapper?.style.setProperty('--size', '25vw');
 
-    if (titleEl && imageEl && contentEl && footerEl && categoryEl && levelEl) {
-      const _titleEl = _card?.querySelector<HTMLHeadingElement>('.title');
-      const _imageEl = _card?.querySelector<HTMLImageElement>('.image img');
-      const _contentEl = _card?.querySelector<HTMLParagraphElement>('.content');
-      const _footerEl = _card?.querySelector<HTMLSpanElement>('.footer');
-      const _categoryEl = _card?.querySelector<SVGSVGElement>('.category');
-      const _levelEl = _card?.querySelector<HTMLDivElement>('.level-dots');
+    if (anaCard && titleEl && imageEl && contentEl && footerEl && categoryEl && levelEl) {
+      const {
+        id = 0,
+        name = 'Card Name',
+        description = 'Card Description',
+        image = '',
+        category = CardCategory.DESIGN,
+        level = 1
+      } = anaCard.dataset;
 
-      if (_titleEl && _imageEl && _contentEl && _footerEl && _categoryEl && _levelEl) {
-        titleEl.textContent = _titleEl.textContent;
-        contentEl.textContent = _contentEl.textContent;
-        footerEl.textContent = _footerEl.textContent;
-        imageEl.src = _imageEl.src;
-        categoryEl.innerHTML = _categoryEl.innerHTML;
-        levelEl.innerHTML = _levelEl.innerHTML;
+      if (name && image && description && id && category && level) {
+        titleEl.textContent = name;
+        contentEl.textContent = description;
+        footerEl.textContent = stringifyCardNumber(+id);
 
-        card?.setAttribute('data-card-level', _card?.dataset.cardLevel ?? '1');
+        imageEl.src = anaCard.getImageURL();
+        categoryEl.innerHTML = anaCard.getCategorySVG();
+        levelEl.innerHTML = anaCard.getLevelDots()?.innerHTML ?? '';
+
+        card?.setAttribute('data-card-level', `${level}`);
         card
           ?.querySelector<HTMLDivElement>('.card-front')
-          ?.setAttribute('data-card-level', _card?.dataset.cardLevel ?? '1');
+          ?.setAttribute('data-card-level', `${level}`);
       } else {
         dialog?.close();
       }
@@ -145,9 +152,160 @@ import Card from './Card.astro';
     }).observe(dialog, { attributes: true, childList: false, subtree: false });
   }
 
-  dialog?.addEventListener('click', () => {
+  card?.addEventListener('click', () => {
     dialog?.classList.add('hide');
     dialog?.addEventListener('animationend', closeDialog, false);
-    document.querySelector('.cards .hidden-atropos')?.classList.remove('hidden-atropos');
+    document.querySelector('ana-card.hidden-card')?.classList.remove('hidden-card');
   });
+
+  dialog?.addEventListener('cancel', event => {
+    event.preventDefault();
+    dialog?.classList.add('hide');
+    dialog?.addEventListener('animationend', closeDialog, false);
+    document.querySelector('ana-card.hidden-card')?.classList.remove('hidden-card');
+  });
+  // #endregion Dialog Card
+
+  // #region Dialog Menu
+  function disableButtons(id: string) {
+    const buttons = dialog?.querySelectorAll<HTMLButtonElement>('button.menu-item');
+    buttons?.forEach(btn => {
+      if (btn.id === id) {
+        btn.classList.add('loading');
+      } else {
+        btn.disabled = true;
+      }
+    });
+  }
+
+  function enableButtons(id: string) {
+    dialog?.querySelectorAll<HTMLButtonElement>('button.menu-item')?.forEach(btn => {
+      if (btn.id === id) {
+        btn.classList.remove('loading');
+      } else {
+        btn.disabled = false;
+      }
+    });
+  }
+
+  function createImageFromCard(srcCard: HTMLElement) {
+    return import('html-to-image').then(htmlToImage =>
+      htmlToImage.toPng(srcCard, { canvasWidth: 916, canvasHeight: 1406 })
+    );
+  }
+
+  // Close
+  dialog
+    ?.querySelector<HTMLButtonElement>('button.menu-item#close-dialog')
+    ?.addEventListener('click', () => {
+      dialog?.classList.add('hide');
+      dialog?.addEventListener('animationend', closeDialog, false);
+      document.querySelector('ana-card.hidden-card')?.classList.remove('hidden-card');
+    });
+
+  // Download
+  dialog
+    ?.querySelector<HTMLButtonElement>('button.menu-item#download-card')
+    ?.addEventListener('click', () => {
+      const btnId = 'download-card';
+      const anaCard = dialog?.querySelector<HTMLDivElement>('.card');
+
+      if (anaCard) {
+        disableButtons(btnId);
+        createImageFromCard(anaCard)
+          .then(dataUrl =>
+            import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataUrl, 'card.png'))
+          )
+          .catch(err => {
+            console.error('ERROR: %s', err.message);
+          })
+          .finally(() => enableButtons(btnId));
+      }
+    });
+
+  // Share
+  dialog
+    ?.querySelector<HTMLButtonElement>('button.menu-item#share-card')
+    ?.addEventListener('click', () => {
+      const btnId = 'share-card';
+      const anaCard = dialog?.querySelector<HTMLDivElement>('.card');
+
+      if (anaCard) {
+        disableButtons(btnId);
+        createImageFromCard(anaCard)
+          .then(dataImage => {
+            if (navigator.share) {
+              navigator.share({
+                title: 'Ana × Cards',
+                text: 'Comparte esta carta con tus amigos',
+                url: window.location.href,
+                files: [new File([dataImage], 'card.png', { type: 'image/png' })]
+              });
+            }
+          })
+          .catch(err => {
+            console.error('ERROR: %s', err.message);
+          })
+          .finally(() => enableButtons(btnId));
+      }
+    });
+  // #endregion Dialog Menu
+
+  // #region Atropos
+  const cursor = { x: 0, y: 0 };
+  const defaultStyles: Record<string, string> = {
+    '--shine-margin-x': '50%',
+    '--shine-margin-y': '50%',
+    '--shine-pos-x': '50%',
+    '--shine-pos-y': '50%',
+    '--hyperspace': '0'
+  };
+
+  function round(num: number) {
+    return parseFloat(num.toFixed(3));
+  }
+
+  function resetStyles() {
+    Object.keys(defaultStyles).forEach(k => {
+      card?.style?.setProperty(k, defaultStyles[k]);
+    });
+  }
+
+  document.addEventListener('mousemove', ev => {
+    cursor.x = ev.clientX;
+    cursor.y = ev.clientY;
+  });
+
+  import('atropos').then(({ default: Atropos }) => {
+    Atropos({
+      el: '.card-0',
+      onLeave() {
+        resetStyles();
+      },
+      onRotate() {
+        if (!card || card.dataset.cardLevel === '1') {
+          return;
+        }
+
+        const rect = card.getBoundingClientRect();
+        const absolute = { x: cursor.x - rect.left, y: cursor.y - rect.top };
+        const percent = {
+          x: round((100 / rect.width) * absolute.x),
+          y: round((100 / rect.height) * absolute.y)
+        };
+        card.style.setProperty('--shine-margin-x', `${percent.x}%`);
+        card.style.setProperty('--shine-margin-y', `${percent.y}%`);
+        card.style.setProperty('--shine-pos-x', `${round(50 + percent.x / 4 - 12.5)}%`);
+        card.style.setProperty('--shine-pos-y', `${round(50 + percent.y / 3 - 16.67)}%`);
+        card.style.setProperty(
+          '--hyperspace',
+          `${
+            Math.sqrt((percent.y - 50) * (percent.y - 50) + (percent.x - 50) * (percent.x - 50)) /
+            50
+          }`
+        );
+      }
+    });
+  });
+  // #endregion Atropos
 </script>

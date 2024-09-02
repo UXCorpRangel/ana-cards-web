@@ -1,34 +1,20 @@
 ---
-import { Icon } from 'astro-icon/components';
 import { cards } from '@data/cards';
-import Card from './Card.astro';
+import AnaCard from './AnaCard.astro';
 import DialogCard from './DialogCard.astro';
 ---
 
 <section class="cards">
   {
     cards.map(({ id, name, description, image, category, level }) => (
-      <div class="card-wrapper">
-        <Card
-          flip
-          id={id}
-          name={name}
-          image={image}
-          category={category}
-          description={description}
-          level={level}
-        />
-        <div class="buttons-container">
-          <button class="share">
-            <Icon name="share" size={22} />
-            <span>Compartir</span>
-          </button>
-          <button class="download">
-            <Icon name="download" size={27} />
-            <span>Descargar</span>
-          </button>
-        </div>
-      </div>
+      <AnaCard
+        id={id}
+        name={name}
+        image={image}
+        category={category}
+        description={description}
+        level={level}
+      />
     ))
   }
 </section>
@@ -43,177 +29,17 @@ import DialogCard from './DialogCard.astro';
     justify-content: center;
     flex-wrap: wrap;
   }
-
-  .card-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    & .buttons-container {
-      display: flex;
-      justify-content: center;
-      gap: 1.3rem;
-
-      & button {
-        position: relative;
-        border: none;
-        cursor: pointer;
-        background: none;
-        padding: 0;
-        margin: 0;
-        transition: color 0.3s ease;
-
-        & * {
-          pointer-events: none;
-        }
-
-        &:hover {
-          color: var(--secondary-color);
-
-          & span {
-            translate: -50% 18px;
-            opacity: 1;
-          }
-        }
-
-        & span {
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          translate: -50% 0;
-          opacity: 0;
-          pointer-events: none;
-          transition:
-            translate 0.3s ease,
-            opacity 0.3s ease;
-        }
-      }
-    }
-  }
 </style>
 
 <script>
-  import Atropos from 'atropos';
+  import { AnaCard } from './ana-card.wc';
 
   const dialogCard = document.querySelector<HTMLDialogElement>('dialog.dialog-card');
-  const shareButtons = document.querySelectorAll<HTMLButtonElement>('.share');
-  const downloadButtons = document.querySelectorAll('.download');
-
-  const cursor = { x: 0, y: 0 };
-  const defaultStyles: Record<string, string> = {
-    '--shine-margin-x': '50%',
-    '--shine-margin-y': '50%',
-    '--shine-pos-x': '50%',
-    '--shine-pos-y': '50%',
-    '--hyperspace': '0'
-  };
-
-  function round(num: number) {
-    return parseFloat(num.toFixed(3));
-  }
-
-  function resetStyles(card: HTMLDivElement) {
-    Object.keys(defaultStyles).forEach(k => {
-      card.style.setProperty(k, defaultStyles[k]);
-    });
-  }
-
-  document.addEventListener('mousemove', ev => {
-    cursor.x = ev.clientX;
-    cursor.y = ev.clientY;
-  });
-
-  document.querySelectorAll<HTMLDivElement>('.card').forEach(card => {
-    const atroposSelector = `.card-${card.dataset.cardId}`;
-
-    resetStyles(card);
-
-    Atropos({
-      el: atroposSelector,
-      onLeave() {
-        resetStyles(card);
-      },
-      onRotate() {
-        if (card.dataset.cardLevel === '1') {
-          return;
-        }
-
-        const rect = card.getBoundingClientRect();
-        const absolute = { x: cursor.x - rect.left, y: cursor.y - rect.top };
-        const percent = {
-          x: round((100 / rect.width) * absolute.x),
-          y: round((100 / rect.height) * absolute.y)
-        };
-
-        card.style.setProperty('--shine-margin-x', `${percent.x}%`);
-        card.style.setProperty('--shine-margin-y', `${percent.y}%`);
-
-        card.style.setProperty('--shine-pos-x', `${round(50 + percent.x / 4 - 12.5)}%`);
-        card.style.setProperty('--shine-pos-y', `${round(50 + percent.y / 3 - 16.67)}%`);
-
-        card.style.setProperty(
-          '--hyperspace',
-          `${
-            Math.sqrt((percent.y - 50) * (percent.y - 50) + (percent.x - 50) * (percent.x - 50)) /
-            50
-          }`
-        );
-      }
-    });
-
+  document.querySelectorAll<AnaCard>(AnaCard.componentName).forEach(card => {
     card.addEventListener('click', () => {
-      document.querySelector(`.cards ${atroposSelector}`)?.classList?.add('hidden-atropos');
-      dialogCard?.setAttribute('data-card-id', `${card.dataset.cardId}`);
+      card.classList?.add('hidden-card');
+      dialogCard?.setAttribute('data-card-id', `${card.dataset.id}`);
       dialogCard?.showModal();
     });
   });
-
-  function createImageFromCard(cardSelector: string): Promise<string> {
-    const cardWrapper = document.querySelector(`${cardSelector} .card-wrapper`) as HTMLDivElement;
-    cardWrapper?.classList?.add('remove-animation');
-
-    return import('html-to-image').then(htmlToImage =>
-      htmlToImage
-        .toPng(document.querySelector(cardSelector) as HTMLElement, {
-          canvasWidth: 916,
-          canvasHeight: 1406
-        })
-        .finally(() => {
-          cardWrapper?.classList?.remove('remove-animation');
-        })
-    );
-  }
-
-  function shareCard(cardSelector: string) {
-    createImageFromCard(cardSelector).then(dataImage => {
-      if (navigator.share) {
-        navigator.share({
-          title: 'Ana Cards',
-          text: 'Compartilhe este card com seus amigos',
-          url: window.location.href,
-          files: [new File([dataImage], 'card.png', { type: 'image/png' })]
-        });
-      }
-    });
-  }
-
-  function downloadCard(cardSelector: string) {
-    createImageFromCard(cardSelector).then(dataImage => {
-      import('downloadjs').then(({ default: downloadjs }) => downloadjs(dataImage, 'card.png'));
-    });
-  }
-
-  shareButtons.forEach((button, index) =>
-    button.addEventListener('click', () => {
-      const cardSelector = `.card-${index + 1}`;
-      shareCard(cardSelector);
-    })
-  );
-
-  downloadButtons.forEach((button, index) =>
-    button.addEventListener('click', () => {
-      const cardSelector = `.card-${index + 1}`;
-      downloadCard(cardSelector);
-    })
-  );
 </script>

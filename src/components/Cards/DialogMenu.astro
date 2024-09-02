@@ -1,0 +1,182 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const buttons = [
+  { id: 'close-dialog', text: 'Cerrar', icon: 'close' },
+  { id: 'download-card', text: 'Descargar', icon: 'download' },
+  { id: 'share-card', text: 'Compartir', icon: 'share' }
+];
+---
+
+<div class="menu-wrapper">
+  <div class="menu">
+    {
+      buttons.map(({ id, text, icon }) => (
+        <button id={id} class="menu-item" data-text={text} aria-label={text}>
+          <Icon name={icon} />
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .menu-wrapper {
+    --transition: 0.3s ease-in-out;
+    --placement: 1.5rem;
+
+    position: absolute;
+    inset-inline-end: calc(var(--placement) * -1);
+    inset-block-start: calc(var(--placement) * 6);
+
+    @media (width <= 576px) {
+      inset-inline: 0;
+      inset-block-start: calc(var(--placement) * -6);
+    }
+
+    & .menu {
+      gap: 0.75rem;
+      display: flex;
+      positi: relative;
+      flex-direction: column;
+
+      @media (width <= 576px) {
+        gap: 1.75rem;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+      }
+
+      & .menu-item {
+        width: 3rem;
+        height: 3rem;
+        display: grid;
+        cursor: pointer;
+        position: relative;
+        place-items: center;
+
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 3px solid currentColor;
+
+        outline-offset: 3px;
+        outline: 3px solid transparent;
+
+        color: var(--text-color);
+        box-shadow: 0 0 1rem transparent;
+        background: var(--card-bgcolor-1);
+        background-image: radial-gradient(
+          circle,
+          var(--card-bgcolor-1),
+          rgb(from var(--primary-color) r g b / 0.2)
+        );
+
+        transition:
+          color var(--transition),
+          border var(--transition),
+          box-shadow var(--transition),
+          background-image var(--transition);
+
+        @media (width <= 576px) {
+          &::before {
+            display: none;
+          }
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          pointer-events: none;
+        }
+
+        &:hover {
+          color: var(--secondary-color);
+          box-shadow: 0 0 1rem rgb(from var(--secondary-color) r g b / 0.5);
+          background-image: radial-gradient(
+            circle,
+            var(--card-bgcolor-1),
+            rgb(from var(--secondary-color) r g b / 0.2)
+          );
+
+          &::before {
+            opacity: 1;
+          }
+        }
+
+        &:active {
+          color: var(--primary-color);
+
+          &::before {
+            background-color: var(--primary-color);
+          }
+        }
+
+        &::before {
+          opacity: 0;
+          content: attr(data-text);
+
+          z-index: -1;
+          position: absolute;
+          inset-block: auto;
+          inset-inline-start: 81%;
+
+          color: var(--body-color);
+          background-color: var(--secondary-color);
+
+          padding-block: 0.5rem;
+          padding-inline-start: 1rem;
+          padding-inline-end: 1.2rem;
+
+          border-end-end-radius: 0.75rem;
+          border-start-end-radius: 0.75rem;
+
+          font-size: 1rem;
+          font-weight: 900;
+          pointer-events: none;
+          text-transform: uppercase;
+
+          transition:
+            opacity var(--transition),
+            background-color var(--transition);
+        }
+
+        &::after {
+          opacity: 0;
+          content: '';
+          z-index: -1;
+          inset: -0.3rem;
+          position: absolute;
+          border-radius: 0.75rem;
+          background-image: var(--rainbow-gradient);
+
+          transition: opacity var(--transition);
+        }
+
+        &.loading {
+          cursor: progress;
+
+          &:hover::before {
+            opacity: 0;
+          }
+
+          &::after {
+            opacity: 1;
+            animation: spin 3s linear infinite;
+          }
+        }
+
+        & svg {
+          font-size: 1.75rem;
+        }
+      }
+    }
+  }
+
+  @keyframes spin {
+    from {
+      rotate: 0;
+    }
+    to {
+      rotate: 360deg;
+    }
+  }
+</style>
