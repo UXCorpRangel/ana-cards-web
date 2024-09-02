@@ -15,3 +15,325 @@ const { title } = Astro.props;
   <slot />
   <Footer />
 </BaseLayout>
+
+<style is:global>
+  .card-front {
+    --z-image-border: -1;
+    --z-image: 1;
+    --z-shine: 2;
+    --z-footer: 3;
+
+    &::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.25;
+      display: block;
+      mix-blend-mode: overlay;
+      background-blend-mode: overlay, overlay;
+      background-clip: padding-box, padding-box;
+      background-image: var(--noise), var(--paper);
+    }
+
+    & .card-title {
+      margin: 0;
+      font-size: 7.9cqi;
+      font-weight: 400;
+      font-family: var(--font-family-primary);
+      padding: 1.5cqi 2.7cqi 0;
+    }
+
+    & .card-image {
+      --cover-radius: 2.7cqi;
+      --cover-border: 1cqi;
+
+      z-index: var(--z-image);
+      height: 93cqi;
+      width: auto;
+      margin: 0 3%;
+
+      overflow: hidden;
+      border-radius: var(--cover-radius);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        content: '';
+        z-index: var(--z-image-border);
+        position: absolute;
+        inset: 0;
+        background: var(--rainbow-gradient);
+      }
+
+      & img {
+        z-index: var(--z-image);
+        padding: var(--cover-border);
+        width: calc(100% - (var(--cover-border) * 2));
+        height: calc(100% - (var(--cover-border) * 2));
+        border-radius: var(--cover-radius);
+        object-fit: cover;
+      }
+    }
+
+    & .card-content {
+      margin: 0;
+      font-size: 4.07cqi;
+      font-weight: 600;
+      text-wrap: pretty;
+      text-align: center;
+      font-family: var(--font-family-secondary);
+
+      overflow: hidden;
+      height: 33.6cqi;
+      padding: 3cqi 4.2cqi;
+    }
+
+    & .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 3.3cqi;
+      font-weight: 800;
+      font-family: var(--font-family-extra);
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--category-color, var(--card-text-color));
+
+      z-index: var(--z-footer);
+      height: 2.1cqi;
+      padding: 1.2cqi 3cqi;
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+
+      border-start-end-radius: 3cqi;
+      border-start-start-radius: 3cqi;
+      background-color: var(--border-color);
+    }
+
+    & .card-category {
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      width: 21cqi;
+      height: 39cqi;
+      display: flex;
+      align-items: start;
+      justify-content: end;
+      padding: 0.3cqi 2cqi;
+
+      color: var(--bgcolor);
+      background: var(--category-color);
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+
+      & svg {
+        margin-inline-end: 3cqi;
+        padding-block-start: 0.3cqi;
+        width: calc(var(--size) / 9.3);
+        height: calc(var(--size) / 9.3);
+      }
+    }
+
+    & .card-level-dots {
+      position: absolute;
+      inset-block-start: 15.9cqi;
+      inset-inline-start: 0.6cqi;
+      padding-block-end: 1cqi;
+
+      gap: 1cqi;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      & .card-level-dot {
+        width: 1.5cqi;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        background: var(--category-color);
+
+        &:nth-child(5n) {
+          background: #d22222;
+        }
+      }
+    }
+
+    & .card-shine {
+      --shine-tex-size: 50%;
+      --shine-tex-pos: center;
+      --shine-tex-blend: exclusion;
+
+      --shine-g1-pos: 0% var(--shine-pos-y, 50%);
+      --shine-g1-blend: hue;
+
+      --shine-g2-pos: var(--shine-pos-x) var(--shine-pos-y);
+      --shine-g2-blend: hard-light;
+
+      --shine-radial-size: 200%;
+      --shine-radial-pos: var(--shine-pos-x) var(--shine-pos-y);
+      --shine-radial-blend: exclusion;
+
+      width: 100%;
+      height: 100%;
+      z-index: var(--z-shine);
+      position: absolute;
+      inset: 0;
+      transition: 0.3s ease;
+      mix-blend-mode: color-dodge;
+
+      background-image: var(--shine-texture, none), var(--shine-gradient-1, none),
+        var(--shine-gradient-2, none), var(--shine-radial-gradient, none);
+
+      background-size:
+        var(--shine-tex-size),
+        200% 700%,
+        300%,
+        var(--shine-radial-size);
+
+      background-position:
+        var(--shine-tex-pos),
+        var(--shine-g1-pos),
+        var(--shine-pos-x, 50%) var(--shine-pos-y, 50%),
+        var(--shine-radial-pos);
+
+      background-blend-mode: var(--shine-tex-blend), var(--shine-g1-blend), var(--shine-g2-blend),
+        var(--shine-radial-blend);
+
+      filter: brightness(calc((var(--hyperspace, 0) * 0.3) + 0.5)) contrast(2) saturate(1.5);
+
+      &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        z-index: var(--z-shine);
+        position: absolute;
+        inset: 0;
+        mix-blend-mode: exclusion;
+
+        background-image: var(--shine-texture, none), var(--shine-gradient-1, none),
+          var(--shine-gradient-2, none), var(--shine-radial-gradient, none);
+
+        background-size:
+          var(--shine-tex-size),
+          200% 400%,
+          195%,
+          var(--shine-radial-size);
+
+        background-position:
+          var(--shine-tex-pos),
+          var(--shine-g1-pos),
+          calc(var(--shine-pos-x, 50%) * -1) calc(var(--shine-pos-y, 50%) * -1),
+          var(--shine-radial-pos);
+
+        background-blend-mode: var(--shine-tex-blend), var(--shine-g1-blend), var(--shine-g2-blend),
+          var(--shine-radial-blend);
+
+        filter: brightness(calc((var(--hyperspace) * 0.5) + 0.8)) contrast(1.6) saturate(1.4);
+      }
+
+      .card-front[data-card-level] & {
+        --shine-texture: url('/ana-cards-web/assets/images/textures/diamonds.webp');
+
+        --shine-gradient-1: repeating-linear-gradient(
+          0deg,
+          #ff7773 calc(5% * 1),
+          #ffed5f calc(5% * 2),
+          #a8ff5f calc(5% * 3),
+          #83fff7 calc(5% * 4),
+          #7894ff calc(5% * 5),
+          #d875ff calc(5% * 6),
+          #ff7773 calc(5% * 7)
+        );
+
+        --shine-gradient-2: repeating-linear-gradient(
+          133deg,
+          #0e152e 0%,
+          #8fa3a3 3.8%,
+          #8fc1c1 4.5%,
+          #8fa3a3 5.2%,
+          #0e152e 10%,
+          #0e152e 12%
+        );
+
+        --shine-radial-gradient: radial-gradient(
+          farthest-corner circle at var(--shine-margin-x, 50%) var(--shine-margin-y, 50%),
+          rgb(0 0 0 / 0.1) 12%,
+          rgb(0 0 0 / 0.15) 20%,
+          rgb(0 0 0 / 0.25) 120%
+        );
+      }
+
+      .card-front[data-card-level='1'] & {
+        --shine-texture: none;
+        --shine-gradient-1: none;
+        --shine-gradient-2: none;
+        --shine-radial-gradient: none;
+
+        display: none;
+      }
+
+      .card-front[data-card-level='2'] & {
+        --shine-texture: url('/ana-cards-web/assets/images/textures/metal.webp');
+      }
+
+      .card-front[data-card-level='3'] & {
+        --shine-texture: url('/ana-cards-web/assets/images/textures/crossover.webp');
+      }
+
+      .card-front[data-card-level='4'] & {
+        --shine-texture: url('/ana-cards-web/assets/images/textures/wave.webp');
+      }
+
+      .card-front[data-card-level='5'] & {
+        --shine-texture: url('/ana-cards-web/assets/images/textures/stamp.webp');
+      }
+    }
+  }
+
+  @keyframes card-shadow-all {
+    0% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--primary-color) r g b / 0.4);
+    }
+    14.3% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--design-color) r g b / 0.4);
+    }
+    28.6% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--development-color) r g b / 0.4);
+    }
+    42.9% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--harley-color) r g b / 0.4);
+    }
+    57.2% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--lore-color) r g b / 0.4);
+    }
+    71.5% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--troll-color) r g b / 0.4);
+    }
+    85.8% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--tools-color) r g b / 0.4);
+    }
+    100% {
+      box-shadow: 0 0 1.5rem 0.6rem rgb(from var(--secondary-color) r g b / 0.4);
+    }
+  }
+
+  @keyframes card-shadow-current {
+    from {
+      box-shadow:
+        0 0 1.5rem 0.1rem rgb(from var(--primary-color) r g b / 0.4),
+        0 0 1.5rem 0.1rem rgb(from var(--secondary-color) r g b / 0.4);
+    }
+
+    to {
+      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+    }
+  }
+</style>

@@ -1,0 +1,147 @@
+---
+import { cardCategoryColors, type AnaCard } from '@contracts';
+
+type CardSize = 'small' | 'large';
+
+const SMALL_SIZE = '12vw';
+const LARGE_SIZE = '25vw';
+
+interface Props extends AnaCard {
+  /** Tamaño de la carta. Por defecto es `small`, */
+  size?: CardSize;
+}
+const { id, name, description, image, category, level = 1, size = 'small' } = Astro.props;
+---
+
+<ana-card
+  data-id={id}
+  data-name={name}
+  data-description={description}
+  data-image={image}
+  data-category={category}
+  data-level={level}></ana-card>
+
+<style
+  define:vars={{
+    'category-color': cardCategoryColors[category],
+    size: size === 'large' ? LARGE_SIZE : SMALL_SIZE,
+    'default-size': SMALL_SIZE
+  }}
+>
+  ana-card {
+    --noise: url('/ana-cards-web/assets/images/textures/noise.png');
+    --grain: url('/ana-cards-web/assets/images/textures/grain.png');
+    --paper: url('/ana-cards-web/assets/images/textures/paper.png');
+
+    --bgcolor: var(--card-bgcolor-1);
+    --border-color: var(--card-border-color);
+    --border-size: calc(var(--size, var(--default-size)) / 43);
+    --border-radius: calc(var(--size, var(--default-size)) / 18);
+
+    &:not(:defined),
+    &:defined {
+      opacity: 1;
+      overflow: hidden;
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+      background-color: var(--bgcolor);
+      border-radius: var(--border-radius);
+      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+      animation: card-shadow 1.5s infinite alternate;
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition:
+          opacity 0.6s ease-in,
+          display 0.6s ease-in;
+        transition-behavior: allow-discrete;
+      }
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    &:not(:defined) {
+      aspect-ratio: 15 / 23;
+      width: var(--size, var(--default-size));
+      border: var(--border-size) solid var(--border-color);
+      background-image: radial-gradient(
+          48.42% 48.42% ellipse at center top,
+          rgb(from var(--primary-color) r g b / 0.2) 0%,
+          transparent 100%
+        ),
+        radial-gradient(
+          48.42% 48.42% ellipse at center bottom,
+          rgb(from var(--secondary-color) r g b / 0.2) 0%,
+          transparent 100%
+        );
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+      }
+
+      &::before {
+        opacity: 0.25;
+
+        mix-blend-mode: multiply;
+        background-blend-mode: multiply, overlay;
+        background-clip: padding-box, padding-box;
+        background-image: var(--noise), var(--grain);
+      }
+
+      &::after {
+        mix-blend-mode: exclusion;
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url('/ana-cards-web/assets/images/logo.png');
+      }
+    }
+
+    &:defined {
+      --sibling-filter: blur(3px) grayscale(90%);
+
+      transition:
+        scale 0.3s ease-in-out,
+        filter 0.3s ease-in-out;
+
+      &:has(~ *:hover) {
+        filter: var(--sibling-filter);
+      }
+
+      &:hover {
+        scale: 1.05;
+        & ~ * {
+          filter: var(--sibling-filter);
+        }
+      }
+
+      &.hidden-card {
+        scale: 0;
+      }
+    }
+  }
+
+  @keyframes card-shadow {
+    from {
+      box-shadow:
+        0 0 1.5rem 0.1rem rgb(from var(--primary-color) r g b / 0.4),
+        0 0 1.5rem 0.1rem rgb(from var(--secondary-color) r g b / 0.4);
+    }
+
+    to {
+      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+    }
+  }
+</style>
+
+<script>
+  import { AnaCard } from './ana-card.wc';
+
+  customElements.define(AnaCard.componentName, AnaCard);
+</script>
