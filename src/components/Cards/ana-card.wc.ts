@@ -89,7 +89,7 @@ export class AnaCard extends HTMLElement {
     return /* css */ `
       :host {
         overflow: hidden;
-        cursor: pointer;
+        cursor: zoom-in;
         position: relative;
         aspect-ratio: 15 / 23;
         width: var(--size, var(--default-size));
