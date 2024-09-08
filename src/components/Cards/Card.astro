@@ -67,23 +67,21 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
 
 <style>
   .card {
-    --default-size: 12vw;
-
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
-    --border-size: calc(var(--size, var(--default-size)) / 43);
-    --border-radius: calc(var(--size, var(--default-size)) / 18);
+    --border-size: calc(var(--size) / 43);
+    --border-radius: calc(var(--size) / 18);
 
     cursor: pointer;
     position: relative;
     aspect-ratio: 15 / 23;
-    width: var(--size, var(--default-size));
+    width: var(--size);
     container: card / inline-size;
     transition: transform 0.6s ease-in-out;
 
     & .card-front {
       aspect-ratio: 15 / 23;
-      width: var(--size, var(--default-size));
+      width: var(--size);
       box-sizing: border-box;
       content-visibility: auto;
 

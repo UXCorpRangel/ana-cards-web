@@ -1,16 +1,8 @@
 ---
 import { cardCategoryColors, type AnaCard } from '@contracts';
 
-type CardSize = 'small' | 'large';
-
-const SMALL_SIZE = '12vw';
-const LARGE_SIZE = '25vw';
-
-interface Props extends AnaCard {
-  /** Tamaño de la carta. Por defecto es `small`, */
-  size?: CardSize;
-}
-const { id, name, description, image, category, level = 1, size = 'small' } = Astro.props;
+type Props = AnaCard;
+const { id, name, description, image, category, level = 1 } = Astro.props;
 ---
 
 <ana-card
@@ -23,16 +15,27 @@ const { id, name, description, image, category, level = 1, size = 'small' } = As
 
 <style
   define:vars={{
-    'category-color': cardCategoryColors[category],
-    size: size === 'large' ? LARGE_SIZE : SMALL_SIZE,
-    'default-size': SMALL_SIZE
+    'category-color': cardCategoryColors[category]
   }}
 >
   ana-card {
+    --size: 12vw;
+
+    @media (width <= 1024px) {
+      --size: 21vw;
+    }
+    @media (width <= 768px) {
+      --size: 30vw;
+    }
+
+    @media (width <= 640px) {
+      --size: 42vw;
+    }
+
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
-    --border-size: calc(var(--size, var(--default-size)) / 43);
-    --border-radius: calc(var(--size, var(--default-size)) / 18);
+    --border-size: calc(var(--size) / 43);
+    --border-radius: calc(var(--size) / 18);
 
     &:not(:defined),
     &:defined {
@@ -60,7 +63,7 @@ const { id, name, description, image, category, level = 1, size = 'small' } = As
 
     &:not(:defined) {
       aspect-ratio: 15 / 23;
-      width: var(--size, var(--default-size));
+      width: var(--size);
       border: var(--border-size) solid var(--border-color);
       background-image: radial-gradient(
           48.42% 48.42% ellipse at center top,

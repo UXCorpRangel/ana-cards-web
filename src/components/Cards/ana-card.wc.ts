@@ -92,7 +92,7 @@ export class AnaCard extends HTMLElement {
         cursor: zoom-in;
         position: relative;
         aspect-ratio: 15 / 23;
-        width: var(--size, var(--default-size));
+        width: var(--size);
         container: card / inline-size;
         box-sizing: border-box;
         border-radius: var(--border-radius);
@@ -105,7 +105,7 @@ export class AnaCard extends HTMLElement {
         --z-footer: 3;
 
         aspect-ratio: 15 / 23;
-        width: var(--size, var(--default-size));
+        width: var(--size);
         box-sizing: border-box;
         content-visibility: auto;
 
@@ -178,8 +178,8 @@ export class AnaCard extends HTMLElement {
           & svg {
             margin-inline-end: 3cqi;
             padding-block-start: 0.3cqi;
-            width: calc(var(--size, var(--default-size)) / 9.3);
-            height: calc(var(--size, var(--default-size)) / 9.3);
+            width: calc(var(--size) / 9.3);
+            height: calc(var(--size) / 9.3);
           }
         }
 
