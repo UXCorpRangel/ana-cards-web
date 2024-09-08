@@ -10,29 +10,18 @@ import { Icon } from 'astro-icon/components';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
-type CardSize = 'small' | 'large';
+type Props = AnaCard;
+const { id, name, description, image, category, level = 1 } = Astro.props;
 
-interface Props extends AnaCard {
-  size?: CardSize;
-}
-const { id, name, description, image, category, level = 1, size = 'small' } = Astro.props;
-
-function getStyledCard(cat: CardCategory, size: CardSize) {
-  return {
-    '--category-color': cardCategoryColors[cat],
-    '--size': `${size === 'large' ? '25vw' : '12vw'};`
-  };
+function getStyledCard(cat: CardCategory) {
+  return { '--category-color': cardCategoryColors[cat] };
 }
 ---
 
 <div class={`atropos card-${id}`}>
   <div class="atropos-scale">
     <div class="atropos-rotate">
-      <div
-        class="atropos-inner card-wrapper"
-        style={getStyledCard(category, size)}
-        data-card-id={id}
-      >
+      <div class="atropos-inner card-wrapper" style={getStyledCard(category)} data-card-id={id}>
         <div class="card" data-card-id={id} data-card-level={level}>
           <div class="card-front" data-card-id={id} data-card-level={level}>
             <h1 class="card-title">{name}</h1>
@@ -66,40 +55,58 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
 </div>
 
 <style>
-  .card {
-    --bgcolor: var(--card-bgcolor-1);
-    --border-color: var(--card-border-color);
-    --border-size: calc(var(--size) / 43);
-    --border-radius: calc(var(--size) / 18);
+  .card-wrapper {
+    --size: 27vw;
 
-    cursor: pointer;
-    position: relative;
-    aspect-ratio: 15 / 23;
-    width: var(--size);
-    container: card / inline-size;
-    transition: transform 0.6s ease-in-out;
+    @media (width <= 1024px) {
+      --size: 45vw;
+    }
+    @media (width <= 768px) {
+      --size: 60vw;
+    }
 
-    & .card-front {
+    @media (width <= 640px) {
+      --size: 66vw;
+    }
+
+    border-radius: calc(var(--size, 12vw) / 18);
+    animation: card-shadow-current 1.5s infinite alternate;
+
+    .card {
+      --bgcolor: var(--card-bgcolor-1);
+      --border-color: var(--card-border-color);
+      --border-size: calc(var(--size) / 43);
+      --border-radius: calc(var(--size) / 18);
+
+      cursor: zoom-out;
+      position: relative;
       aspect-ratio: 15 / 23;
       width: var(--size);
-      box-sizing: border-box;
-      content-visibility: auto;
+      container: card / inline-size;
+      transition: transform 0.6s ease-in-out;
 
-      position: absolute;
-      inset: 0;
+      & .card-front {
+        aspect-ratio: 15 / 23;
+        width: var(--size);
+        box-sizing: border-box;
+        content-visibility: auto;
 
-      display: flex;
-      overflow: hidden;
-      user-select: none;
-      pointer-events: none;
-      flex-direction: column;
+        position: absolute;
+        inset: 0;
 
-      color: var(--text-color);
-      background-color: var(--bgcolor);
+        display: flex;
+        overflow: hidden;
+        user-select: none;
+        pointer-events: none;
+        flex-direction: column;
 
-      border-radius: var(--border-radius);
-      border: var(--border-size) solid var(--border-color);
-      box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+        color: var(--text-color);
+        background-color: var(--bgcolor);
+
+        border-radius: var(--border-radius);
+        border: var(--border-size) solid var(--border-color);
+        box-shadow: 0 0 1.5rem 0.1rem rgb(from var(--category-color) r g b / 0.4);
+      }
     }
   }
 
@@ -108,11 +115,6 @@ function getStyledCard(cat: CardCategory, size: CardSize) {
 
     &.hidden-atropos {
       scale: 0;
-    }
-
-    & .atropos-inner {
-      border-radius: calc(var(--size, 12vw) / 18);
-      animation: card-shadow-current 1.5s infinite alternate;
     }
   }
 </style>

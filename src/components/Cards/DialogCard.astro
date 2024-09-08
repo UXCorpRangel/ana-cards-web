@@ -13,7 +13,6 @@ import DialogMenu from './DialogMenu.astro';
   .dialog-card {
     border: none;
     outline: none;
-    padding: 9cqb;
     overflow: visible;
     background-color: transparent;
     z-index: var(--z-index-modal);
@@ -108,7 +107,6 @@ import DialogMenu from './DialogMenu.astro';
     const anaCard = document.querySelector<AnaCard>(cardSelector);
 
     cardWrapper?.setAttribute('style', anaCard?.getAttribute('style') ?? '');
-    cardWrapper?.style.setProperty('--size', '25vw');
 
     if (anaCard && titleEl && imageEl && contentEl && footerEl && categoryEl && levelEl) {
       const {

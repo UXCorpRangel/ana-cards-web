@@ -26,12 +26,15 @@ const buttons = [
     --placement: 1.5rem;
 
     position: absolute;
-    inset-inline-end: calc(var(--placement) * -1);
-    inset-block-start: calc(var(--placement) * 6);
+    inset-inline: var(--placement);
+    inset-block: auto calc(var(--placement) * -3);
+    padding-inline: var(--placement);
 
-    @media (width <= 576px) {
-      inset-inline: 0;
-      inset-block-start: calc(var(--placement) * -6);
+    @media (width >= 640px) {
+      padding-inline: 0;
+
+      inset-block: calc(var(--placement) * 6) auto;
+      inset-inline: auto calc(var(--placement) * -3);
     }
 
     & .menu {
@@ -40,7 +43,7 @@ const buttons = [
       positi: relative;
       flex-direction: column;
 
-      @media (width <= 576px) {
+      @media (width <= 640px) {
         gap: 1.75rem;
         align-items: center;
         flex-direction: row-reverse;
@@ -77,7 +80,7 @@ const buttons = [
           box-shadow var(--transition),
           background-image var(--transition);
 
-        @media (width <= 576px) {
+        @media (width <= 640px) {
           &::before {
             display: none;
           }
