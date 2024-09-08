@@ -1,4 +1,14 @@
-export type CreatorIcon = 'github' | 'website' | 'linkedin' | 'twitter' | 'twitch' | 'youtube';
+export type CreatorIcon =
+  | 'github'
+  | 'website'
+  | 'linkedin'
+  | 'twitter'
+  | 'twitch'
+  | 'youtube'
+  | 'instagram'
+  | 'discord'
+  | 'behance'
+  | 'codepen';
 
 export type CreatorLink = {
   /** Icono a mostrar */
