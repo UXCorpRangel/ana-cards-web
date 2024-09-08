@@ -145,9 +145,9 @@ export class AnaCard extends HTMLElement {
           opacity: 0.25;
           display: block;
           mix-blend-mode: overlay;
-          background-blend-mode: overlay, overlay;
-          background-clip: padding-box, padding-box;
-          background-image: var(--noise), var(--paper);
+          background-blend-mode: overlay;
+          background-clip: padding-box;
+          background-image: var(--grain-texture);
         }
 
         & .card-title {

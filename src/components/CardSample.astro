@@ -72,10 +72,6 @@ const cssVars = {
 
 <style>
   .card {
-    --noise: url('/ana-cards-web/assets/images/textures/noise.png');
-    --grain: url('/ana-cards-web/assets/images/textures/grain.png');
-    --paper: url('/ana-cards-web/assets/images/textures/paper.png');
-
     --size: 346px;
     --default-size: 18vw;
 
@@ -318,9 +314,9 @@ const cssVars = {
         opacity: 0.25;
         display: block;
         mix-blend-mode: multiply;
-        background-blend-mode: multiply, overlay;
-        background-clip: padding-box, padding-box;
-        background-image: var(--noise), var(--grain);
+        background-blend-mode: overlay;
+        background-clip: padding-box;
+        background-image: var(--grain-texture);
       }
 
       & .logo {

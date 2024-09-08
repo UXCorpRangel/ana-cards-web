@@ -29,10 +29,6 @@ const { id, name, description, image, category, level = 1, size = 'small' } = As
   }}
 >
   ana-card {
-    --noise: url('/ana-cards-web/assets/images/textures/noise.png');
-    --grain: url('/ana-cards-web/assets/images/textures/grain.png');
-    --paper: url('/ana-cards-web/assets/images/textures/paper.png');
-
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
     --border-size: calc(var(--size, var(--default-size)) / 43);
@@ -89,9 +85,9 @@ const { id, name, description, image, category, level = 1, size = 'small' } = As
         opacity: 0.25;
 
         mix-blend-mode: multiply;
-        background-blend-mode: multiply, overlay;
-        background-clip: padding-box, padding-box;
-        background-image: var(--noise), var(--grain);
+        background-blend-mode: overlay;
+        background-clip: padding-box;
+        background-image: var(--grain-texture);
       }
 
       &::after {
