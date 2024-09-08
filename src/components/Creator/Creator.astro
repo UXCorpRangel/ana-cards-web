@@ -33,8 +33,13 @@ const { name, description, avatar, direction, links } = Astro.props;
       <div class="networking">
         {
           links.map(({ href, icon }) => (
-            <a href={href} target="_blank" rel="noreferer noopener">
-              <Icon name={`socials/${icon}`} title={ICON_TITLES[icon]} size={42} />
+            <a
+              href={href}
+              target="_blank"
+              rel="noreferer noopener"
+              data-tooltip={ICON_TITLES[icon]}
+            >
+              <Icon name={`socials/${icon}`} size={42} />
             </a>
           ))
         }
@@ -79,8 +84,9 @@ const { name, description, avatar, direction, links } = Astro.props;
           gap: 1.5rem;
 
           & a {
-            color: #fff;
+            position: relative;
             text-decoration: none;
+            color: var(--text-color);
             transition:
               color 0.2s ease-in-out,
               scale 0.2s ease-in-out,
@@ -90,6 +96,29 @@ const { name, description, avatar, direction, links } = Astro.props;
               scale: 1.2;
               color: var(--secondary-color);
               filter: drop-shadow(0 0 0.3rem var(--primary-color));
+
+              &::before {
+                opacity: 1;
+                translate: -50% -1.5rem;
+              }
+            }
+
+            &::before {
+              content: attr(data-tooltip);
+              position: absolute;
+              width: max-content;
+              pointer-events: none;
+
+              scale: 0.9;
+              opacity: 0;
+              translate: -50% 0;
+              color: currentColor;
+              inset-block-start: 0;
+              inset-inline-start: 50%;
+
+              transition:
+                opacity 0.2s ease-in-out,
+                translate 0.2s ease-in-out;
             }
           }
         }
