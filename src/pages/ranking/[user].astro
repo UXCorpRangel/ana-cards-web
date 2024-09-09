@@ -37,6 +37,8 @@ const totalCards = formatNumber(cards.length, DIGITS);
 
       <h1 class="user-name">{currentUser.username}</h1>
 
+      <hr />
+
       <h1
         class:list={[
           'user-position',
@@ -120,11 +122,15 @@ const totalCards = formatNumber(cards.length, DIGITS);
           rgb(from var(--text-color) r g b / 0.2)
         );
 
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         position: absolute;
         top: 1.5rem;
         left: 1.5rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         transition:
           border var(--transition),
@@ -163,19 +169,18 @@ const totalCards = formatNumber(cards.length, DIGITS);
         width: 100%;
         position: relative;
         color: var(--text-color);
-        font-size: 3rem;
+        font-size: 2.4rem;
         text-align: center;
-        line-height: 0.3;
+        line-height: 0.9;
+        word-wrap: break-word;
+        margin-block-end: 0;
+        padding-block-end: 0.3rem;
+      }
 
-        &::before {
-          content: '';
-          position: absolute;
-          height: 0.3rem;
-          background-color: var(--card-border-color);
-          left: 1.5rem;
-          right: 1.5rem;
-          bottom: -2.1rem;
-        }
+      & hr {
+        width: calc(100% - 3rem);
+        background-color: var(--card-border-color);
+        border: 0.3rem solid var(--card-border-color);
       }
 
       & .user-position {
