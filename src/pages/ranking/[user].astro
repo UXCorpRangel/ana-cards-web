@@ -88,10 +88,8 @@ const totalCards = formatNumber(cards.length, DIGITS);
     }
 
     .user-wrapper {
-      grid-column: 1 / 2;
-      position: sticky;
-      top: 4.7rem;
-      height: 56vh;
+      position: relative;
+      grid-column: 1 / 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -100,6 +98,13 @@ const totalCards = formatNumber(cards.length, DIGITS);
       border-color: var(--secondary-color);
       background-color: var(--card-bgcolor-1);
       font-family: var(--font-family-primary);
+
+      @media (width > 640px) {
+        grid-column: 1 / 2;
+        position: sticky;
+        top: 4.7rem;
+        height: 56vh;
+      }
 
       & .back-button {
         z-index: 10;
@@ -228,11 +233,15 @@ const totalCards = formatNumber(cards.length, DIGITS);
     }
 
     .cards-wrapper {
-      grid-column: 2 / 3;
+      grid-column: 1 / 3;
       display: flex;
 
       border-color: var(--primary-color);
       background-color: #0a0514;
+
+      @media (width > 640) {
+        grid-column: 2 / 3;
+      }
     }
   }
 
