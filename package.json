@@ -19,7 +19,7 @@
     "@fontsource-variable/playpen-sans": "^5.0.8",
     "@fontsource/bebas-neue": "^5.0.20",
     "@fontsource/encode-sans-semi-expanded": "^5.0.20",
-    "astro": "^4.15.2",
+    "astro": "^4.15.4",
     "astro-icon": "^1.1.0",
     "atropos": "^2.0.2",
     "downloadjs": "^1.4.7",
