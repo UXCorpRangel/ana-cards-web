@@ -62,6 +62,7 @@ const { id, name, description, image, category, level = 1 } = Astro.props;
     }
 
     &:not(:defined) {
+      pointer-events: none;
       aspect-ratio: 15 / 23;
       width: var(--size);
       border: var(--border-size) solid var(--border-color);
@@ -109,14 +110,16 @@ const { id, name, description, image, category, level = 1 } = Astro.props;
         scale 0.3s ease-in-out,
         filter 0.3s ease-in-out;
 
-      &:has(~ *:hover) {
-        filter: var(--sibling-filter);
-      }
-
-      &:hover {
-        scale: 1.05;
-        & ~ * {
+      @media (any-hover: hover) {
+        &:has(~ *:hover) {
           filter: var(--sibling-filter);
+        }
+
+        &:hover {
+          scale: 1.05;
+          & ~ * {
+            filter: var(--sibling-filter);
+          }
         }
       }
 
