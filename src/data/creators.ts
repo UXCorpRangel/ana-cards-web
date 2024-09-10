@@ -44,10 +44,10 @@ export const creators: Creator[] = [
     ]
   },
   {
-    avatar: 'felixicaza.avif',
+    avatar: 'felixicaza.avif?v=1',
     name: 'Félix Icaza',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde corrupti incidunt nihil dolore qui magni deserunt placeat beatae minus, quas, accusamus nobis tenetur saepe, error dignissimos excepturi cupiditate vitae quis!',
+      'Uno de los primeros integrantes del sótano. Nadie aprueba una PR sin consultarle, es capaz de sacarle el máximo provecho a la web, conocido por tener cierta destreza con CSS y ganador de las cartas de Ana Rangel y Figma en ManzDev. Ahora su próxima meta es lograr la carta de Figma en este proyecto antes que Ana.',
     links: [
       { href: 'https://felixicaza.com', icon: 'website' },
       { href: 'https://github.com/felixicaza', icon: 'github' },
