@@ -72,7 +72,11 @@ const cssVars = {
 
 <style>
   .card {
-    --size: 346px;
+    --size: 280px;
+
+    @media (width >= 768px) {
+      --size: 391px;
+    }
 
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
@@ -92,10 +96,6 @@ const cssVars = {
     @starting-style {
       scale: 0;
       opacity: 0;
-    }
-
-    @media (width >= 768px) {
-      --size: 391px;
     }
 
     &.rotate {

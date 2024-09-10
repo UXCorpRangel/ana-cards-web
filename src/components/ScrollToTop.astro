@@ -50,6 +50,10 @@ const { alignment = 'right' } = Astro.props;
     bottom: var(--placement);
     transform: scale(0);
 
+    @media (width <= 640px) {
+      display: none;
+    }
+
     &.left {
       left: var(--placement);
     }
