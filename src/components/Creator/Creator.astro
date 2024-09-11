@@ -25,7 +25,16 @@ const { name, description, avatar, direction, links } = Astro.props;
 
 <article class=`creator ${direction}`>
   <header>
-    <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
+    <div
+      class:list={[
+        'avatar-wrapper',
+        {
+          party: avatar.includes('odracirdev')
+        }
+      ]}
+    >
+      <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
+    </div>
 
     <div class="creator-card">
       <h2>{name}</h2>
@@ -59,6 +68,25 @@ const { name, description, avatar, direction, links } = Astro.props;
       display: flex;
       align-items: center;
       gap: 2rem;
+
+      & .avatar-wrapper {
+        position: relative;
+
+        &.party::after {
+          content: '';
+          width: 50%;
+          height: 50%;
+          position: absolute;
+          background-image: url('/ana-cards-web/assets/images/party-hat.svg');
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          rotate: 45deg;
+          z-index: 1;
+          inset-block-start: -4rem;
+          inset-inline-end: -4rem;
+        }
+      }
 
       & .avatar {
         object-fit: cover;
