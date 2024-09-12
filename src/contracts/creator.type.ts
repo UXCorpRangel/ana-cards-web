@@ -74,4 +74,7 @@ export type Creator = {
 
   /** Fecha de nacimiento del creado */
   birthdate: Birthdate;
+
+  /** Indica si el creador debe ser destacado */
+  isAmazing?: boolean;
 };

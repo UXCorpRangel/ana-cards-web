@@ -16,7 +16,8 @@ export const creators: Creator[] = [
       { href: 'https://behance.net/rangelana1a2a6', icon: 'behance' },
       { href: 'https://discord.com/invite/6rfgHETy', icon: 'discord' }
     ],
-    birthdate: '12-20'
+    birthdate: '12-20',
+    isAmazing: true
   },
   {
     avatar: 'odracirdev.avif',
