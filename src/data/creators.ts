@@ -15,7 +15,8 @@ export const creators: Creator[] = [
       { href: 'https://youtube.com/@ux.ana.rangel', icon: 'youtube' },
       { href: 'https://behance.net/rangelana1a2a6', icon: 'behance' },
       { href: 'https://discord.com/invite/6rfgHETy', icon: 'discord' }
-    ]
+    ],
+    birthdate: '12-20'
   },
   {
     avatar: 'odracirdev.avif',
@@ -28,7 +29,8 @@ export const creators: Creator[] = [
       { href: 'https://twitch.tv/odracirdev', icon: 'twitch' },
       { href: 'https://youtube.com/@RicardCuauro', icon: 'youtube' },
       { href: 'https://discord.gg/3m9KdYAf3p', icon: 'discord' }
-    ]
+    ],
+    birthdate: '09-11'
   },
   {
     avatar: 'jagcruz.avif',
@@ -41,7 +43,8 @@ export const creators: Creator[] = [
       { href: 'https://linkedin.com/in/jagcruz', icon: 'linkedin' },
       { href: 'https://codepen.io/jagcruz', icon: 'codepen' },
       { href: 'https://x.com/Tyto993', icon: 'twitter' }
-    ]
+    ],
+    birthdate: '07-09'
   },
   {
     avatar: 'felixicaza.avif?v=1',
@@ -52,7 +55,8 @@ export const creators: Creator[] = [
       { href: 'https://felixicaza.com', icon: 'website' },
       { href: 'https://github.com/felixicaza', icon: 'github' },
       { href: 'https://linkedin.com/in/felixicaza', icon: 'linkedin' }
-    ]
+    ],
+    birthdate: '03-16'
   },
   {
     avatar: 'omaaraguirre.avif',
@@ -63,6 +67,7 @@ export const creators: Creator[] = [
       { href: 'https://omao.dev', icon: 'website' },
       { href: 'https://github.com/omaaraguirre', icon: 'github' },
       { href: 'https://linkedin.com/in/omaaraguirre', icon: 'linkedin' }
-    ]
+    ],
+    birthdate: '03-09'
   }
 ];

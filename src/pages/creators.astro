@@ -10,13 +10,14 @@ import { creators } from '@data/creators';
     <h1 class="title">Creadores</h1>
 
     {
-      creators.map(({ name, description, avatar, links }, index) => (
+      creators.map(({ name, description, avatar, links, birthdate }, index) => (
         <Creator
           avatar={avatar}
           name={name}
           description={description}
           direction={index % 2 === 0 ? 'left' : 'right'}
           links={links}
+          birthdate={birthdate}
         />
       ))
     }
