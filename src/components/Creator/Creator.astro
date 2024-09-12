@@ -25,7 +25,7 @@ const { name, description, avatar, direction, links, birthdate } = Astro.props;
 
 <article class:list={['creator', direction]} data-birthdate={birthdate}>
   <header>
-    <div class:list="avatar-wrapper">
+    <div class="avatar-wrapper">
       <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
     </div>
 
