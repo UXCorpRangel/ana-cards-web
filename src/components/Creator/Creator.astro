@@ -20,10 +20,10 @@ const ICON_TITLES: Record<CreatorIcon, string> = {
 interface Props extends Creator {
   direction: HorizontalAlignment;
 }
-const { name, description, avatar, direction, links, birthdate } = Astro.props;
+const { name, description, avatar, direction, links, birthdate, isAmazing = false } = Astro.props;
 ---
 
-<article class:list={['creator', direction]} data-birthdate={birthdate}>
+<article class:list={['creator', { direction, amazing: isAmazing }]} data-birthdate={birthdate}>
   <header>
     <div class="avatar-wrapper">
       <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
