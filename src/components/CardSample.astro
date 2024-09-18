@@ -74,10 +74,6 @@ const cssVars = {
   .card {
     --size: 280px;
 
-    @media (width >= 768px) {
-      --size: 391px;
-    }
-
     --bgcolor: var(--card-bgcolor-1);
     --border-color: var(--card-border-color);
     --border-size: calc(var(--size) / 43);
@@ -98,6 +94,9 @@ const cssVars = {
       opacity: 0;
     }
 
+    @media (width >= 768px) {
+      --size: 391px;
+    }
     &.rotate {
       transform: rotateY(180deg);
     }

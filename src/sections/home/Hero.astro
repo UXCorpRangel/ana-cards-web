@@ -24,11 +24,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     --width: 400px;
     --height: 600px;
 
-    @media (width >= 768px) {
-      --width: 600px;
-      --height: 920px;
-    }
-
     --border-size: 0.563rem;
     --border-color: #282828;
 
@@ -39,12 +34,18 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     transition: all 0.6s;
 
+    @media (width >= 767.98px) {
+      --width: 600px;
+      --height: 920px;
+    }
+
     & .card-back {
       position: absolute;
       inset: 0;
 
       display: flex;
       flex-direction: column;
+
       align-items: center;
       justify-content: center;
       overflow: hidden;
