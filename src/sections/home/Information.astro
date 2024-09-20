@@ -24,9 +24,11 @@
     border: 1px solid rgb(250 134 206 / 50%);
     display: grid;
     gap: 1rem;
+    margin-inline: 1rem;
 
-    @media (width >= 768px) {
+    @media (width >= 767.98px) {
       padding: 2.25rem;
+      margin-inline: 0;
     }
 
     @media (width >= 1200px) {
@@ -47,18 +49,24 @@
         position: relative;
         background-position-x: center;
 
-        &::before,
-        &::after {
-          --rotate-card: 20deg;
-          --scale-card: 0.97;
+        @media (width <= 768px) {
+          width: 100%;
+        }
 
-          content: '';
-          position: absolute;
-          width: 183px;
-          height: inherit;
-          background-image: inherit;
-          background-repeat: inherit;
-          z-index: -1;
+        @media (width >= 768px) {
+          &::before,
+          &::after {
+            --rotate-card: 20deg;
+            --scale-card: 0.97;
+
+            content: '';
+            position: absolute;
+            width: 183px;
+            height: inherit;
+            background-image: inherit;
+            background-repeat: inherit;
+            z-index: -1;
+          }
         }
 
         &.show {
