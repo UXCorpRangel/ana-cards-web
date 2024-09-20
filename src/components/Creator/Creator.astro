@@ -54,8 +54,12 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
 
 <style>
   .creator {
-    max-width: 45vw;
+    display: flex;
+    flex-direction: column;
+    max-width: 864px;
     user-select: none;
+    padding-inline: 1rem;
+    padding-bottom: 1.5rem;
 
     & header {
       display: flex;
@@ -99,7 +103,14 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
 
         & .networking {
           display: flex;
-          gap: 1.5rem;
+          gap: 1rem;
+          flex-wrap: wrap;
+          justify-content: center;
+
+          @media (width >= 768px) {
+            flex-wrap: nowrap;
+            gap: 1.5rem;
+          }
 
           & a {
             position: relative;
@@ -150,7 +161,11 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
 
     &.left {
       & header {
-        flex-direction: row;
+        flex-direction: column;
+
+        @media (width >= 768px) {
+          flex-direction: row;
+        }
 
         & .avatar-wrapper {
           &.party::after {
@@ -164,18 +179,30 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
         }
 
         & .creator-card {
-          align-items: flex-start;
+          align-items: center;
+
+          @media (width >= 768px) {
+            align-items: flex-start;
+          }
         }
       }
 
       & p {
-        text-align: start;
+        text-align: center;
+
+        @media (width >= 768px) {
+          text-align: start;
+        }
       }
     }
 
     &.right {
       & header {
-        flex-direction: row-reverse;
+        flex-direction: column;
+
+        @media (width >= 768px) {
+          flex-direction: row-reverse;
+        }
 
         & .avatar-wrapper {
           &.party::after {
@@ -189,12 +216,20 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
         }
 
         & .creator-card {
-          align-items: flex-end;
+          align-items: center;
+
+          @media (width >= 768px) {
+            align-items: flex-end;
+          }
         }
       }
 
       & p {
-        text-align: end;
+        text-align: center;
+
+        @media (width >= 768px) {
+          text-align: end;
+        }
       }
     }
   }

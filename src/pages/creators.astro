@@ -36,13 +36,19 @@ import { creators } from '@data/creators';
     margin-bottom: 5rem;
 
     & .title {
-      width: 45vw;
+      width: 70%;
+      max-width: 864px;
       position: relative;
       font-family: var(--font-family-primary);
-      font-size: 5.5rem;
+      font-size: 3.5rem;
       text-align: center;
       margin: 1rem 0 2rem;
       user-select: none;
+
+      @media (width >= 768px) {
+        width: 100%;
+        font-size: 5.5rem;
+      }
 
       &::after {
         content: '';
