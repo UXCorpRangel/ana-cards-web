@@ -1,20 +1,16 @@
 ---
 import { Picture } from 'astro:assets';
 
+interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+}
+
 const getContributors = await fetch(
   'https://api.github.com/repos/UXCorpRangel/ana-cards-web/contributors'
 );
-const mainContributors = await getContributors.json();
-
-const getAnaRangelUser = [
-  {
-    login: 'AnaRangel',
-    avatar_url: 'https://avatars.githubusercontent.com/u/30361612?v=4',
-    html_url: 'https://github.com/AnaRangel'
-  }
-];
-
-const contributors = [...mainContributors, ...getAnaRangelUser];
+const contributors: Contributor[] = await getContributors.json();
 ---
 
 <section class="contributors">
