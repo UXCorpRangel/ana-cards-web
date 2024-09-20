@@ -1,34 +1,32 @@
 ---
+import { StatusValue, type RoadmapItem } from '@contracts';
 import { Icon } from 'astro-icon/components';
 
-const STATUS_VALUES = {
-  COMPLETADO: 'Completado' as const,
-  EN_DESARROLLO: 'En Desarrollo' as const,
-  EN_ESPERA: 'En Espera' as const
+const STATUS_TEXT: Record<StatusValue, string> = {
+  [StatusValue.COMPLETE]: 'Completado',
+  [StatusValue.DEVELOP]: 'En Desarrollo',
+  [StatusValue.WAIT]: 'En Espera'
 };
 
-type Status = (typeof STATUS_VALUES)[keyof typeof STATUS_VALUES];
+const STATUS_ICONS: Record<StatusValue, string> = {
+  [StatusValue.COMPLETE]: 'check',
+  [StatusValue.DEVELOP]: 'code',
+  [StatusValue.WAIT]: 'hourglass'
+};
 
-interface Props {
-  title: string;
-  date: string;
-  status: Status;
-  description: string;
-}
+type Props = RoadmapItem;
 
 const { title, date, status, description } = Astro.props;
 
-const STATUS = {
-  isDone: STATUS_VALUES.COMPLETADO,
-  isDevelopment: STATUS_VALUES.EN_DESARROLLO,
-  isPending: STATUS_VALUES.EN_ESPERA
-};
+function getStatusIcon(value: StatusValue) {
+  return STATUS_ICONS[value];
+}
 
-function getStatusColor(status: Status): string | null {
+function getStatusColor(status: StatusValue): string | null {
   const statusKeys = {
-    [STATUS.isDone]: '--lore-color',
-    [STATUS.isDevelopment]: '--harley-color',
-    [STATUS.isPending]: '--development-color'
+    [StatusValue.COMPLETE]: '--lore-color',
+    [StatusValue.DEVELOP]: '--harley-color',
+    [StatusValue.WAIT]: '--development-color'
   };
 
   return statusKeys[status] || null;
@@ -41,10 +39,8 @@ function getStatusColor(status: Status): string | null {
     <header>
       <h3>{date}</h3>
       <p style={`--color: var(${getStatusColor(status)})`}>
-        {status === STATUS.isDone && <Icon name="roadmap/check" size={24} />}
-        {status === STATUS.isDevelopment && <Icon name="roadmap/code" size={24} />}
-        {status === STATUS.isPending && <Icon name="roadmap/hourglass" size={24} />}
-        <span>{status}</span>
+        <Icon name={`roadmap/${getStatusIcon(status)}`} size={24} />
+        <span>{STATUS_TEXT[status]}</span>
       </p>
     </header>
     <p class="description">
