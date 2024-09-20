@@ -2,6 +2,7 @@
 import CardRoadmap from '@components/CardRoadmap.astro';
 import Logo from '@components/Logo.astro';
 import PageLayout from '@layouts/Page.astro';
+import { roadmap } from '@data/roadmap';
 ---
 
 <PageLayout title="Roadmap">
@@ -16,24 +17,11 @@ import PageLayout from '@layouts/Page.astro';
           <Logo size={78} />
         </div>
         <div class="card-container">
-          <CardRoadmap
-            title="¡LANZAMIENTO DE LAS CARTAS!"
-            date="JULIO 2024"
-            status="Completado"
-            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
-          />
-          <CardRoadmap
-            title="¡LANZAMIENTO DE LAS CARTAS! TEXTO LARGO"
-            date="JULIO 2024"
-            status="En Desarrollo"
-            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
-          />
-          <CardRoadmap
-            title="¡LANZAMIENTO DE LAS CARTAS! TEXTO LARGO"
-            date="JULIO 2024"
-            status="En Espera"
-            description="Lorem ipsum dolor sit amet consectetur. Et senectus lectus senectus dictum ultrices lobortis. Erat at egestas arcu tellus. Sed in vitae integer tortor sit morbi. A in ullamcorper ut eget etiam odio porta nunc. Volutpat nec ac enim volutpat ipsum sit. Est tellus fames ut lectus scelerisque. Sem gravida lacus a nisi in platea. Sapien ante sem ultrices velit ornare diam egestas."
-          />
+          {
+            roadmap.map(({ title, date, status, description }) => (
+              <CardRoadmap title={title} date={date} status={status} description={description} />
+            ))
+          }
         </div>
       </div>
     </section>
