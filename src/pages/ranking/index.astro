@@ -51,13 +51,18 @@ import { RANKING_MOCK } from '@data/ranking';
       align-items: center;
 
       & .title {
-        width: 45vw;
+        width: 85vw;
         position: relative;
         font-family: var(--font-family-primary);
-        font-size: 5.5rem;
+        font-size: 3.5rem;
         user-select: none;
         text-align: center;
         margin: 1rem 0 2rem;
+
+        @media (width >= 768px) {
+          font-size: 5.5rem;
+          width: 45vw;
+        }
 
         &::after {
           content: '';
@@ -71,24 +76,38 @@ import { RANKING_MOCK } from '@data/ranking';
       }
 
       & .search-wrapper {
-        width: 43vw;
+        width: 90vw;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
         padding: 1rem 1rem 2rem;
+
+        @media (width >= 768px) {
+          width: 45vw;
+        }
 
         & p {
           font-size: 1.2rem;
           font-weight: 600;
           margin: 0;
           flex: 0.7;
+          text-wrap: pretty;
+
+          @media (width <= 768.98px) {
+            text-align: center;
+          }
         }
 
         & search {
           --transition: 0.3s ease-in-out;
           --border: 1px;
-          --input-size: 17rem;
+          --input-size: 9rem;
+
+          @media (width >= 768px) {
+            --input-size: 17rem;
+          }
 
           display: flex;
           gap: 1rem;

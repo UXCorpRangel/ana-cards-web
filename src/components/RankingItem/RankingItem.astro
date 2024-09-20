@@ -55,12 +55,16 @@ const { place, score, username } = Astro.props;
     }
 
     & .ranking-item {
-      width: 40vw;
+      width: 70vw;
       height: 3rem;
       padding: 2rem;
       position: relative;
       overflow: hidden;
       user-select: none;
+
+      @media (width >= 780px) {
+        width: 40vw;
+      }
 
       color: var(--text-color);
       font-family: var(--font-family-primary);
@@ -107,7 +111,11 @@ const { place, score, username } = Astro.props;
         line-height: 0.9;
 
         & .number {
-          font-size: 3.5rem;
+          font-size: 1.5rem;
+
+          @media (width >= 780px) {
+            font-size: 3.5rem;
+          }
         }
 
         & .subtitle {
@@ -122,8 +130,15 @@ const { place, score, username } = Astro.props;
 
       & .username {
         width: 75%;
-        font-size: 3.8rem;
-        padding: 0 1.5rem;
+        font-size: 1.5rem;
+        padding: 0 1.3rem;
+        word-break: break-all;
+        line-height: 0.9;
+
+        @media (width >= 780px) {
+          font-size: 3rem;
+          padding: 0 1.5rem;
+        }
       }
 
       & .score {
