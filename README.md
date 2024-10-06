@@ -27,6 +27,6 @@ El proyecto está en una etapa muy temprana y por el momento queremos mantener l
 
 Te invitamos a unirte a nuestra comunidad en [Discord](https://discord.gg/GBGPSQaKRf) y a no perderte ningún stream en [Twitch](https://twitch.tv/uxanarangel) para que estés al tanto del proyecto.
 
-## 📈 Activity
+## 📈 Actividad
 
-![Activity](https://repobeats.axiom.co/api/embed/0844a5653e39b580ba436375e7d40d65b9b8e927.svg "Repobeats analytics image")
+![Actividad](https://repobeats.axiom.co/api/embed/0844a5653e39b580ba436375e7d40d65b9b8e927.svg "Repobeats analytics image")
