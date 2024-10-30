@@ -55,7 +55,7 @@ export class AnaCard extends HTMLElement {
   }
 
   getImageURL() {
-    return `/ana-cards-web/assets/images/cards/${this.cardImage}`;
+    return `s/assets/images/cards/${this.cardImage}`;
   }
 
   render() {
@@ -353,7 +353,7 @@ export class AnaCard extends HTMLElement {
           }
 
           .card[data-card-level] & {
-            --shine-texture: url('/ana-cards-web/assets/images/textures/diamonds.webp');
+            --shine-texture: url('/assets/images/textures/diamonds.webp');
 
             --shine-gradient-1: repeating-linear-gradient(
               0deg,
@@ -394,19 +394,19 @@ export class AnaCard extends HTMLElement {
           }
 
           .card[data-card-level='2'] & {
-            --shine-texture: url('/ana-cards-web/assets/images/textures/metal.webp');
+            --shine-texture: url('/assets/images/textures/metal.webp');
           }
 
           .card[data-card-level='3'] & {
-            --shine-texture: url('/ana-cards-web/assets/images/textures/crossover.webp');
+            --shine-texture: url('/assets/images/textures/crossover.webp');
           }
 
           .card[data-card-level='4'] & {
-            --shine-texture: url('/ana-cards-web/assets/images/textures/wave.webp');
+            --shine-texture: url('/assets/images/textures/wave.webp');
           }
 
           .card[data-card-level='5'] & {
-            --shine-texture: url('/ana-cards-web/assets/images/textures/stamp.webp');
+            --shine-texture: url('/assets/images/textures/stamp.webp');
           }
         }
       }
