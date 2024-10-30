@@ -8,8 +8,6 @@ import {
 import { stringifyCardNumber } from '@utils';
 import { Icon } from 'astro-icon/components';
 
-const BASE_URL = import.meta.env.BASE_URL;
-
 type Props = AnaCard;
 const { id, name, description, image, category, level = 1 } = Astro.props;
 
@@ -27,7 +25,7 @@ function getStyledCard(cat: CardCategory) {
             <h1 class="card-title">{name}</h1>
 
             <div class="card-image">
-              <img src={`${BASE_URL}/assets/images/cards/${image}`} loading="lazy" />
+              <img src={`/assets/images/cards/${image}`} loading="lazy" />
             </div>
 
             <p class="card-content">{description}</p>

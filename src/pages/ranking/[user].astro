@@ -25,15 +25,11 @@ const totalCards = formatNumber(cards.length, DIGITS);
 <PageLayout title="Ranking: User">
   <main class="container">
     <aside class="user-wrapper">
-      <a class="back-button" href={`${BASE_URL}/ranking`}>
+      <a class="back-button" href={`${BASE_URL}ranking`}>
         <Icon name="arrow-left" title="Ir arriba" size={32} />
       </a>
 
-      <img
-        class="user-avatar"
-        src={`${BASE_URL}/assets/images/unicorn-avatar.png`}
-        alt="User Avatar"
-      />
+      <img class="user-avatar" src="/assets/images/unicorn-avatar.png" alt="User Avatar" />
 
       <h1 class="user-name">{currentUser.username}</h1>
 

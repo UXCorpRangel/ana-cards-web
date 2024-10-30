@@ -14,7 +14,7 @@ const { place, score, username } = Astro.props;
     { 'first-place': place === 1, 'second-place': place === 2, 'third-place': place === 3 }
   ]}
 >
-  <a href={`${BASE_URL}/ranking/${username}`} class="ranking-item">
+  <a href={`${BASE_URL}ranking/${username}`} class="ranking-item">
     <header class="placement">
       <span class="number">
         {formatNumber(place, 2)}

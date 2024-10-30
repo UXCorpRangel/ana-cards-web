@@ -2,8 +2,6 @@
 import type { Creator, CreatorIcon, HorizontalAlignment } from '@contracts';
 import { Icon } from 'astro-icon/components';
 
-const BASE_URL = import.meta.env.BASE_URL;
-
 const ICON_TITLES: Record<CreatorIcon, string> = {
   github: 'GitHub',
   linkedin: 'LinkedIn',
@@ -26,7 +24,7 @@ const { name, description, avatar, direction, links, birthdate, isAmazing = fals
 <article class:list={['creator', direction, { isAmazing }]} data-birthdate={birthdate}>
   <header>
     <div class="avatar-wrapper">
-      <img src={`${BASE_URL}/assets/images/creators/${avatar}`} alt={name} class="avatar" />
+      <img src={`/assets/images/creators/${avatar}`} alt={name} class="avatar" />
     </div>
 
     <div class="creator-card">

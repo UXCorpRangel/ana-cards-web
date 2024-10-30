@@ -4,13 +4,13 @@ const BASE_URL = import.meta.env.BASE_URL;
 
 /** Imágenes de demostración de las categorías de las cartas */
 export const demoCategoryImages: CategoryMap = {
-  [CardCategory.DESIGN]: `${BASE_URL}/assets/images/dummies/cat-design.webp`,
-  [CardCategory.HARLEY]: `${BASE_URL}/assets/images/dummies/cat-harley.webp`,
-  [CardCategory.DEVELOPMENT]: `${BASE_URL}/assets/images/dummies/cat-development.webp`,
-  [CardCategory.LORE]: `${BASE_URL}/assets/images/dummies/cat-lore.webp`,
-  [CardCategory.TROLL]: `${BASE_URL}/assets/images/dummies/cat-troll.webp`,
-  [CardCategory.TOOLS]: `${BASE_URL}/assets/images/dummies/cat-tools.webp`,
-  [CardCategory.SPECIAL]: `${BASE_URL}/assets/images/dummies/cat-special.webp`
+  [CardCategory.DESIGN]: `${BASE_URL}assets/images/dummies/cat-design.webp`,
+  [CardCategory.HARLEY]: `${BASE_URL}assets/images/dummies/cat-harley.webp`,
+  [CardCategory.DEVELOPMENT]: `${BASE_URL}assets/images/dummies/cat-development.webp`,
+  [CardCategory.LORE]: `${BASE_URL}assets/images/dummies/cat-lore.webp`,
+  [CardCategory.TROLL]: `${BASE_URL}assets/images/dummies/cat-troll.webp`,
+  [CardCategory.TOOLS]: `${BASE_URL}assets/images/dummies/cat-tools.webp`,
+  [CardCategory.SPECIAL]: `${BASE_URL}assets/images/dummies/cat-special.webp`
 };
 
 /** Títulos de las categorías de las cartas */

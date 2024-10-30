@@ -55,7 +55,7 @@ export class AnaCard extends HTMLElement {
   }
 
   getImageURL() {
-    return `s/assets/images/cards/${this.cardImage}`;
+    return `/assets/images/cards/${this.cardImage}`;
   }
 
   render() {

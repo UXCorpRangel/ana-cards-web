@@ -7,7 +7,7 @@ export const creators: Creator[] = [
     description:
       'UX Designer con una comunidad tan avanzada que ya es casi una secta, de hecho, mis seguidores llevan mi apellido en sus nicknames. Amante de los unicornios, devs y todo lo que tenga que ver con jugar en equipo (o sea, Fortnite y juegos a fines). Me encontrarás siempre rompiendo el estereotipo del UX gruñón: en lugar de hacerle la vida imposible a los devs, prefiero enseñar, compartir risas, y conquistar corazones... Si buscas unicornios, buena onda, y algo de código, estás oficialmente en territorio UX Corp Rangel!',
     links: [
-      { href: 'https://anarangel.github.io', icon: 'website' },
+      { href: 'https://uxanarangel.com', icon: 'website' },
       { href: 'https://github.com/anarangel', icon: 'github' },
       { href: 'https://linkedin.com/in/ux-ana-rangel', icon: 'linkedin' },
       { href: 'https://instagram.com/ux.ana.rangel', icon: 'instagram' },

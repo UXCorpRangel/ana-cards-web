@@ -1,24 +1,17 @@
 ---
 import Logo from '../Logo.astro';
-
-const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <footer class="footer-wrapper">
   <div class="footer">
-    <a class="logo" href="https://anarangel.github.io" target="_blank" rel="noopener noreferrer">
+    <a class="logo" href="https://uxanarangel.com" target="_blank" rel="noopener noreferrer">
       <Logo size={96} />
     </a>
 
     <span class="last-row">
       Hecho con
       <span class="heart">
-        <img
-          src={`${BASE_URL}/assets/images/heart_on_fire.png`}
-          width="32"
-          height="32"
-          alt="love"
-        />
+        <img src="/assets/images/heart_on_fire.png" width="32" height="32" alt="love" />
       </span>
       para la comunidad | Inspirado en <a
         class="manzlink"
@@ -217,11 +210,11 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 </style>
 
-<script define:vars={{ BASE_URL }}>
+<script>
   const manzlink = document.querySelector('.manzlink');
 
   manzlink?.addEventListener('mouseenter', () => {
-    const audio = new Audio(`${BASE_URL}/assets/audio/star.mp3`);
+    const audio = new Audio('/assets/audio/star.mp3');
 
     audio.play();
   });
