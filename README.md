@@ -6,6 +6,8 @@
 
 Si estás aquí es porque ya conoces el proyecto en el que estamos trabajando. En este repositorio puedes reportar los bugs que encuentres en la aplicación o también solicitar características (funciones) nuevas.
 
+![Ana Cards](https://raw.githubusercontent.com/UXCorpRangel/ana-cards-web/refs/heads/main/public/og.png)
+
 ## 🚧 ¿Cómo contribuir?
 
 Por ahora la única manera de contribuir a este proyecto es [creando las issues](https://github.com/UXCorpRangel/ana-cards-web/issues) que creas pertinentes por las siguientes razones:
@@ -29,4 +31,4 @@ Te invitamos a unirte a nuestra comunidad en [Discord](https://discord.gg/GBGPSQ
 
 ## 📈 Actividad
 
-![Actividad](https://repobeats.axiom.co/api/embed/0844a5653e39b580ba436375e7d40d65b9b8e927.svg "Repobeats analytics image")
+![Actividad](https://repobeats.axiom.co/api/embed/0844a5653e39b580ba436375e7d40d65b9b8e927.svg 'Repobeats analytics image')
