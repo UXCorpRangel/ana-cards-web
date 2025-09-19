@@ -34,6 +34,14 @@ import { RANKING_MOCK } from '@data/ranking';
     <section class="ranking-wrapper">
       <ul class="ranking">
         {RANKING_MOCK.map(item => <RankingItem {...item} />)}
+        <li>
+          <p
+            id="no-results-message"
+            style="display: none; text-align: center; font-weight: 600; color: var(--secondary-color);"
+          >
+            No se encontraron resultados.
+          </p>
+        </li>
       </ul>
     </section>
   </main>
@@ -214,21 +222,50 @@ import { RANKING_MOCK } from '@data/ranking';
 
 <script>
   const BASE_URL = import.meta.env.BASE_URL;
+
   const searchInput = document.querySelector<HTMLInputElement>('.search-input');
+  const rankingItems = document.querySelectorAll<HTMLLIElement>('.ranking-item-wrapper');
   const searchButton = document.querySelector<HTMLButtonElement>('.search-button');
 
-  function searchUser() {
-    const username = searchInput?.value.trim().toLowerCase();
+  function filterRanking() {
+    const searchTerm = searchInput?.value.trim().toLowerCase() || '';
 
-    if (username) {
-      location.href = `${BASE_URL}ranking/${username}`;
+    rankingItems.forEach(item => {
+      const username = item?.textContent?.toLowerCase() || '';
+
+      if (username.includes(searchTerm)) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    const noResultsMessageId = 'no-results-message';
+    let noResultsMessage = document.getElementById(noResultsMessageId);
+    const anyVisible = Array.from(rankingItems).some(item => item.style.display !== 'none');
+
+    if (!anyVisible && searchTerm) {
+      if (noResultsMessage) {
+        noResultsMessage.style.display = 'block';
+      }
+    } else {
+      if (noResultsMessage) {
+        noResultsMessage.style.display = 'none';
+      }
     }
   }
 
-  searchInput?.addEventListener('keydown', (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      searchUser();
+  function BtnSearch() {
+    const searchTerm = searchInput?.value.trim().toLowerCase() || '';
+    const anyVisible = Array.from(rankingItems).some(item => item.style.display !== 'none');
+    window.location.href = `${BASE_URL}ranking/${searchTerm}`;
+    if (!anyVisible && searchTerm) {
     }
+  }
+
+  searchInput?.addEventListener('input', filterRanking);
+  searchButton?.addEventListener('click', e => {
+    e.preventDefault();
+    BtnSearch();
   });
-  searchButton?.addEventListener('click', searchUser);
 </script>
